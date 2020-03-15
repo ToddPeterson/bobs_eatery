@@ -30,7 +30,7 @@ Create Table Customers(
 
 	PhoneNumber nvarchar(15) NOT NULL,
 
-	Email nvarchar(15) NOT NULL,
+	Email nvarchar(100) NOT NULL,
 
 	StreetAddress nvarchar(50) NOT NULL,
 
