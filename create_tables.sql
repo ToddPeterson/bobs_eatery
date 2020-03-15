@@ -1,4 +1,4 @@
-USE BobsEatery
+USE BobsAwesomeEatery
 
 Create Table States(
 
@@ -86,7 +86,7 @@ Create Table MenuItems(
 
 	IsSideItem bit NOT NULL,
 
-	PrepTime smallint NOT NULL, -- I made this small int cause i guess we are storing in minutes
+	PrepTime int NOT NULL, -- I made this small int cause i guess we are storing in minutes
 
 	PrepMethodID int FOREIGN KEY REFERENCES PrepMethods(PrepMethodID),
 
@@ -248,9 +248,9 @@ Create Table Seatings(
 
 	SeatingID int IDENTITY(1,1) PRIMARY KEY,
 
-	TimeSatDown int NOT NULL, -- I prefer Time instead of int
+	TimeSatDown datetime NOT NULL, -- I prefer Time instead of int
 
-	TimeLeft int NOT NULL, -- I prefer Time instead of int
+	TimeLeft datetime NOT NULL, -- I prefer Time instead of int
 
 	TableID int FOREIGN KEY REFERENCES [Tables](TableID),
 
