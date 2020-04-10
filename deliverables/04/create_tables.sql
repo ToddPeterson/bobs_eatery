@@ -1,6 +1,7 @@
 USE BobsAwesomeEatery
 
-Create Table States(
+CREATE TABLE States
+(
 
 	StateID int IDENTITY(1,1) PRIMARY KEY,
 
@@ -8,7 +9,8 @@ Create Table States(
 
 )
 
-Create Table Cities(
+CREATE TABLE Cities
+(
 
 	CityID int IDENTITY(1,1) PRIMARY KEY,
 
@@ -18,13 +20,14 @@ Create Table Cities(
 
 )
 
-Create Table Customers(
+CREATE TABLE Customers
+(
 
 	CustomerID int IDENTITY(1,1) PRIMARY KEY,
 
 	FirstName nvarchar(50) NOT NULL,
 
-	MiddleName nvarchar(50) NOT NULL, ----- I have this as not null
+	MiddleName nvarchar(50) NOT NULL,
 
 	LastName nvarchar(50) NOT NULL,
 
@@ -38,7 +41,8 @@ Create Table Customers(
 
 )
 
-Create Table Accounts(
+CREATE TABLE Accounts
+(
 
 	AccountID int IDENTITY(1,1) PRIMARY KEY,
 
@@ -48,9 +52,10 @@ Create Table Accounts(
 
 	CustomerID int FOREIGN KEY REFERENCES Customers(CustomerID)
 
-) 
+)
 
-Create Table CuisineTypes(
+CREATE TABLE CuisineTypes
+(
 
 	CuisineTypeID int IDENTITY(1,1) PRIMARY KEY,
 
@@ -58,7 +63,8 @@ Create Table CuisineTypes(
 
 )
 
-Create Table Categories(
+CREATE TABLE Categories
+(
 
 	CategoryID int IDENTITY(1,1) PRIMARY KEY,
 
@@ -66,7 +72,8 @@ Create Table Categories(
 
 )
 
-Create Table PrepMethods(
+CREATE TABLE PrepMethods
+(
 
 	PrepMethodID int IDENTITY(1,1) PRIMARY KEY,
 
@@ -74,7 +81,8 @@ Create Table PrepMethods(
 
 )
 
-Create Table MenuItems(
+CREATE TABLE MenuItems
+(
 
 	MenuItemID int IDENTITY(1,1) PRIMARY KEY,
 
@@ -86,7 +94,7 @@ Create Table MenuItems(
 
 	IsSideItem bit NOT NULL,
 
-	PrepTime int NOT NULL, -- I made this small int cause i guess we are storing in minutes
+	PrepTime int NOT NULL,
 
 	PrepMethodID int FOREIGN KEY REFERENCES PrepMethods(PrepMethodID),
 
@@ -96,7 +104,8 @@ Create Table MenuItems(
 
 )
 
-Create Table SideItemPairings(
+CREATE TABLE SideItemPairings
+(
 
 	SideItemPairingID int IDENTITY(1,1) PRIMARY KEY,
 
@@ -106,11 +115,12 @@ Create Table SideItemPairings(
 
 )
 
-Create Table Ratings(
+CREATE TABLE Ratings
+(
 
 	RatingID int IDENTITY(1,1) PRIMARY KEY,
 
-	RatingValue smallint NOT NULL, -- I made this small int
+	RatingValue smallint NOT NULL,
 
 	AccountID int FOREIGN KEY REFERENCES Accounts(AccountID),
 
@@ -118,7 +128,8 @@ Create Table Ratings(
 
 )
 
-Create Table DietaryRestrictions(
+CREATE TABLE DietaryRestrictions
+(
 
 	DietaryRestrictionID int IDENTITY(1,1) PRIMARY KEY,
 
@@ -128,7 +139,8 @@ Create Table DietaryRestrictions(
 
 )
 
-Create Table MenuItemVariations(
+CREATE TABLE MenuItemVariations
+(
 
 	MenuItemVariationID int IDENTITY(1,1) PRIMARY KEY,
 
@@ -140,7 +152,8 @@ Create Table MenuItemVariations(
 
 )
 
-Create Table DrinkTypes(
+CREATE TABLE DrinkTypes
+(
 
 	DrinkTypeID int IDENTITY(1,1) PRIMARY KEY,
 
@@ -150,7 +163,8 @@ Create Table DrinkTypes(
 
 )
 
-Create Table Drinks(
+CREATE TABLE Drinks
+(
 
 	DrinkID int IDENTITY(1,1) PRIMARY KEY,
 
@@ -162,7 +176,8 @@ Create Table Drinks(
 
 )
 
-Create Table Vendors(
+CREATE TABLE Vendors
+(
 
 	VendorID int IDENTITY(1,1) PRIMARY KEY,
 
@@ -172,7 +187,8 @@ Create Table Vendors(
 
 )
 
-Create Table Ingredients(
+CREATE TABLE Ingredients
+(
 
 	IngredientID int IDENTITY(1,1) PRIMARY KEY,
 
@@ -186,7 +202,8 @@ Create Table Ingredients(
 
 )
 
-Create Table TableStyles(
+CREATE TABLE TableStyles
+(
 
 	TableStyleID int IDENTITY(1,1) PRIMARY KEY,
 
@@ -194,19 +211,21 @@ Create Table TableStyles(
 
 )
 
-Create Table [Tables](
+CREATE TABLE [Tables]
+(
 
 	TableID int IDENTITY(1,1) PRIMARY KEY,
 
-	Number int NOT NULL, 
+	Number int NOT NULL,
 
-	NumberOfSeats int NOT NULL, 
+	NumberOfSeats int NOT NULL,
 
 	TableStyleID int FOREIGN KEY REFERENCES TableStyles(TableStyleID)
 
 )
 
-Create Table EmployeePositions(
+CREATE TABLE EmployeePositions
+(
 
 	EmployeePositionID int IDENTITY(1,1) PRIMARY KEY,
 
@@ -214,13 +233,14 @@ Create Table EmployeePositions(
 
 )
 
-Create Table Employees(
+CREATE TABLE Employees
+(
 
 	EmployeeID int IDENTITY(1,1) PRIMARY KEY,
 
 	FirstName nvarchar(50) NOT NULL,
 
-	MiddleName nvarchar(50) NOT NULL, ----- I have this as not null
+	MiddleName nvarchar(50) NOT NULL,
 
 	LastName nvarchar(50) NOT NULL,
 
@@ -230,27 +250,28 @@ Create Table Employees(
 
 	ContactFirstName nvarchar(50) NOT NULL,
 
-	ContactMiddleName nvarchar(50) NOT NULL, -- I have this as NOT null
+	ContactMiddleName nvarchar(50) NOT NULL,
 
 	ContactLastName nvarchar(50) NOT NULL,
 
-	ContactPhoneNumber nvarchar(15) NOT NULL, -- made this nvarchar(15)
+	ContactPhoneNumber nvarchar(15) NOT NULL,
 
 	StreetAddress nvarchar(50) NOT NULL,
 
-	CityID int FOREIGN KEY REFERENCES Cities(CityID), -- i used FK for cities
+	CityID int FOREIGN KEY REFERENCES Cities(CityID),
 
 	EmployeePositionID int FOREIGN KEY REFERENCES EmployeePositions(EmployeePositionID)
 
 )
 
-Create Table Seatings(
+CREATE TABLE Seatings
+(
 
 	SeatingID int IDENTITY(1,1) PRIMARY KEY,
 
-	TimeSatDown datetime NOT NULL, -- I prefer Time instead of int
+	TimeSatDown datetime NOT NULL,
 
-	TimeLeft datetime NOT NULL, -- I prefer Time instead of int
+	TimeLeft datetime NOT NULL,
 
 	TableID int FOREIGN KEY REFERENCES [Tables](TableID),
 
@@ -258,7 +279,8 @@ Create Table Seatings(
 
 )
 
-Create Table CustomersToTables(
+CREATE TABLE CustomersToTables
+(
 
 	CustomerToSeatingID int IDENTITY(1,1) PRIMARY KEY,
 
@@ -268,7 +290,8 @@ Create Table CustomersToTables(
 
 )
 
-Create Table Shifts(
+CREATE TABLE Shifts
+(
 
 	ShiftID int IDENTITY(1,1) PRIMARY KEY,
 
@@ -280,7 +303,8 @@ Create Table Shifts(
 
 )
 
-Create Table PaymentMethods(
+CREATE TABLE PaymentMethods
+(
 
 	PaymentMethodID int IDENTITY(1,1) PRIMARY KEY,
 
@@ -288,7 +312,8 @@ Create Table PaymentMethods(
 
 )
 
-Create Table OrderTypes(
+CREATE TABLE OrderTypes
+(
 
 	OrderTypeID int IDENTITY(1,1) PRIMARY KEY,
 
@@ -296,7 +321,8 @@ Create Table OrderTypes(
 
 )
 
-Create Table Orders(
+CREATE TABLE Orders
+(
 
 	OrderID int IDENTITY(1,1) PRIMARY KEY,
 
@@ -310,7 +336,8 @@ Create Table Orders(
 
 )
 
-Create Table OrderItems(
+CREATE TABLE OrderItems
+(
 
 	OrderItemID int IDENTITY(1,1) PRIMARY KEY,
 
@@ -322,7 +349,8 @@ Create Table OrderItems(
 
 )
 
-Create Table CheckDetails(
+CREATE TABLE CheckDetails
+(
 
 	CheckDetailID int IDENTITY(1,1) PRIMARY KEY,
 
@@ -332,11 +360,12 @@ Create Table CheckDetails(
 
 )
 
-Create Table Deliveries(
+CREATE TABLE Deliveries
+(
 
 	DeliveryID int IDENTITY(1,1) PRIMARY KEY,
 
-	Charge money NOT NULL, -- I set this to money
+	Charge money NOT NULL,
 
 	DateTimeOut DateTime NOT NULL,
 
