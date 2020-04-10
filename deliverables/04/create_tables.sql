@@ -18,6 +18,8 @@ CREATE TABLE Cities
 
 	StateID int FOREIGN KEY REFERENCES States(StateID),
 
+	ZipCode nvarchar(20) NOT NULL
+
 )
 
 CREATE TABLE Customers
