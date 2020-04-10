@@ -1,4 +1,9 @@
+--
+-- Populate the database with dummy data
+--
+
 USE BobsAwesomeEatery
+GO
 
 INSERT INTO dbo.States VALUES ('Utah')
 							, ('Idaho')
