@@ -180,6 +180,7 @@ CREATE TABLE Orders (
 	SeatingID int FOREIGN KEY REFERENCES Seatings(SeatingID),
 	OrderTypeID int FOREIGN KEY REFERENCES OrderTypes(OrderTypeID),
 	PaymentMethodID int FOREIGN KEY REFERENCES PaymentMethods(PaymentMethodID),
+	DateOrdered DateTime NOT NULL
 )
 
 CREATE TABLE OrderItems (
