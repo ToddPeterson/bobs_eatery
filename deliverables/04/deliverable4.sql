@@ -1,14 +1,25 @@
+USE BobsAwesomeEatery
+GO
 -- 1. Show the following employee information: first name, last name, EmployeeID. They should be listed alphabetically by last name first, if more than one employee has the same last name them sort them alphabetically by first name. 
 
-
+SELECT FirstName, LastName, EmployeeID FROM Employees
+	ORDER BY LastName, FirstName
 
 -- 2. Show the following customer information: first name, last name, telephone number, address, city, state, zipcode; they should be listed alphabetically by last name first. If more than one customerhas the same last name,thensort them alphabetically be first name.
 
-
+SELECT e.FirstName, e.LastName, e.PhoneNumber, e.StreetAddress, c.Name AS 'City', s.Name AS 'State', c.ZipCode   FROM Employees e
+	JOIN Cities c ON e.CityID = c.CityID
+	JOIN States s ON c.StateID = s.StateID
+	ORDER BY e.LastName, e.FirstName
 
 -- 3. Given a customer name, list all of the times that the customer visited the restaurant. Include how the customer paid and at which table they sat. Do not include delivery or carry out orders. Pick a name from your dataset, but the name should be able to easily be replaced.
 
-
+SELECT o.DateOrdered, p.Name AS 'Payment Method', t.Number AS 'Table Number' FROM Orders o
+	JOIN Customers c ON o.CustomerID = c.CustomerID
+	JOIN PaymentMethods p ON o.PaymentMethodID = p.PaymentMethodID
+	JOIN Seatings s ON o.SeatingID = s.SeatingID
+	JOIN [Tables] t ON s.TableID = t.TableID
+		WHERE c.FirstName = 'Isaac' AND c.LastName = 'Harris' AND o.OrderTypeID = 1
 
 -- 4. List the Employee number,employee job title,hours worked, salary per hour, and total weekly salary for each technician who worked more than 40 hoursfor a given week.You will need to pick a start and end date, but these should be able to be changed easily.
 
