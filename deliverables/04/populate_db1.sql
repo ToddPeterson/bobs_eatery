@@ -227,9 +227,10 @@ INSERT INTO Shifts([DateTimeIn],[DateTimeOut],[EmployeeID]) VALUES('2020-03-14 1
 
 INSERT INTO PaymentMethods ([Name]) VALUES ('Credit'),('Credit'),('Other'),('Credit'),('Other'),('Chase'),('Other'),('American Express'),('Other'),('Chase');
 
+ 
+INSERT INTO OrderMethods(Method) VALUES ('In person'),('Phone'),('Online');
 
-
-INSERT INTO OrderTypes([Type]) VALUES ('Restaurant'),('Online');
+INSERT INTO OrderTypes([Type], OrderMethodID) VALUES ('Restaurant', 1),('Carry Out', 2),('Carry Out',3),('Delivery',2),('Delivery',3);
 
 
 
