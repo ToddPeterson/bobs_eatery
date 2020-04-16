@@ -140,7 +140,8 @@ CREATE TABLE Employees (
 	ContactPhoneNumber nvarchar(15) NOT NULL,
 	StreetAddress nvarchar(50) NOT NULL,
 	CityID int FOREIGN KEY REFERENCES Cities(CityID),
-	EmployeePositionID int FOREIGN KEY REFERENCES EmployeePositions(EmployeePositionID)
+	EmployeePositionID int FOREIGN KEY REFERENCES EmployeePositions(EmployeePositionID),
+	EmployeeNumber INT UNIQUE NOT NULL
 )
 
 CREATE TABLE Seatings (
