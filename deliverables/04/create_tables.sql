@@ -170,9 +170,15 @@ CREATE TABLE PaymentMethods (
 	[Name] nvarchar(50) NOT NULL
 )
 
+CREATE TABLE OrderMethods (
+	OrderMethodID int IDENTITY(1,1) PRIMARY KEY,
+	Method nvarchar(30) NOT NULL
+)
+
 CREATE TABLE OrderTypes (
 	OrderTypeID int IDENTITY(1,1) PRIMARY KEY,
-	[Type] nvarchar(30) NOT NULL
+	[Type] nvarchar(30) NOT NULL,
+	OrderMethodID int FOREIGN KEY REFERENCES OrderMethods(OrderMethodID)
 )
 
 CREATE TABLE Orders (
