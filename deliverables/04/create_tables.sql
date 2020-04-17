@@ -18,6 +18,7 @@ CREATE TABLE Customers (
 	FirstName nvarchar(50) NOT NULL,
 	MiddleName nvarchar(50) NOT NULL,
 	LastName nvarchar(50) NOT NULL,
+	CustomerNumber int NOT NULL,
 	PhoneNumber nvarchar(15) NOT NULL,
 	Email nvarchar(100) NOT NULL,
 	StreetAddress nvarchar(50) NOT NULL,

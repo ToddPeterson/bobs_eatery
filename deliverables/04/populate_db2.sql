@@ -20,7 +20,7 @@ INSERT INTO Ingredients VALUES
 -- Make water free
 
 UPDATE Drinks
-	SET Price = 0
+	SET Price = 0.00
 	WHERE Name = 'water'
 
 -- Add an order where only water is ordered
