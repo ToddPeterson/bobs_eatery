@@ -1,4 +1,5 @@
 USE BobsAwesomeEatery
+GO
 
 CREATE TABLE States (
 	StateID int IDENTITY(1,1) PRIMARY KEY,
