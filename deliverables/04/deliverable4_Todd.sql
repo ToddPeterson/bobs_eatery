@@ -68,6 +68,9 @@ GO -- DONE
 -- 6. List all vendors in alphabetical order and each ingredient they supply and the first day that item was ever delivered and the last day that ingredient was ever delivered from that vendor.
 
 -- Pending Issue #3
+SELECT v.Name, i.Name, i.IngredientID FROM Vendors v
+	JOIN Ingredients i ON i.VendorID = v.VendorID
+	ORDER BY v.Name
 
 -- 7. List the customer name, table number, entrée ordered, and date and time ordered for all items purchased on a given date.(e.g. May 5th2010)
 
@@ -116,11 +119,14 @@ SELECT MAX(ct.Name) AS [Cuisine], MAX(mi.Name) AS [Name], MAX(mi.Description) AS
 	ORDER BY Cuisine
 
 -- b.
-SELECT MAX(mi.Name), MAX(mi.Description), COUNT(oi.OrderItemID) FROM CuisineTypes ct
-	JOIN MenuItems mi ON mi.CuisineTypeID = ct.CuisineTypeID
-	JOIN MenuItemVariations miv ON miv.MenuItemID = mi.MenuItemID
-	JOIN OrderItems oi ON oi.MenuItemVariationID = miv.MenuItemVariationID
-	GROUP BY mi.MenuItemID
+SELECT a.Cuisine, MAX(a.Name), MAX(a.Description), MAX(a.[Number of Sales]) FROM (
+	SELECT MAX(ct.Name) AS [Cuisine], MAX(mi.Name) AS [Name], MAX(mi.Description) AS [Description], COUNT(oi.OrderItemID) AS [Number of Sales] FROM CuisineTypes ct
+		JOIN MenuItems mi ON mi.CuisineTypeID = ct.CuisineTypeID
+		JOIN MenuItemVariations miv ON miv.MenuItemID = mi.MenuItemID
+		JOIN OrderItems oi ON oi.MenuItemVariationID = miv.MenuItemVariationID
+		GROUP BY mi.MenuItemID) a
+	GROUP BY a.Cuisine
+GO -- DONE ?
 
 -- 10. List the menu item, description, and number of suppliers for those ingredients that can be supplied from multiple suppliers.
 
@@ -150,14 +156,16 @@ GO -- DONE
 
 -- 12. List the order number, total price, and count of ticket items for any order where any drink other than water was ordered. If water was also ordered, it will still be included as long as anyone else on the ticket ordered something other than water (free drinks).
 
-SELECT o.OrderID, SUM(d.Price) + SUM(miv.Price) AS [Total Price], COUNT(oi.OrderItemID) AS [Ticket Item Count] FROM Orders o
+SELECT o.OrderID, SUM(d.Price) + SUM(miv.Price) AS [Total Price], COUNT(oi.OrderItemID) AS [Ticket Item Count] FROM 
+	(SELECT o.OrderID FROM Orders o
+		JOIN OrderItems oi ON oi.OrderID = o.OrderID
+		JOIN Drinks d ON d.DrinkID = oi.DrinkID
+		WHERE d.Name != 'water') o
 	JOIN OrderItems oi ON oi.OrderID = o.OrderID
 	LEFT JOIN Drinks d ON d.DrinkID = oi.DrinkID
 	LEFT JOIN MenuItemVariations miv ON miv.MenuItemVariationID = oi.MenuItemVariationID
-	EXCEPT
-	SELECT o.OrderID FROM Orders o
-		JOIN OrderItems oi ON o.OrderID = oi.OrderID
-		JOIN Drinks d ON d.DrinkID = oi.DrinkID
+	GROUP BY o.OrderID
+GO -- DONE?
 
 -- 13. List any menu item that has never been ordered.
 
