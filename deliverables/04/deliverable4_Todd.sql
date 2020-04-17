@@ -22,7 +22,7 @@ DECLARE @CustomerLastName nvarchar(50)
 SET @CustomerFirstName = 'Paul'
 SET @CustomerLastName = 'Harrell'
 
-SELECT s.TimeSatDown, pm.Name [Payment Method], t.Number [Table Number] FROM Customers cus
+SELECT o.DateOrdered, pm.Name [Payment Method], t.Number [Table Number] FROM Customers cus
 	JOIN CustomersToTables c2t ON cus.CustomerID = c2t.CustomerID
 	JOIN Seatings s ON c2t.SeatingID = s.SeatingID
 	JOIN Orders o ON o.SeatingID = s.SeatingID
@@ -44,15 +44,20 @@ SET @StartDate = '2020-03-13'
 SET @EndDate = '2020-03-15'
 
 SELECT e.EmployeeNumber, 
-		MAX(e.FirstName) AS [Fist Name],
-		MAX(e.LastName) AS [Last Name],
-		SUM(DATEPART(HOUR, CAST(sh.DateTimeOut - sh.DateTimeIn AS time))) AS [Hours Worked],
+		MAX(ep.Name),
+		MAX(hw.[Hours Worked]),
 		MAX(e.Wage) AS Wage, 
-		SUM(DATEPART(HOUR, CAST(sh.DateTimeOut - sh.DateTimeIn AS time)) * e.Wage) [Total Wages] 
+		MAX(hw.[Hours Worked]) * MAX(e.Wage) [Total Wages] 
 		FROM Employees e
+		JOIN (SELECT e.EmployeeNumber, SUM(DATEPART(HOUR, CAST(sh.DateTimeOut - sh.DateTimeIn AS time))) AS [Hours Worked] FROM Employees e
+			JOIN EmployeePositions ep ON e.EmployeePositionID = ep.EmployeePositionID
+			JOIN Shifts sh ON sh.EmployeeID = e.EmployeeID
+			WHERE sh.DateTimeIn > @StartDate
+				AND sh.DateTimeOut < @EndDate
+			GROUP BY e.EmployeeNumber) hw ON hw.EmployeeNumber = e.EmployeeNumber
 	JOIN EmployeePositions ep ON e.EmployeePositionID = ep.EmployeePositionID
 	JOIN Shifts sh ON sh.EmployeeID = e.EmployeeID
-	WHERE DATEPART(HOUR, CAST(sh.DateTimeOut - sh.DateTimeIn AS time)) > 10
+	WHERE [Hours Worked] > 40
 		AND sh.DateTimeIn > @StartDate
 		AND sh.DateTimeOut < @EndDate
 	GROUP BY e.EmployeeNumber
