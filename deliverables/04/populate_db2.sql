@@ -15,6 +15,7 @@ INSERT INTO Ingredients VALUES
 	('Baking Soda', 'Pantry', @CookieID, 2),
 	('Baking Powder', 'Pantry', @CookieID, 2),
 	('Baker''s Chocolate', 'Pantry', @CookieID, 4)
+GO
 
 -- For query 11
 -- Make water free
@@ -41,6 +42,8 @@ SELECT TOP 1 @SeafoodID = miv.MenuItemVariationID FROM MenuItemVariations miv
 INSERT INTO OrderItems (OrderID, MenuItemVariationID, DrinkID) VALUES
 	(@OrderID, NULL, @WaterID),
 	(@OrderID, @SeafoodID, NULL)
+GO
 
 -- For query 14
 INSERT INTO CuisineTypes VALUES ('Swedish')
+GO
