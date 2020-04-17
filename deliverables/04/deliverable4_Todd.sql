@@ -16,13 +16,12 @@ SELECT cus.FirstName, cus.LastName, cus.PhoneNumber, cus.StreetAddress, cit.Name
 GO -- Done
 
 -- 3. Given a customer name, list all of the times that the customer visited the restaurant. Include how the customer paid and at which table they sat. Do not include delivery or carry out orders. Pick a name from your dataset, but the name should be able to easily be replaced.
-
 DECLARE @CustomerFirstName nvarchar(50)
 DECLARE @CustomerLastName nvarchar(50)
-SET @CustomerFirstName = 'Paul'
-SET @CustomerLastName = 'Harrell'
+SET @CustomerFirstName = 'Felix'
+SET @CustomerLastName = 'Giles'
 
-SELECT s.TimeSatDown, pm.Name [Payment Method], t.Number [Table Number] FROM Customers cus
+SELECT o.DateOrdered , pm.Name [Payment Method], t.Number [Table Number] FROM Customers cus
 	JOIN CustomersToTables c2t ON cus.CustomerID = c2t.CustomerID
 	JOIN Seatings s ON c2t.SeatingID = s.SeatingID
 	JOIN Orders o ON o.SeatingID = s.SeatingID
@@ -44,15 +43,14 @@ SET @StartDate = '2020-03-13'
 SET @EndDate = '2020-03-15'
 
 SELECT e.EmployeeNumber, 
-		MAX(e.FirstName) AS [Fist Name],
-		MAX(e.LastName) AS [Last Name],
+		Max(ep.Name) AS Position,
 		SUM(DATEPART(HOUR, CAST(sh.DateTimeOut - sh.DateTimeIn AS time))) AS [Hours Worked],
 		MAX(e.Wage) AS Wage, 
 		SUM(DATEPART(HOUR, CAST(sh.DateTimeOut - sh.DateTimeIn AS time)) * e.Wage) [Total Wages] 
 		FROM Employees e
 	JOIN EmployeePositions ep ON e.EmployeePositionID = ep.EmployeePositionID
 	JOIN Shifts sh ON sh.EmployeeID = e.EmployeeID
-	WHERE DATEPART(HOUR, CAST(sh.DateTimeOut - sh.DateTimeIn AS time)) > 10
+	WHERE DATEPART(HOUR, CAST(sh.DateTimeOut - sh.DateTimeIn AS time)) > 20
 		AND sh.DateTimeIn > @StartDate
 		AND sh.DateTimeOut < @EndDate
 	GROUP BY e.EmployeeNumber
