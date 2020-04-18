@@ -57,7 +57,16 @@ GO
 
 -- 6. List all vendors in alphabetical order and each ingredient they supply and the first day that item was ever delivered and the last day that ingredient was ever delivered from that vendor.
 
-
+SELECT v.Name [Vendor], i.Name [Ingredient], a.[First Date Delivered], a.[Last Day Delivered] From Vendors v
+	JOIN VendorDeliveries vd on v.VendorID = vd.VendorID
+	JOIN Ingredients i on i.IngredientID = vd.IngredientID
+	JOIN (
+	SELECT i.IngredientID, MIN(vd.DateDelivered) AS [First Date Delivered], MAX(vd.DateDelivered) AS [Last Day Delivered] FROM Vendors v
+	JOIN VendorDeliveries vd ON v.VendorID = vd.VendorDeliveryID
+	JOIN Ingredients i ON i.IngredientID = vd.IngredientID
+	GROUP BY i.IngredientID
+	) a ON a.IngredientID = i.IngredientID
+	ORDER BY v.Name
 
 -- 7. List the customer name, table number, entrée ordered, and date and time ordered for all items purchased on a given date.(e.g. May 5th2010)
 DECLARE @Date datetime = '2018-09-29'
@@ -96,29 +105,24 @@ GO
 --      a. For each cuisine list the menu item, description, and the total number of sales from that cuisine.
 --      b. As a continuation from a, list the menu item, description, and the total number of sales for the cuisine that has the highest number of sales.
 -- a
---SELECT MAX(ct.Name) AS [Cuisine], MAX(mi.Name) AS [Menu Item], MAX(mi.Description) AS [Description], COUNT(oi.OrderItemID) AS [Number of Sales] FROM CuisineTypes ct
---	JOIN MenuItems mi ON mi.CuisineTypeID = ct.CuisineTypeID
---	JOIN MenuItemVariations miv ON miv.MenuItemID = mi.MenuItemID
---	LEFT JOIN OrderItems oi ON oi.MenuItemVariationID = miv.MenuItemVariationID
---	GROUP BY mi.MenuItemID
---	ORDER BY Cuisine
 
-CREATE VIEW MenuItemSalesCount AS
-	SELECT mi.MenuItemID, COUNT(oi.OrderItemID) AS [Number of Sales] FROM CuisineTypes ct
-		JOIN MenuItems mi ON mi.CuisineTypeID = ct.CuisineTypeID
-		JOIN MenuItemVariations miv ON miv.MenuItemID = mi.MenuItemID
-		LEFT JOIN OrderItems oi ON oi.MenuItemVariationID = miv.MenuItemVariationID
-		GROUP BY mi.MenuItemID
-GO
+-- Note: This view is required for both 9 a and b.
 
-SELECT ct.Name, mi.Name, mi.Description, num.[Number of Sales] FROM CuisineTypes ct
+--CREATE VIEW MenuItemSalesCount AS
+--	SELECT mi.MenuItemID, COUNT(oi.OrderItemID) AS [Number of Sales] FROM CuisineTypes ct
+--		JOIN MenuItems mi ON mi.CuisineTypeID = ct.CuisineTypeID
+--		JOIN MenuItemVariations miv ON miv.MenuItemID = mi.MenuItemID
+--		LEFT JOIN OrderItems oi ON oi.MenuItemVariationID = miv.MenuItemVariationID
+--		GROUP BY mi.MenuItemID
+--GO
+
+SELECT ct.Name [Cuisine], mi.Name [Menu Item] , mi.Description, num.[Number of Sales] FROM CuisineTypes ct
 	JOIN MenuItems mi ON mi.CuisineTypeID = ct.CuisineTypeID
 	JOIN MenuItemSalesCount num ON mi.MenuItemID = num.MenuItemID
 	ORDER BY ct.Name
 
 -- b
--- WIP
-SELECT ct.Name, mi.Name, mi.Description, sc.[Number of Sales] FROM MenuItems mi
+SELECT ct.Name [Cuisine], mi.Name [Menu Item], mi.Description, sc.[Number of Sales] FROM MenuItems mi
 	JOIN CuisineTypes ct ON mi.CuisineTypeID = ct.CuisineTypeID
 	JOIN MenuItemSalesCount sc ON sc.MenuItemID = mi.MenuItemID
 	JOIN (SELECT mi.CuisineTypeID, MAX(sc.[Number of Sales]) AS [MaxSales] FROM MenuItems mi
@@ -128,8 +132,16 @@ SELECT ct.Name, mi.Name, mi.Description, sc.[Number of Sales] FROM MenuItems mi
 			AND max_sales.CuisineTypeID = mi.CuisineTypeID
 
 -- 10. List the menu item, description, and number of suppliers for those ingredients that can be supplied from multiple suppliers.
-
-
+SELECT mi.Name AS [Menu Item], mi.Description, i.IngredientID,  i.Name [Ingredient], a.Vendors AS [Number of Suppliers] FROM MenuItems mi
+	JOIN Ingredients i ON i.MenuItemID = mi.MenuItemID
+	JOIN (
+		SELECT i.IngredientID, COUNT(v.VendorID) AS [Vendors] FROM Ingredients i
+		JOIN VendorDeliveries vd ON vd.IngredientID = i.IngredientID
+		JOIN Vendors v ON v.VendorID = vd.VendorID
+		GROUP BY i.IngredientID
+	) a ON a.IngredientID = i.IngredientID
+	WHERE a.Vendors > 1
+	ORDER BY [Menu Item]
 
 -- 11. List the order number, total price, and count of ticket items for any order where only water was ordered. Only include tickets where every drink on the ticket ordered was water (free drinks).
 SELECT o.OrderID, SUM(d.Price) + SUM(miv.Price) AS [Total Price], COUNT(oi.OrderItemID) AS [Ticket Item Count] FROM 
@@ -163,10 +175,15 @@ GO
 
 -- 13. List any menu item that has never been ordered.
 
-
+SELECT MenuItemID, Name [Menu Item] FROM MenuItems
+	EXCEPT
+	SELECT mi.MenuItemID, mi.Name FROM MenuItems mi
+		JOIN MenuItemVariations miv ON mi.MenuItemID = miv.MenuItemID
+		JOIN OrderItems oi ON oi.MenuItemVariationID = miv.MenuItemVariationID
+GO
 
 -- 14. List any cuisine that has never had an item ordered from it.
-SELECT Name FROM CuisineTypes
+SELECT Name [Cuisine] FROM CuisineTypes
 	EXCEPT
 	SELECT cui.Name FROM CuisineTypes cui
 		JOIN MenuItems mi ON mi.CuisineTypeID = cui.CuisineTypeID
