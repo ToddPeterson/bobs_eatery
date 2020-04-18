@@ -79,8 +79,6 @@ SELECT v.Name, i.Name, i.IngredientID FROM Vendors v
 
 -- 7. List the customer name, table number, entrée ordered, and date and time ordered for all items purchased on a given date.(e.g. May 5th2010)
 
--- TODO - Store time of Orders, separate from seating
-
 DECLARE @Date datetime = '2018-09-29'
 
 SELECT cus.FirstName, cus.LastName, t.Number, mi.Name, o.DateOrdered FROM Customers cus
@@ -116,22 +114,19 @@ GO -- DONE
 --      b. As a continuation from a, list the menu item, description, and the total number of sales for the cuisine that has the highest number of sales.
 
 -- a.
-SELECT MAX(ct.Name) AS [Cuisine], MAX(mi.Name) AS [Name], MAX(mi.Description) AS [Description], COUNT(oi.OrderItemID) AS [Number of Sales] FROM CuisineTypes ct
+SELECT ct.Name, mi.Name, mi.Description, num.[Number of Sales] FROM CuisineTypes ct
 	JOIN MenuItems mi ON mi.CuisineTypeID = ct.CuisineTypeID
-	JOIN MenuItemVariations miv ON miv.MenuItemID = mi.MenuItemID
-	JOIN OrderItems oi ON oi.MenuItemVariationID = miv.MenuItemVariationID
-	GROUP BY mi.MenuItemID
-	ORDER BY Cuisine
+	JOIN MenuItemSalesCount num ON mi.MenuItemID = num.MenuItemID
+	ORDER BY ct.Name
 
 -- b.
-SELECT a.Cuisine, MAX(a.Name), MAX(a.Description), MAX(a.[Number of Sales]) FROM (
-	SELECT MAX(ct.Name) AS [Cuisine], MAX(mi.Name) AS [Name], MAX(mi.Description) AS [Description], COUNT(oi.OrderItemID) AS [Number of Sales] FROM CuisineTypes ct
-		JOIN MenuItems mi ON mi.CuisineTypeID = ct.CuisineTypeID
-		JOIN MenuItemVariations miv ON miv.MenuItemID = mi.MenuItemID
-		JOIN OrderItems oi ON oi.MenuItemVariationID = miv.MenuItemVariationID
-		GROUP BY mi.MenuItemID) a
-	GROUP BY a.Cuisine
-GO -- DONE ?
+SELECT mi.CuisineTypeID, MAX(sc.[Number of Sales]) FROM MenuItems mi
+	JOIN MenuItemSalesCount sc on sc.MenuItemID = mi.MenuItemID
+	GROUP BY mi.CuisineTypeID
+	
+
+
+
 
 -- 10. List the menu item, description, and number of suppliers for those ingredients that can be supplied from multiple suppliers.
 
@@ -162,7 +157,7 @@ GO -- DONE
 -- 12. List the order number, total price, and count of ticket items for any order where any drink other than water was ordered. If water was also ordered, it will still be included as long as anyone else on the ticket ordered something other than water (free drinks).
 
 SELECT o.OrderID, SUM(d.Price) + SUM(miv.Price) AS [Total Price], COUNT(oi.OrderItemID) AS [Ticket Item Count] FROM 
-	(SELECT o.OrderID FROM Orders o
+	(SELECT DISTINCT o.OrderID FROM Orders o
 		JOIN OrderItems oi ON oi.OrderID = o.OrderID
 		JOIN Drinks d ON d.DrinkID = oi.DrinkID
 		WHERE d.Name != 'water') o
