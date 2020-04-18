@@ -208,10 +208,9 @@ CREATE TABLE CheckDetails (
 CREATE TABLE Deliveries (
 	DeliveryID int IDENTITY(1,1) PRIMARY KEY,
 	Charge money NOT NULL,
-	DateDelivered DateTime NOT NULL,
-	IngredientID int FOREIGN KEY REFERENCES Ingredients(IngredientID),
+	DateTimeOut DateTime NOT NULL,
+	DateTimeIn DateTime NOT NULL,
 	OrderID int FOREIGN KEY REFERENCES Orders(OrderID),
 	EmployeeID int FOREIGN KEY REFERENCES Employees(EmployeeID),
-	VendorID int FOREIGN KEY REFERENCES Vendors(VendorID)
 )
 
