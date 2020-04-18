@@ -19,44 +19,125 @@ SELECT o.DateOrdered, p.Name AS 'Payment Method', t.Number AS 'Table Number' FRO
 	JOIN PaymentMethods p ON o.PaymentMethodID = p.PaymentMethodID
 	JOIN Seatings s ON o.SeatingID = s.SeatingID
 	JOIN [Tables] t ON s.TableID = t.TableID
-		WHERE c.FirstName = 'Isaac' AND c.LastName = 'Harris' AND o.OrderTypeID = 1
+		WHERE c.FirstName = 'Felix' AND c.LastName = 'Giles' AND o.OrderTypeID = 1
 
 -- 4. List the Employee number,employee job title,hours worked, salary per hour, and total weekly salary for each technician who worked more than 40 hoursfor a given week.You will need to pick a start and end date, but these should be able to be changed easily.
+DECLARE @StartDate datetime
+DECLARE @EndDate datetime
+SET @StartDate = '2020-03-13'
+SET @EndDate = '2020-03-15'
 
+SELECT e.EmployeeNumber, 
+		MAX(ep.Name) [Position],
+		MAX(hw.[Hours Worked]) [Hours Worked],
+		MAX(e.Wage) AS Wage, 
+		MAX(hw.[Hours Worked]) * MAX(e.Wage) [Total Wages] 
+		FROM Employees e
+		JOIN (SELECT e.EmployeeNumber, SUM(DATEPART(HOUR, CAST(sh.DateTimeOut - sh.DateTimeIn AS time))) AS [Hours Worked] FROM Employees e
+			JOIN EmployeePositions ep ON e.EmployeePositionID = ep.EmployeePositionID
+			JOIN Shifts sh ON sh.EmployeeID = e.EmployeeID
+			WHERE sh.DateTimeIn > @StartDate
+				AND sh.DateTimeOut < @EndDate
+			GROUP BY e.EmployeeNumber) hw ON hw.EmployeeNumber = e.EmployeeNumber
+	JOIN EmployeePositions ep ON e.EmployeePositionID = ep.EmployeePositionID
+	JOIN Shifts sh ON sh.EmployeeID = e.EmployeeID
+	WHERE [Hours Worked] > 40
+		AND sh.DateTimeIn > @StartDate
+		AND sh.DateTimeOut < @EndDate
+	GROUP BY e.EmployeeNumber
+GO
 
 
 -- 5. List the menu item name and description for all products which contain an ingredient that has a name which starts with a "B" and has a third letter of "k".  (Your answer should include Baking Powder, Baking Soda, and Baker’s Chocolate.)
-
-
+-- NOTE: The question asks for menu item not the ingredient.
+SELECT DISTINCT mi.Name, mi.Description FROM MenuItems mi
+	JOIN Ingredients i ON mi.MenuItemID = i.MenuItemID
+	WHERE i.Name LIKE 'B_K%'
+GO 
 
 -- 6. List all vendors in alphabetical order and each ingredient they supply and the first day that item was ever delivered and the last day that ingredient was ever delivered from that vendor.
 
 
 
 -- 7. List the customer name, table number, entrée ordered, and date and time ordered for all items purchased on a given date.(e.g. May 5th2010)
+DECLARE @Date datetime = '2018-09-29'
 
+SELECT cus.FirstName, cus.LastName, t.Number [Table Number], mi.Name [Menu Item], o.DateOrdered FROM Customers cus
+	JOIN Orders o ON o.CustomerID = cus.CustomerID
+	JOIN Seatings s ON s.SeatingID = o.SeatingID
+	JOIN [Tables] t ON t.TableID = s.TableID
+	JOIN OrderItems oi ON oi.OrderID = o.OrderID
+	JOIN MenuItemVariations miv ON oi.MenuItemVariationID = miv.MenuItemVariationID
+	JOIN MenuItems mi ON mi.MenuItemID = miv.MenuItemID
+	WHERE CAST(o.DateOrdered AS date) = CAST(@Date AS date)
+GO 
 
 
 -- 8. List food items (customer number, customer name, item ordered, item type, price, whether dine in, carry out, or delivery) for all orders associated with a specified customer. The query should a given customer number or name. Pick a name and number from your dataset, but the name should be able to easily be replaced.
 
+DECLARE @CustomerNumber int = 44
+DECLARE @CustomerFirstName nvarchar(100) = 'Lacota'
+DECLARE @CustomerLastName nvarchar(100) = 'Dean'
+
+SELECT cus.CustomerNumber, cus.FirstName, cus.LastName, mi.Name [Menu Item], ct.Name [Item Type], miv.Price, ot.Type [Order Type] FROM Customers cus
+	JOIN Orders o ON o.CustomerID = cus.CustomerID
+	JOIN OrderItems oi ON oi.OrderID = o.OrderID
+	JOIN OrderTypes ot ON o.OrderTypeID = ot.OrderTypeID
+	JOIN MenuItemVariations miv ON oi.MenuItemVariationID = miv.MenuItemVariationID
+	JOIN MenuItems mi ON mi.MenuItemID = miv.MenuItemID
+	Join Categories ct on ct.CategoryID = mi.CategoryID
+	WHERE cus.CustomerNumber = @CustomerNumber
+		OR (cus.FirstName = @CustomerFirstName
+			AND cus.LastName = @CustomerLastName)
+GO
 
 
 -- 9. Products
 --      a. For each cuisine list the menu item, description, and the total number of sales from that cuisine.
 --      b. As a continuation from a, list the menu item, description, and the total number of sales for the cuisine that has the highest number of sales.
+-- a
+SELECT MAX(ct.Name) AS [Cuisine], MAX(mi.Name) AS [Menu Item], MAX(mi.Description) AS [Description], COUNT(oi.OrderItemID) AS [Number of Sales] FROM CuisineTypes ct
+	JOIN MenuItems mi ON mi.CuisineTypeID = ct.CuisineTypeID
+	JOIN MenuItemVariations miv ON miv.MenuItemID = mi.MenuItemID
+	LEFT JOIN OrderItems oi ON oi.MenuItemVariationID = miv.MenuItemVariationID
+	GROUP BY mi.MenuItemID
+	ORDER BY Cuisine
 
-
+-- b
+-- WIP
 
 -- 10. List the menu item, description, and number of suppliers for those ingredients that can be supplied from multiple suppliers.
 
 
 
 -- 11. List the order number, total price, and count of ticket items for any order where only water was ordered. Only include tickets where every drink on the ticket ordered was water (free drinks).
-
+SELECT o.OrderID, SUM(d.Price) + SUM(miv.Price) AS [Total Price], COUNT(oi.OrderItemID) AS [Ticket Item Count] FROM 
+	(SELECT OrderID FROM Orders
+		EXCEPT
+		SELECT o.OrderID FROM Orders o
+			JOIN OrderItems oi ON oi.OrderID = o.OrderID
+			JOIN Drinks d ON d.DrinkID = oi.DrinkID
+			WHERE d.Name != 'water'
+			GROUP BY o.OrderID) o
+	JOIN OrderItems oi ON oi.OrderID = o.OrderID
+	LEFT JOIN Drinks d ON d.DrinkID = oi.DrinkID
+	LEFT JOIN MenuItemVariations miv ON miv.MenuItemVariationID = oi.MenuItemVariationID
+	GROUP BY o.OrderID
+	ORDER BY o.OrderID
+GO
 
 
 -- 12. List the order number, total price, and count of ticket items for any order where any drink other than water was ordered. If water was also ordered, it will still be included as long as anyone else on the ticket ordered something other than water (free drinks).
-
+SELECT o.OrderID, SUM(d.Price) + SUM(miv.Price) AS [Total Price], COUNT(oi.OrderItemID) AS [Ticket Item Count] FROM 
+	(SELECT DISTINCT o.OrderID FROM Orders o
+		JOIN OrderItems oi ON oi.OrderID = o.OrderID
+		JOIN Drinks d ON d.DrinkID = oi.DrinkID
+		WHERE d.Name != 'water') o
+	JOIN OrderItems oi ON oi.OrderID = o.OrderID
+	LEFT JOIN Drinks d ON d.DrinkID = oi.DrinkID
+	LEFT JOIN MenuItemVariations miv ON miv.MenuItemVariationID = oi.MenuItemVariationID
+	GROUP BY o.OrderID
+GO
 
 
 -- 13. List any menu item that has never been ordered.
