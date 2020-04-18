@@ -109,7 +109,6 @@ SELECT ct.Name, mi.Name, mi.Description, num.[Number of Sales] FROM CuisineTypes
 	ORDER BY ct.Name
 
 -- b
--- WIP
 SELECT ct.Name, mi.Name, mi.Description, sc.[Number of Sales] FROM MenuItems mi
 	JOIN CuisineTypes ct ON mi.CuisineTypeID = ct.CuisineTypeID
 	JOIN MenuItemSalesCount sc ON sc.MenuItemID = mi.MenuItemID
@@ -155,8 +154,21 @@ GO
 
 -- 13. List any menu item that has never been ordered.
 
-
+SELECT MenuItemID, Name FROM MenuItems
+	EXCEPT
+	SELECT mi.Name, mi.MenuItemID FROM MenuItems mi
+		JOIN MenuItemVariations miv ON mi.MenuItemID = miv.MenuItemID
+		JOIN OrderItems oi ON oi.MenuItemVariationID = miv.MenuItemVariationID
+GO
 
 -- 14. List any cuisine that has never had an item ordered from it.
 
-
+SELECT Name FROM CuisineTypes
+	EXCEPT
+	SELECT cui.Name FROM CuisineTypes cui
+		JOIN MenuItems mi ON mi.CuisineTypeID = cui.CuisineTypeID
+		JOIN MenuItemVariations miv ON miv.MenuItemID = mi.MenuItemID
+		LEFT JOIN OrderItems oi ON oi.MenuItemVariationID = miv.MenuItemVariationID
+		WHERE oi.OrderItemID IS NOT NULL
+			AND oi.MenuItemVariationID IS NOT NULL
+GO
