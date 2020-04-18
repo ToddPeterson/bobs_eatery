@@ -103,6 +103,14 @@ GO
 --	GROUP BY mi.MenuItemID
 --	ORDER BY Cuisine
 
+CREATE VIEW MenuItemSalesCount AS
+	SELECT mi.MenuItemID, COUNT(oi.OrderItemID) AS [Number of Sales] FROM CuisineTypes ct
+		JOIN MenuItems mi ON mi.CuisineTypeID = ct.CuisineTypeID
+		JOIN MenuItemVariations miv ON miv.MenuItemID = mi.MenuItemID
+		LEFT JOIN OrderItems oi ON oi.MenuItemVariationID = miv.MenuItemVariationID
+		GROUP BY mi.MenuItemID
+GO
+
 SELECT ct.Name, mi.Name, mi.Description, num.[Number of Sales] FROM CuisineTypes ct
 	JOIN MenuItems mi ON mi.CuisineTypeID = ct.CuisineTypeID
 	JOIN MenuItemSalesCount num ON mi.MenuItemID = num.MenuItemID
@@ -158,5 +166,12 @@ GO
 
 
 -- 14. List any cuisine that has never had an item ordered from it.
-
-
+SELECT Name FROM CuisineTypes
+	EXCEPT
+	SELECT cui.Name FROM CuisineTypes cui
+		JOIN MenuItems mi ON mi.CuisineTypeID = cui.CuisineTypeID
+		JOIN MenuItemVariations miv ON miv.MenuItemID = mi.MenuItemID
+		LEFT JOIN OrderItems oi ON oi.MenuItemVariationID = miv.MenuItemVariationID
+		WHERE oi.OrderItemID IS NOT NULL
+			AND oi.MenuItemVariationID IS NOT NULL
+GO

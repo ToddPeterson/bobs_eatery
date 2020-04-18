@@ -216,16 +216,16 @@ GO -- DONE?
 
 -- 13. List any menu item that has never been ordered.
 
-SELECT Name, MenuItemID  FROM MenuItems
+SELECT MenuItemID, Name FROM MenuItems
 	EXCEPT
-	SELECT mi.Name, mi.MenuItemID FROM MenuItems mi
+	SELECT mi.MenuItemID, mi.Name FROM MenuItems mi
 		JOIN MenuItemVariations miv ON mi.MenuItemID = miv.MenuItemID
 		JOIN OrderItems oi ON oi.MenuItemVariationID = miv.MenuItemVariationID
 GO -- DONE
 
 
 -- 14. List any cuisine that has never had an item ordered from it.
-
+Use BobsAwesomeEatery
 SELECT Name FROM CuisineTypes
 	EXCEPT
 	SELECT cui.Name FROM CuisineTypes cui
@@ -235,3 +235,5 @@ SELECT Name FROM CuisineTypes
 		WHERE oi.OrderItemID IS NOT NULL
 			AND oi.MenuItemVariationID IS NOT NULL
 GO -- DONE
+
+Select * from MenuItems
