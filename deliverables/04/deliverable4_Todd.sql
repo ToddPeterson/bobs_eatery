@@ -116,50 +116,12 @@ GO -- DONE
 --      b. As a continuation from a, list the menu item, description, and the total number of sales for the cuisine that has the highest number of sales.
 
 -- a.
---SELECT MAX(ct.Name) AS [Cuisine], MAX(mi.Name) AS [Menu Item], MAX(mi.Description) AS [Description], COUNT(oi.OrderItemID) AS [Number of Sales] FROM CuisineTypes ct
---	JOIN MenuItems mi ON mi.CuisineTypeID = ct.CuisineTypeID
---	JOIN MenuItemVariations miv ON miv.MenuItemID = mi.MenuItemID
---	LEFT JOIN OrderItems oi ON oi.MenuItemVariationID = miv.MenuItemVariationID
---	GROUP BY mi.MenuItemID
---	ORDER BY Cuisine
-
---SELECT ct.Name AS [Cuisine], mi.Name AS [Menu Item], mi.Description AS [Description], num.[Number of Sales] FROM CuisineTypes ct
---	JOIN MenuItems mi ON mi.CuisineTypeID = ct.CuisineTypeID
---	JOIN (SELECT mi.MenuItemID, COUNT(oi.OrderItemID) AS [Number of Sales] FROM CuisineTypes ct
---		JOIN MenuItems mi ON mi.CuisineTypeID = ct.CuisineTypeID
---		JOIN MenuItemVariations miv ON miv.MenuItemID = mi.MenuItemID
---		LEFT JOIN OrderItems oi ON oi.MenuItemVariationID = miv.MenuItemVariationID
---		GROUP BY mi.MenuItemID) num ON mi.MenuItemID = num.MenuItemID
---	ORDER BY ct.Name
-
-	-- Todd's new query for a
-	SELECT ct.Name, mi.Name, mi.Description, num.[Number of Sales] FROM CuisineTypes ct
+SELECT ct.Name, mi.Name, mi.Description, num.[Number of Sales] FROM CuisineTypes ct
 	JOIN MenuItems mi ON mi.CuisineTypeID = ct.CuisineTypeID
 	JOIN MenuItemSalesCount num ON mi.MenuItemID = num.MenuItemID
 	ORDER BY ct.Name
 
 -- b.
---SELECT mi.CuisineTypeID, MAX(sc.[Number of Sales]) FROM MenuItems mi
---	JOIN MenuItemSalesCount sc on sc.MenuItemID = mi.MenuItemID
---	GROUP BY mi.CuisineTypeID
-
--- b.
-
---- Needs work
---SELECT ct.Name AS [Cuisine], mi.Name AS [Menu Item], mi.Description AS [Description], num.[Number of Sales] FROM CuisineTypes ct
---	JOIN MenuItems mi ON mi.CuisineTypeID = ct.CuisineTypeID
---	JOIN (
---		SELECT mi.MenuItemID, COUNT(oi.OrderItemID) AS [Number of Sales] FROM CuisineTypes ct
---			JOIN MenuItems mi ON mi.CuisineTypeID = ct.CuisineTypeID
---			JOIN MenuItemVariations miv ON miv.MenuItemID = mi.MenuItemID
---			LEFT JOIN OrderItems oi ON oi.MenuItemVariationID = miv.MenuItemVariationID
---			GROUP BY mi.MenuItemID
---		) 
---	num ON mi.MenuItemID = num.MenuItemID
---	ORDER BY ct.Name
---GO -- DONE ?
-
--- Todds new b
 SELECT ct.Name, mi.Name, mi.Description, sc.[Number of Sales] FROM MenuItems mi
 	JOIN CuisineTypes ct ON mi.CuisineTypeID = ct.CuisineTypeID
 	JOIN MenuItemSalesCount sc ON sc.MenuItemID = mi.MenuItemID

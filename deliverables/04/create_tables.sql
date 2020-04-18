@@ -101,7 +101,6 @@ CREATE TABLE Drinks (
 CREATE TABLE Vendors (
 	VendorID int IDENTITY(1,1) PRIMARY KEY,
 	[Name] nvarchar(50) NOT NULL,
-	DateDelivered DateTime NOT NULL
 )
 
 CREATE TABLE Ingredients (
@@ -109,7 +108,13 @@ CREATE TABLE Ingredients (
 	[Name] nvarchar(50) NOT NULL,
 	StorageLocation nvarchar(50) NOT NULL,
 	MenuItemID int FOREIGN KEY REFERENCES MenuItems(MenuItemID),
+)
+
+CREATE TABLE VendorDeliveries(
+	VendorDeliveryID int IDENTITY(1,1) PRIMARY KEY,
 	VendorID int FOREIGN KEY REFERENCES Vendors(VendorID),
+	IngredientID int FOREIGN KEY REFERENCES Ingredients(IngredientID),
+	DateDelivered DateTime NOT NULL 
 )
 
 CREATE TABLE TableStyles (
