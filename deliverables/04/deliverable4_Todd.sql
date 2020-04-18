@@ -16,11 +16,10 @@ SELECT cus.FirstName, cus.LastName, cus.PhoneNumber, cus.StreetAddress, cit.Name
 GO -- Done
 
 -- 3. Given a customer name, list all of the times that the customer visited the restaurant. Include how the customer paid and at which table they sat. Do not include delivery or carry out orders. Pick a name from your dataset, but the name should be able to easily be replaced.
-
 DECLARE @CustomerFirstName nvarchar(50)
 DECLARE @CustomerLastName nvarchar(50)
-SET @CustomerFirstName = 'Paul'
-SET @CustomerLastName = 'Harrell'
+SET @CustomerFirstName = 'Felix'
+SET @CustomerLastName = 'Giles'
 
 SELECT o.DateOrdered, pm.Name [Payment Method], t.Number [Table Number] FROM Customers cus
 	JOIN CustomersToTables c2t ON cus.CustomerID = c2t.CustomerID
@@ -44,8 +43,8 @@ SET @StartDate = '2020-03-13'
 SET @EndDate = '2020-03-15'
 
 SELECT e.EmployeeNumber, 
-		MAX(ep.Name),
-		MAX(hw.[Hours Worked]),
+		MAX(ep.Name) [Position],
+		MAX(hw.[Hours Worked]) [Hours Worked],
 		MAX(e.Wage) AS Wage, 
 		MAX(hw.[Hours Worked]) * MAX(e.Wage) [Total Wages] 
 		FROM Employees e
@@ -72,6 +71,7 @@ GO -- DONE
 
 -- 6. List all vendors in alphabetical order and each ingredient they supply and the first day that item was ever delivered and the last day that ingredient was ever delivered from that vendor.
 
+
 -- Pending Issue #3
 SELECT v.Name, i.Name, i.IngredientID FROM Vendors v
 	JOIN Ingredients i ON i.VendorID = v.VendorID
@@ -81,33 +81,35 @@ SELECT v.Name, i.Name, i.IngredientID FROM Vendors v
 
 DECLARE @Date datetime = '2018-09-29'
 
-SELECT cus.FirstName, cus.LastName, t.Number, mi.Name, o.DateOrdered FROM Customers cus
+SELECT cus.FirstName, cus.LastName, t.Number [Table Number], mi.Name [Menu Item], o.DateOrdered FROM Customers cus
 	JOIN Orders o ON o.CustomerID = cus.CustomerID
 	JOIN Seatings s ON s.SeatingID = o.SeatingID
 	JOIN [Tables] t ON t.TableID = s.TableID
 	JOIN OrderItems oi ON oi.OrderID = o.OrderID
 	JOIN MenuItemVariations miv ON oi.MenuItemVariationID = miv.MenuItemVariationID
 	JOIN MenuItems mi ON mi.MenuItemID = miv.MenuItemID
-	WHERE mi.CategoryID = 2 -- entree
-		AND CAST(o.DateOrdered AS date) = CAST(@Date AS date)
+	--WHERE mi.CategoryID = 2 -- entree
+	WHERE CAST(o.DateOrdered AS date) = CAST(@Date AS date)
 GO -- DONE
 
 -- 8. List food items (customer number, customer name, item ordered, item type, price, whether dine in, carry out, or delivery) for all orders associated with a specified customer. The query should a given customer number or name. Pick a name and number from your dataset, but the name should be able to easily be replaced.
 
-DECLARE @CustomerID int = 44
+DECLARE @CustomerNumber int = 44
 DECLARE @CustomerFirstName nvarchar(100) = 'Lacota'
 DECLARE @CustomerLastName nvarchar(100) = 'Dean'
 
-SELECT cus.CustomerID, cus.FirstName, cus.LastName, mi.Name, miv.Price, ot.Type FROM Customers cus
+SELECT cus.CustomerNumber, cus.FirstName, cus.LastName, mi.Name [Menu Item], ct.Name [Item Type], miv.Price, ot.Type [Order Type] FROM Customers cus
 	JOIN Orders o ON o.CustomerID = cus.CustomerID
 	JOIN OrderItems oi ON oi.OrderID = o.OrderID
 	JOIN OrderTypes ot ON o.OrderTypeID = ot.OrderTypeID
 	JOIN MenuItemVariations miv ON oi.MenuItemVariationID = miv.MenuItemVariationID
 	JOIN MenuItems mi ON mi.MenuItemID = miv.MenuItemID
-	WHERE cus.CustomerID = @CustomerID
+	Join Categories ct on ct.CategoryID = mi.CategoryID
+	WHERE cus.CustomerNumber = @CustomerNumber
 		OR (cus.FirstName = @CustomerFirstName
 			AND cus.LastName = @CustomerLastName)
 GO -- DONE
+
 
 -- 9. Products
 --      a. For each cuisine list the menu item, description, and the total number of sales from that cuisine.
@@ -132,6 +134,12 @@ SELECT ct.Name, mi.Name, mi.Description, sc.[Number of Sales] FROM MenuItems mi
 -- 10. List the menu item, description, and number of suppliers for those ingredients that can be supplied from multiple suppliers.
 
 -- TODO: Allow for many to many on vendor - ingredient
+
+-- Andrew Query
+SELECT mi.[Name], mi.MenuItemID, mi.[Description], COUNT(mi.[Name]) AS NumberOfSuppliers FROM Ingredients i
+	JOIN MenuItems mi ON mi.MenuItemID = i.MenuItemID
+	GROUP BY mi.[Name], mi.MenuItemID, mi.[Description]
+-- end
 
 SELECT mi.Name FROM MenuItems mi
 	JOIN Ingredients i ON i.MenuItemID = mi.MenuItemID
@@ -170,12 +178,13 @@ GO -- DONE?
 
 -- 13. List any menu item that has never been ordered.
 
-SELECT Name FROM MenuItems
+SELECT Name, MenuItemID  FROM MenuItems
 	EXCEPT
-	SELECT mi.Name FROM MenuItems mi
+	SELECT mi.Name, mi.MenuItemID FROM MenuItems mi
 		JOIN MenuItemVariations miv ON mi.MenuItemID = miv.MenuItemID
 		JOIN OrderItems oi ON oi.MenuItemVariationID = miv.MenuItemVariationID
 GO -- DONE
+
 
 -- 14. List any cuisine that has never had an item ordered from it.
 
