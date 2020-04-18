@@ -116,7 +116,6 @@ GO -- DONE
 --      b. As a continuation from a, list the menu item, description, and the total number of sales for the cuisine that has the highest number of sales.
 
 -- a.
-<<<<<<< HEAD
 --SELECT MAX(ct.Name) AS [Cuisine], MAX(mi.Name) AS [Menu Item], MAX(mi.Description) AS [Description], COUNT(oi.OrderItemID) AS [Number of Sales] FROM CuisineTypes ct
 --	JOIN MenuItems mi ON mi.CuisineTypeID = ct.CuisineTypeID
 --	JOIN MenuItemVariations miv ON miv.MenuItemID = mi.MenuItemID
@@ -124,50 +123,51 @@ GO -- DONE
 --	GROUP BY mi.MenuItemID
 --	ORDER BY Cuisine
 
-SELECT ct.Name AS [Cuisine], mi.Name AS [Menu Item], mi.Description AS [Description], num.[Number of Sales] FROM CuisineTypes ct
-	JOIN MenuItems mi ON mi.CuisineTypeID = ct.CuisineTypeID
-	JOIN (SELECT mi.MenuItemID, COUNT(oi.OrderItemID) AS [Number of Sales] FROM CuisineTypes ct
-		JOIN MenuItems mi ON mi.CuisineTypeID = ct.CuisineTypeID
-		JOIN MenuItemVariations miv ON miv.MenuItemID = mi.MenuItemID
-		LEFT JOIN OrderItems oi ON oi.MenuItemVariationID = miv.MenuItemVariationID
-		GROUP BY mi.MenuItemID) num ON mi.MenuItemID = num.MenuItemID
-	ORDER BY ct.Name
+--SELECT ct.Name AS [Cuisine], mi.Name AS [Menu Item], mi.Description AS [Description], num.[Number of Sales] FROM CuisineTypes ct
+--	JOIN MenuItems mi ON mi.CuisineTypeID = ct.CuisineTypeID
+--	JOIN (SELECT mi.MenuItemID, COUNT(oi.OrderItemID) AS [Number of Sales] FROM CuisineTypes ct
+--		JOIN MenuItems mi ON mi.CuisineTypeID = ct.CuisineTypeID
+--		JOIN MenuItemVariations miv ON miv.MenuItemID = mi.MenuItemID
+--		LEFT JOIN OrderItems oi ON oi.MenuItemVariationID = miv.MenuItemVariationID
+--		GROUP BY mi.MenuItemID) num ON mi.MenuItemID = num.MenuItemID
+--	ORDER BY ct.Name
 
--- b.
-
---- Needs work
-SELECT ct.Name AS [Cuisine], mi.Name AS [Menu Item], mi.Description AS [Description], num.[Number of Sales] FROM CuisineTypes ct
-	JOIN MenuItems mi ON mi.CuisineTypeID = ct.CuisineTypeID
-	JOIN (
-		SELECT mi.MenuItemID, COUNT(oi.OrderItemID) AS [Number of Sales] FROM CuisineTypes ct
-			JOIN MenuItems mi ON mi.CuisineTypeID = ct.CuisineTypeID
-			JOIN MenuItemVariations miv ON miv.MenuItemID = mi.MenuItemID
-			LEFT JOIN OrderItems oi ON oi.MenuItemVariationID = miv.MenuItemVariationID
-			GROUP BY mi.MenuItemID
-		) 
-	num ON mi.MenuItemID = num.MenuItemID
-	ORDER BY ct.Name
-GO -- DONE ?
-=======
-SELECT ct.Name, mi.Name, mi.Description, num.[Number of Sales] FROM CuisineTypes ct
+	-- Todd's new query for a
+	SELECT ct.Name, mi.Name, mi.Description, num.[Number of Sales] FROM CuisineTypes ct
 	JOIN MenuItems mi ON mi.CuisineTypeID = ct.CuisineTypeID
 	JOIN MenuItemSalesCount num ON mi.MenuItemID = num.MenuItemID
 	ORDER BY ct.Name
 
 -- b.
-SELECT mi.CuisineTypeID, MAX(sc.[Number of Sales]) FROM MenuItems mi
-	JOIN MenuItemSalesCount sc on sc.MenuItemID = mi.MenuItemID
-	GROUP BY mi.CuisineTypeID
-	
+--SELECT mi.CuisineTypeID, MAX(sc.[Number of Sales]) FROM MenuItems mi
+--	JOIN MenuItemSalesCount sc on sc.MenuItemID = mi.MenuItemID
+--	GROUP BY mi.CuisineTypeID
 
+-- b.
 
+--- Needs work
+--SELECT ct.Name AS [Cuisine], mi.Name AS [Menu Item], mi.Description AS [Description], num.[Number of Sales] FROM CuisineTypes ct
+--	JOIN MenuItems mi ON mi.CuisineTypeID = ct.CuisineTypeID
+--	JOIN (
+--		SELECT mi.MenuItemID, COUNT(oi.OrderItemID) AS [Number of Sales] FROM CuisineTypes ct
+--			JOIN MenuItems mi ON mi.CuisineTypeID = ct.CuisineTypeID
+--			JOIN MenuItemVariations miv ON miv.MenuItemID = mi.MenuItemID
+--			LEFT JOIN OrderItems oi ON oi.MenuItemVariationID = miv.MenuItemVariationID
+--			GROUP BY mi.MenuItemID
+--		) 
+--	num ON mi.MenuItemID = num.MenuItemID
+--	ORDER BY ct.Name
+--GO -- DONE ?
 
->>>>>>> 55621dfe3d6d06c34e36de9998af977e785f10c9
-
-
-
-
-
+-- Todds new b
+SELECT ct.Name, mi.Name, mi.Description, sc.[Number of Sales] FROM MenuItems mi
+	JOIN CuisineTypes ct ON mi.CuisineTypeID = ct.CuisineTypeID
+	JOIN MenuItemSalesCount sc ON sc.MenuItemID = mi.MenuItemID
+	JOIN (SELECT mi.CuisineTypeID, MAX(sc.[Number of Sales]) AS [MaxSales] FROM MenuItems mi
+		JOIN MenuItemSalesCount sc on sc.MenuItemID = mi.MenuItemID
+		GROUP BY mi.CuisineTypeID) max_sales 
+		ON max_sales.MaxSales = sc.[Number of Sales] 
+			AND max_sales.CuisineTypeID = mi.CuisineTypeID
 
 -- 10. List the menu item, description, and number of suppliers for those ingredients that can be supplied from multiple suppliers.
 
