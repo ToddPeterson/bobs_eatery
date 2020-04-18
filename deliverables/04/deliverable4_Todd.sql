@@ -120,13 +120,14 @@ SELECT ct.Name, mi.Name, mi.Description, num.[Number of Sales] FROM CuisineTypes
 	ORDER BY ct.Name
 
 -- b.
-SELECT mi.CuisineTypeID, MAX(sc.[Number of Sales]) FROM MenuItems mi
-	JOIN MenuItemSalesCount sc on sc.MenuItemID = mi.MenuItemID
-	GROUP BY mi.CuisineTypeID
-	
-
-
-
+SELECT ct.Name, mi.Name, mi.Description, sc.[Number of Sales] FROM MenuItems mi
+	JOIN CuisineTypes ct ON mi.CuisineTypeID = ct.CuisineTypeID
+	JOIN MenuItemSalesCount sc ON sc.MenuItemID = mi.MenuItemID
+	JOIN (SELECT mi.CuisineTypeID, MAX(sc.[Number of Sales]) AS [MaxSales] FROM MenuItems mi
+		JOIN MenuItemSalesCount sc on sc.MenuItemID = mi.MenuItemID
+		GROUP BY mi.CuisineTypeID) max_sales 
+		ON max_sales.MaxSales = sc.[Number of Sales] 
+			AND max_sales.CuisineTypeID = mi.CuisineTypeID
 
 -- 10. List the menu item, description, and number of suppliers for those ingredients that can be supplied from multiple suppliers.
 
