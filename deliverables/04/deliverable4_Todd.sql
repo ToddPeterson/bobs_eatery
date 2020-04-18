@@ -79,8 +79,6 @@ SELECT v.Name, i.Name, i.IngredientID FROM Vendors v
 
 -- 7. List the customer name, table number, entrée ordered, and date and time ordered for all items purchased on a given date.(e.g. May 5th2010)
 
--- TODO - Store time of Orders, separate from seating
-
 DECLARE @Date datetime = '2018-09-29'
 
 SELECT cus.FirstName, cus.LastName, t.Number [Table Number], mi.Name [Menu Item], o.DateOrdered FROM Customers cus
@@ -118,6 +116,7 @@ GO -- DONE
 --      b. As a continuation from a, list the menu item, description, and the total number of sales for the cuisine that has the highest number of sales.
 
 -- a.
+<<<<<<< HEAD
 --SELECT MAX(ct.Name) AS [Cuisine], MAX(mi.Name) AS [Menu Item], MAX(mi.Description) AS [Description], COUNT(oi.OrderItemID) AS [Number of Sales] FROM CuisineTypes ct
 --	JOIN MenuItems mi ON mi.CuisineTypeID = ct.CuisineTypeID
 --	JOIN MenuItemVariations miv ON miv.MenuItemID = mi.MenuItemID
@@ -149,6 +148,21 @@ SELECT ct.Name AS [Cuisine], mi.Name AS [Menu Item], mi.Description AS [Descript
 	num ON mi.MenuItemID = num.MenuItemID
 	ORDER BY ct.Name
 GO -- DONE ?
+=======
+SELECT ct.Name, mi.Name, mi.Description, num.[Number of Sales] FROM CuisineTypes ct
+	JOIN MenuItems mi ON mi.CuisineTypeID = ct.CuisineTypeID
+	JOIN MenuItemSalesCount num ON mi.MenuItemID = num.MenuItemID
+	ORDER BY ct.Name
+
+-- b.
+SELECT mi.CuisineTypeID, MAX(sc.[Number of Sales]) FROM MenuItems mi
+	JOIN MenuItemSalesCount sc on sc.MenuItemID = mi.MenuItemID
+	GROUP BY mi.CuisineTypeID
+	
+
+
+
+>>>>>>> 55621dfe3d6d06c34e36de9998af977e785f10c9
 
 
 
