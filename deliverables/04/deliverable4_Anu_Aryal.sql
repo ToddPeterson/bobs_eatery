@@ -4,6 +4,8 @@ ORDER BY LastName, FirstName;
 
 
 -- 2. Show the following customer information: first name, last name, telephone number, address, city, state, zipcode; they should be listed alphabetically by last name first. If more than one customerhas the same last name,thensort them alphabetically be first name.
+-- x,y,z are used because we are dealing with multiple tables, and when dealing with multiple tables we need to specify the columns as well as table
+-- from which the column belongs to
 SELECT x.FirstName, x.LastName, x.PhoneNumber, x.StreetAddress, y.Name AS 'City', z.Name AS 'State', y.ZipCode   
 FROM Employees x
 JOIN Cities y 
