@@ -368,7 +368,7 @@ BEGIN
 END
 GO
 
--- List all entrées orderedbetween two given dates.
+-- List all entrées ordered between two given dates.
 
 CREATE PROCEDURE sprocMenuItemGetByDateOrdered
 	@StartDate datetime
@@ -385,7 +385,7 @@ BEGIN
 END
 GO
 
--- Given acuisineID, list all menu items in that cuisine.
+-- Given a cuisineID, list all menu items in that cuisine.
 
 CREATE PROCEDURE sprocMenuItemGetByCuisine
 	@CuisineID int
@@ -398,7 +398,7 @@ BEGIN
 END
 GO
 
--- Given anemployeeID, list allthe customers served by that employee.
+-- Given an employeeID, list all the customers served by that employee.
 
 CREATE PROCEDURE sprocCustomersGetByServer
 	@EmployeeID int
