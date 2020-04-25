@@ -10,8 +10,8 @@ DECLARE @LastName nvarchar(50)
 
 SELECT TOP 1 @FirstName = FirstName, @LastName = LastName FROM Employees
 
-EXECUTE @ret1a = sprocEmployeeExists @FirstName, @LastName
-EXECUTE @ret1b = sprocEmployeeExists 'xxx', 'xxx'
+EXECUTE @ret1a = sprocEmployeesExists @FirstName, @LastName
+EXECUTE @ret1b = sprocEmployeesExists 'xxx', 'xxx'
 
 IF (@ret1a = 1 AND @ret1b = -1)
 	PRINT('PASS :: sprocEmployeeExists')
@@ -23,35 +23,35 @@ ELSE
 --SELECT c.* FROM Customers c
 --	JOIN Orders o ON o.CustomerID = c.CustomerID
 
-EXECUTE sprocOrderGetByCustomer 'Asher', 'Santiago'
+EXECUTE sprocOrdersGetByCustomer 'Asher', 'Santiago'
 
 -- sprocEmployeeGetByNameLike
 
 --SELECT * FROM Employees
 
-EXECUTE sprocEmployeeGetByNameLike 'ck'
+EXECUTE sprocEmployeesGetByNameLikeString 'ck'
 
 -- sproc_CityCreate
 
-EXECUTE sproc_CityCreate 'Ypsilanti', '83202', 'Michigan'
+EXECUTE sproc_CityCreate 'Pocatello', '83202', 'asfdsadf'
 
 SELECT * FROM Cities
-	WHERE Name = 'Ypsilanti'
+	WHERE Name = 'Pocatello'
 SELECT * FROM States
 
 -- sprocOrderItemGetByDate
 
 --SELECT DateOrdered FROM Orders
 
-EXECUTE sprocOrderItemGetByDate '2020-04-03'
+EXECUTE sprocCustomersEatInOrdersGetByDate '2020-04-03'
 
 -- sprocMenuItemGetByDateOrdered
 
-EXECUTE sprocMenuItemGetByDateOrdered '2020-01-01', '2020-04-20'
+EXECUTE sprocEntreesGetBetweenDates '2020-01-01', '2020-04-20'
 
 -- sprocMenuItemGetByCuisine
 
-EXECUTE sprocMenuItemGetByCuisine 2
+EXECUTE sprocMenuItemsGetByCuisineID 2
 
 -- sprocCustomersGetByServer
 
@@ -63,7 +63,7 @@ EXECUTE sprocMenuItemGetByYearOrdered 2020
 
 -- sprocMenuItemGetLowSalesByDate
 
-EXECUTE sprocMenuItemGetLowSalesByDate 3, '2020-01-01', '2020-04-20'
-EXECUTE sprocMenuItemGetLowSalesByDate 2, '2020-01-01', '2020-04-20'
+EXECUTE sprocMenuItemGetLowSalesByDate '2020-01-01', '2020-04-20', 2
+EXECUTE sprocMenuItemGetLowSalesByDate '2020-01-01', '2020-04-20', 3
 
 

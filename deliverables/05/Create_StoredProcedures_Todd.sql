@@ -303,7 +303,7 @@ GO
 
 -- Given the City, Zip, and State name, add the information to the database. Associate them as needed. Do not add data to the relative tables if the tables already contain the given information. Make sure to add any information that is not in the tables.
 
-CREATE PROCEDURE sproc_CityCreate
+CREATE PROCEDURE sproc_CitiesCreate
 	@CityName nvarchar(50)
 	, @ZipCode nvarchar(20)
 	, @StateName nvarchar(50)
@@ -317,7 +317,7 @@ BEGIN
 	-- Create the State if it doesn't exist
 	SELECT @StateID = StateID FROM States
 		WHERE [Name] = @StateName
-	IF (@StateID < 1)
+	IF @@ROWCOUNT < 1
 		BEGIN
 			INSERT INTO States ([Name])
 				VALUES (@StateName)
@@ -329,7 +329,7 @@ BEGIN
 		WHERE [Name] = @CityName
 			AND StateID = @StateID
 			AND ZipCode = @ZipCode
-	IF (@CityID < 1)
+	IF @@ROWCOUNT < 1
 		BEGIN
 			INSERT INTO Cities ([Name], StateID, ZipCode)
 				VALUES (@CityName, @StateID, @ZipCode)

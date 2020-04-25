@@ -1,10 +1,3 @@
---Deliverable 5 SPROCs
---Write Stored Procedures that will do the list of behaviors to your database. You will need to
---figure out if parameters are needed and what the appropriate parameters would be. Hint:
---when something is given, it probably needs a parameter. On add SPROCs you will need to make
---sure that the Identity ID of the inserted item is captured and returned to the user through an
---OUTPUT parameter.
-
 USE BobsAwesomeEatery
 GO
 
@@ -13,11 +6,12 @@ GO
 
 CREATE PROCEDURE sprocEmployeesGetAll
 AS
-BEGIN 
+BEGIN
 	SET NOCOUNT ON
-	SELECT * FROM Employees
+	SELECT * FROM dbo.Employees
 END
 GO
+
 --b. Return an employee from a given EmployeeID
 
 CREATE PROCEDURE sprocEmployeesGetByID
@@ -29,6 +23,7 @@ BEGIN
 		WHERE EmployeeID = @EmployeeID
 END
 GO
+
 --c. Add an employee.
 
 CREATE PROCEDURE sproc_EmployeesAdd
@@ -298,7 +293,6 @@ BEGIN
 END
 GO
 
-
 --5. Given a first and last name for an employee, return 1 if the employee name is found in
 --database, return -1 otherwise. E.g. if Fred Smith is in your database, return 1 else -1.
 
@@ -322,25 +316,25 @@ GO
 
 --6. Given a first and last name for a customer, return all orders from that customer.
 
-CREATE PROCEDURE sprocOrdersGetByCustomerName
+CREATE PROCEDURE sprocOrdersGetByCustomer
 @FirstName nvarchar(50)
 ,@LastName nvarchar(50)
 AS
 BEGIN
 	SET NOCOUNT ON
-	DECLARE @CustomerID int
-	SET @CustomerID = (SELECT CustomerID FROM Customers
-		WHERE FirstName = @FirstName AND LastName = @LastName)
-	SELECT * FROM Orders o
-		WHERE o.CustomerID = @CustomerID
+	SELECT o.OrderID, o.CustomerID, o.SeatingID, o.OrderTypeID, o.PaymentMethodID, o.DateOrdered FROM Orders o
+			JOIN Customers c ON c.CustomerID = o.CustomerID
+		WHERE c.FirstName = @FirstName
+		AND c.LastName = @LastName
 END
 GO
+
 --7. Return all employees whose first or last name contains a given string. E.g. if “ar” was
 --given as a parameter, you would return: Mark Smith, Marc Lewis, Paris Marconi, Howey
 --Marsdin, etc.
 
 CREATE PROCEDURE sprocEmployeesGetByNameLikeString
-@String nvarchar(10)
+@String nvarchar(50)
 AS
 BEGIN 
 	SET NOCOUNT ON
@@ -350,94 +344,63 @@ BEGIN
 END
 GO
 
---8. Given the City, Zip, and State name, add the information to the database. Associate
---them as needed. Do not add data to the relative tables if the tables already contain the
---given information. Make sure to add any information that is not in the tables.
+-- 8. Given the City, Zip, and State name, add the information to the database. Associate them as needed. Do not add data to the relative tables if the tables already contain the given information. Make sure to add any information that is not in the tables.
 
-CREATE PROCEDURE sprocStatesGetIDByName
-@StateID int OUTPUT
-,@StateName nvarchar(50)
+CREATE PROCEDURE sproc_CitiesCreate
+	@CityName nvarchar(50)
+	, @ZipCode nvarchar(20)
+	, @StateName nvarchar(50)
+	, @CityID int = 0 OUTPUT
 AS
 BEGIN
 	SET NOCOUNT ON
-	SELECT * FROM States
-		WHERE Name = @StateName
+
+	DECLARE @StateID int = 0
+
+	-- Create the State if it doesn't exist
+	SELECT @StateID = StateID FROM States
+		WHERE [Name] = @StateName
+	IF @@ROWCOUNT < 1
+		BEGIN
+			INSERT INTO States ([Name])
+				VALUES (@StateName)
+			SET @StateID = @@IDENTITY
+		END
+
+	-- Create the City if it doesn't exist
+	SELECT @CityID = CityID FROM Cities
+		WHERE [Name] = @CityName
+			AND StateID = @StateID
+			AND ZipCode = @ZipCode
+	IF @@ROWCOUNT < 1
+		BEGIN
+			INSERT INTO Cities ([Name], StateID, ZipCode)
+				VALUES (@CityName, @StateID, @ZipCode)
+			SET @CityID = @@IDENTITY
+		END
+	
 END
 GO
 
-CREATE PROCEDURE sprocCitiesGetIDByName
-@CityID int OUTPUT
-,@CityName nvarchar(50)
-AS
-BEGIN
-	SET NOCOUNT ON
-	SELECT * FROM Cities
-		WHERE Name = @CityName
-END
-GO
-
-CREATE PROCEDURE sproc_StatesAdd
-@StateID int OUTPUT
-, @Name nvarchar(50)
-AS
-BEGIN
-	INSERT INTO States (Name) VALUES
-		(@Name)
-	SET @StateID = @@IDENTITY
-END
-GO
-
-CREATE PROCEDURE sproc_CitiesAdd
-@CityID int OUTPUT
-,@Name nvarchar(50)
-,@StateID int
-,@ZipCode nvarchar(20)
-AS
-BEGIN
-	INSERT INTO Cities (Name,StateID,ZipCode) VALUES
-		(@Name, @StateID, @ZipCode)
-	SET @CityID = @@IDENTITY
-END
-GO
-
-CREATE PROCEDURE sproc_CityZipStateAdd
-@CityName nvarchar(50)
-,@ZipCode nvarchar(20)
-,@StateName nvarchar(50)
-AS
-BEGIN 
-	DECLARE @StateExist int
-	SET @StateExist = sprocStatesGetByName @StateName
-	DECLARE @CityExist int
-	SET @CityExist = sprocCitiesGetByName @CityName
-	DECLARE @StateID int
-	IF @StateExist < 1 AND @CityExist < 1
-		SET @StateID = sproc_StatesAdd @StateName
-		sproc_CitiesAdd @CityName, @StateID, @ZipCode
-	IF @StateExist > 0 AND @CityExist < 1
-		sproc_CitiesAdd @CityName, @StateExist, @ZipCode
-END
-GO
 --9. List the customer name, table number, entrée ordered, and date and time ordered for
 --all items purchased on a given date.
 
-CREATE PROCEDURE sprocNamesTablesOrdersGetByDate
-@DateOrdered Date
+CREATE PROCEDURE sprocCustomersEatInOrdersGetByDate
+@Date date
 AS
 BEGIN
 	SET NOCOUNT ON
-	SELECT c.FirstName + ' ' + c.LastName AS [Customer Name], t.Number AS [Table Number], mi.Name AS [Menu Item Ordered], o.DateOrdered AS [Date and Time Ordered] FROM Orders o
-		JOIN OrderItems oi ON o.OrderID = oi.OrderID
+	SELECT cus.FirstName + ' ' + cus.LastName AS [Customer], t.Number [Table Number], mi.Name [Menu Item], o.DateOrdered FROM Customers cus
+		JOIN Orders o ON o.CustomerID = cus.CustomerID
+		JOIN Seatings s ON s.SeatingID = o.SeatingID
+		JOIN [Tables] t ON t.TableID = s.TableID
+		JOIN OrderItems oi ON oi.OrderID = o.OrderID
 		JOIN MenuItemVariations miv ON oi.MenuItemVariationID = miv.MenuItemVariationID
-		JOIN MenuItems mi ON miv.MenuItemID = mi.MenuItemID
-		JOIN Customers c ON o.CustomerID = c.CustomerID
-		JOIN Seatings s ON o.SeatingID = s.SeatingID
-		JOIN Tables t ON s.TableID = t.TableID
-		WHERE MONTH(o.DateOrdered) = MONTH(@DateOrdered) 
-			AND DAY(o.DateOrdered) = DAY(@DateOrdered) 
-			AND YEAR(o.DateOrdered) = YEAR(@DateOrdered) 
+		JOIN MenuItems mi ON mi.MenuItemID = miv.MenuItemID
+		WHERE CAST(o.DateOrdered AS date) = @Date
 END
 GO
+
 --10. List all entrées ordered between two given dates.
 
 CREATE PROCEDURE sprocEntreesGetBetweenDates
@@ -446,7 +409,7 @@ CREATE PROCEDURE sprocEntreesGetBetweenDates
 AS
 BEGIN
 	SET NOCOUNT ON
-	SELECT mi.Name AS [Menu Items Ordered] FROM Orders o
+	SELECT DISTINCT mi.* FROM Orders o
 		JOIN OrderItems oi ON o.OrderID = oi.OrderID
 		JOIN MenuItemVariations miv ON oi.MenuItemVariationID = miv.MenuItemVariationID
 		JOIN MenuItems mi ON miv.MenuItemID = mi.MenuItemID
@@ -455,12 +418,13 @@ END
 GO
 
 --11. Given a cuisine ID, list all menu items in that cuisine.
+
 CREATE PROCEDURE sprocMenuItemsGetByCuisineID
 @CuisineID int
 AS
 BEGIN
 	SET NOCOUNT ON
-	SELECT mi.Name AS [Menu Items In Cuisine] FROM MenuItems mi
+	SELECT mi.* FROM MenuItems mi
 		JOIN CuisineTypes ct ON mi.CuisineTypeID = ct.CuisineTypeID
 		WHERE ct.CuisineTypeID = @CuisineID
 END
@@ -472,7 +436,7 @@ CREATE PROCEDURE sprocCustomersGetByEmployeeID
 AS
 BEGIN
 	SET NOCOUNT ON
-	SELECT c.FirstName + ' ' + c.LastName AS [Customer Served By Employee] FROM Customers c
+	SELECT c.* FROM Customers c
 		JOIN Orders o ON c.CustomerID = o.CustomerID
 		JOIN Seatings s ON o.SeatingID = s.SeatingID
 		JOIN Employees e ON s.EmployeeID = e.EmployeeID
@@ -480,23 +444,40 @@ BEGIN
 END
 GO
 
---13. Given a year, all menu items purchased during that calendar year.
-CREATE PROCEDURE sprocMenuItemsGetByYear
-@Year Date
+--12. Given an employee ID, list all the customers served by that employee.
+
+CREATE PROCEDURE sprocCustomersGetByServer
+	@EmployeeID int
 AS
 BEGIN
 	SET NOCOUNT ON
-	SELECT * FROM Orders o
-		JOIN OrderItems oi ON o.OrderID = oi.OrderID
-		JOIN MenuItemVariations miv ON oi.MenuItemVariationID = miv.MenuItemVariationID
-		JOIN MenuItems mi ON miv.MenuItemID = mi.MenuItemID
-		WHERE YEAR(o.DateOrdered) = YEAR(@Year)
+
+	SELECT DISTINCT c.* FROM Customers c
+		JOIN CustomersToTables c2t ON c.CustomerID = c2t.CustomerID
+		JOIN Seatings s ON c2t.SeatingID = s.SeatingID
+		WHERE s.EmployeeID = @EmployeeID
+END
+GO
+
+--13. Given a year, all menu items purchased during that calendar year.
+
+CREATE PROCEDURE sprocMenuItemGetByYearOrdered
+	@Year int
+AS
+BEGIN
+	SET NOCOUNT ON
+
+	SELECT DISTINCT mi.* FROM MenuItems mi
+		JOIN MenuItemVariations miv ON miv.MenuItemID = mi.MenuItemID
+		JOIN OrderItems oi ON oi.MenuItemVariationID = miv.MenuItemVariationID
+		JOIN Orders o ON o.OrderID = oi.OrderID
+		WHERE YEAR(o.DateOrdered) = @Year
 END
 GO
 
 --14. Given a number of orders and a start and end date, list any menu item that has less than
 --that number of orders between (inclusive) the given dates.
-CREATE PROCEDURE sproc
+CREATE PROCEDURE sprocMenuItemGetLowSalesByDate
 @BeginDate Date
 ,@EndDate Date
 ,@NumberOfOrders int
