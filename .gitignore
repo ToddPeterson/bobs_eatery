@@ -15,3 +15,6 @@ bld/
 [Oo]bj/
 
 .vs
+
+#NuGet
+packages/

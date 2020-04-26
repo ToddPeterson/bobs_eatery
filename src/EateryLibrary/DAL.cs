@@ -160,10 +160,6 @@ namespace EateryLibrary
                 comm.Parameters.AddWithValue("@CategoryID", model.CategoryID);
                 comm.Parameters.AddWithValue("@CuisineTypeID", model.CuisineTypeID);
 
-                SqlParameter outID = new SqlParameter("@MenuItemID", System.Data.SqlDbType.Int);
-                outID.Direction = System.Data.ParameterDirection.Output;
-                comm.Parameters.Add(outID);
-
                 conn.Open();
                 numberOfRowsAffected = comm.ExecuteNonQuery();
             }
