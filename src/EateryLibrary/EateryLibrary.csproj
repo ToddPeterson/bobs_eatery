@@ -45,6 +45,7 @@
     <Compile Include="DAL.cs" />
     <Compile Include="GlobalConfig.cs" />
     <Compile Include="Models\MenuItem.cs" />
+    <Compile Include="Models\Order.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
