@@ -15,6 +15,9 @@ namespace EateryLibrary.Models
 		private string _PicturePath;
 		private bool _IsSideItem;
 		private int _PrepTime;
+		private int _PrepMethodID;
+		private int _CategoryID;
+		private int _CuisineTypeID;
 		#endregion
 
 		#region Public Variables
@@ -53,8 +56,26 @@ namespace EateryLibrary.Models
 			get { return _PrepTime; }
 			set { _PrepTime = value; }
 		}
+
+
+		public int PrepMethodID
+		{
+			get { return _PrepMethodID; }
+			set { _PrepMethodID = value; }
+		}
+
+		public int CategoryID
+		{
+			get { return _CategoryID; }
+			set { _CategoryID = value; }
+		}
+
+
+		public int CuisineTypeID
+		{
+			get { return _CuisineTypeID; }
+			set { _CuisineTypeID = value; }
+		}
 		#endregion
-
-
 	}
 }
