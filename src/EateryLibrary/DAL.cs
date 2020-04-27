@@ -399,5 +399,179 @@ namespace EateryLibrary
         #endregion
 
 
+        #region Customers
+
+        /// <summary>
+        /// Get a list of all Customers in the database
+        /// </summary>
+        public static List<Customer> CustomerGetAll()
+        {
+            SqlConnection conn = null;
+            List<Customer> output = new List<Customer>();
+
+            try
+            {
+                conn = new SqlConnection(GlobalConfig.ConnectionString(db));
+
+                SqlCommand comm = new SqlCommand("sprocCustomersGetAll", conn);
+                comm.CommandType = System.Data.CommandType.StoredProcedure;
+
+                conn.Open();
+                SqlDataReader dr = comm.ExecuteReader();
+
+                while (dr.Read())
+                {
+                    output.Add(FillCustomer(dr));
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+            }
+            finally
+            {
+                if (conn != null) conn.Close();
+            }
+
+            return output;
+        }
+
+        /// <summary>
+        /// Get the Customer associated with the given ID
+        /// </summary>
+        /// <param name="id">Primary key associated with a Customer</param>
+        /// <returns>Customer</returns>
+        public static Customer CustomerGetByID(int id)
+        {
+            SqlConnection conn = null;
+            Customer output = null;
+
+            try
+            {
+                conn = new SqlConnection(GlobalConfig.ConnectionString(db));
+
+                SqlCommand comm = new SqlCommand("sprocCustomersGetByID", conn);
+                comm.CommandType = System.Data.CommandType.StoredProcedure;
+                comm.Parameters.AddWithValue("@CustomerID", id);
+
+                conn.Open();
+                SqlDataReader dr = comm.ExecuteReader();
+
+                while (dr.Read())
+                {
+                    output = FillCustomer(dr);
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+            }
+            finally
+            {
+                if (conn != null) conn.Close();
+            }
+
+            return output;
+        }
+
+        /// <summary>
+        /// Create a new Customer record in the database
+        /// </summary>
+        /// <param name="emp">Customer data model</param>
+        /// <returns>The id of customer added</returns>
+        public static int CustomerAdd(Customer customer)
+        {
+            if (customer == null) return -1;
+            int effectedId = -1;
+            SqlConnection conn = null;
+
+            try
+            {
+                conn = new SqlConnection(GlobalConfig.ConnectionString(db));
+                SqlCommand comm = new SqlCommand("sproc_CustomersAdd", conn);
+                comm.CommandType = System.Data.CommandType.StoredProcedure;
+                conn.Open();
+                comm.Parameters.AddWithValue("@FirstName", customer.FirstName);
+                comm.Parameters.AddWithValue("@MiddleName", customer.MiddleName);
+                comm.Parameters.AddWithValue("@LastName", customer.LastName);
+                comm.Parameters.AddWithValue("@CustomerNumber", customer.CustomerNumber);
+                comm.Parameters.AddWithValue("@PhoneNumber", customer.PhoneNumber);
+                comm.Parameters.AddWithValue("@Email", customer.Email);
+                comm.Parameters.AddWithValue("@StreetAddress", customer.StreetAddress);
+                comm.Parameters.AddWithValue("@CityID", customer.CityID);
+                SqlParameter retParameter = comm.Parameters.Add("@ID", System.Data.SqlDbType.Int);
+                retParameter.Direction = System.Data.ParameterDirection.Output;
+                effectedId = comm.ExecuteNonQuery();
+                return effectedId;
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+                effectedId = -1;
+            }
+            finally
+            {
+                if (conn != null) conn.Close();
+            }
+            return effectedId;
+        }
+
+        /// <summary>
+        /// Update a Customer record in the database
+        /// </summary>
+        /// <param name="emp">A customer model</param>
+        /// <returns>Effected ID</returns>
+        public static int CustomerUpdate(Customer customer)
+        {
+            if (customer == null) return -1;
+            int effectedId = -1;
+            SqlConnection conn = null;
+
+            try
+            {
+                conn = new SqlConnection(GlobalConfig.ConnectionString(db));
+                SqlCommand comm = new SqlCommand("sproc_EmployeesUpdateByID", conn);
+                comm.CommandType = System.Data.CommandType.StoredProcedure;
+                conn.Open();
+                comm.Parameters.AddWithValue("@CustomerID", customer.FirstName);
+                comm.Parameters.AddWithValue("@FirstName", customer.FirstName);
+                comm.Parameters.AddWithValue("@MiddleName", customer.MiddleName);
+                comm.Parameters.AddWithValue("@LastName", customer.LastName);
+                comm.Parameters.AddWithValue("@CustomerNumber", customer.CustomerNumber);
+                comm.Parameters.AddWithValue("@PhoneNumber", customer.PhoneNumber);
+                comm.Parameters.AddWithValue("@Email", customer.Email);
+                comm.Parameters.AddWithValue("@StreetAddress", customer.StreetAddress);
+                comm.Parameters.AddWithValue("@CityID", customer.CityID);
+                effectedId = comm.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+
+            }
+            finally
+            {
+                if (conn != null) conn.Close();
+            }
+
+            return effectedId;
+        }
+
+        private static Customer FillCustomer(SqlDataReader dr)
+        {
+            Customer customer= new Customer();
+            customer.ID = (int)dr["CustomerID"];
+            customer.FirstName = (string)dr["FirstName"];
+            customer.MiddleName = (string)dr["MiddleName"];
+            customer.LastName = (string)dr["LastName"];
+            customer.CustomerNumber = (int)dr["CustomerNumber"];
+            customer.PhoneNumber = (string)dr["PhoneNumber"];
+            customer.Email = (string)dr["Email"];
+            customer.StreetAddress = (string)dr["StreetAddress"];
+            customer.CityID = (int)dr["CityID"];
+            return customer;
+        }
+
+        #endregion
     }
 }
