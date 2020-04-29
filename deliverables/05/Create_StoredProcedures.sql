@@ -385,7 +385,7 @@ GO
 --9. List the customer name, table number, entrée ordered, and date and time ordered for
 --all items purchased on a given date.
 
-ALTER PROCEDURE sprocCustomersEatInOrdersGetByDate
+CREATE PROCEDURE sprocCustomersEatInOrdersGetByDate
 @Date date
 AS
 BEGIN
