@@ -78,5 +78,10 @@ namespace EateryLibrary.Models
         }
 
         #endregion
+
+        public  override string ToString()
+        {
+            return FirstName + " " + MiddleName + " " + LastName;
+        }
     }
 }

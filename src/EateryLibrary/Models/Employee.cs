@@ -67,7 +67,7 @@ namespace EateryLibrary.Models
         public string ContactFirstName
         {
             get { return _ContactFirstName; }
-            set { _FirstName = value; }
+            set { _ContactFirstName = value; }
         }
 
         public string ContactMiddleName
@@ -113,5 +113,30 @@ namespace EateryLibrary.Models
         }
 
         #endregion
+
+        public  override string ToString()
+        {
+            return FirstName + " " + MiddleName + " " + LastName;
+        }
+
+        public string ContactPerson()
+        {
+            return ContactFirstName + " " + ContactMiddleName + " " + ContactLastName;
+        }
+
+        public string Details()
+        {
+            return String.Format(
+                                 "Employee Number: {0} \r\n" +
+                                 "Employee Name: {1} \r\n" +
+                                 "Phone Number: {2} \r\n" +
+                                 "Wage: ${3} \r\n" +
+                                 "Contact Person: {4}, {5} \r\n" +
+                                 "Street Address: {6} \r\n" +
+                                 "City ID: {7}"
+                                 , 
+                                 EmployeeNumber, ToString(), PhoneNumber, Wage, ContactPerson(), ContactPhoneNumber
+                                 , StreetAddress, CityID);
+        }
     }
 }

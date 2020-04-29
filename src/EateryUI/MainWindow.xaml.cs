@@ -12,6 +12,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using EateryLibrary;
+using EateryLibrary.Models;
+
 
 namespace EateryUI
 {
@@ -23,6 +26,33 @@ namespace EateryUI
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void BtnShowCustomers_Click(object sender, RoutedEventArgs e)
+        {
+            lbxOutput.Items.Clear();
+            List<Customer> customers = DAL.CustomerGetAll();
+            foreach(Customer customer in customers)
+            {
+                lbxOutput.Items.Add(customer);
+            }
+        }
+
+        private void BtnShowEmployees_Click(object sender, RoutedEventArgs e)
+        {
+            lbxOutput.Items.Clear();
+            List<Employee> employees = DAL.EmployeesGetAll();
+            foreach (Employee employee in employees)
+            {
+                lbxOutput.Items.Add(employee);
+            }
+        }
+
+        private void LbxOutput_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Employee ba = lbxOutput.SelectedItem as Employee;
+            Details details = new Details(ba);
+            details.Show();
         }
     }
 }

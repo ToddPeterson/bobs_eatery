@@ -7,27 +7,12 @@
         mc:Ignorable="d"
         FontSize="18"
         FontFamily="Montserrat"
-        Title="Bob's Awesome Eatery" Height="450" Width="800">
+        Title="Bob's Awesome Eatery" Height="450" Width="800" WindowState="Maximized" WindowStyle="ToolWindow">
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="20" />
-            <ColumnDefinition Width="auto" />
-            <ColumnDefinition Width="auto" />
-            <ColumnDefinition Width="auto" />
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="20" />
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="20" />
-            <RowDefinition Height="auto" />
-            <RowDefinition Height="auto" />
-            <RowDefinition Height="auto" />
-            <RowDefinition Height="auto" />
-            <RowDefinition Height="auto" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="20" />
-        </Grid.RowDefinitions>
-
-        <TextBlock Text="Bob's Awesome Eatery" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="3" FontSize="24"></TextBlock>
+        <TextBlock Text="Bob's Awesome Eatery" FontSize="24" Margin="262,70,253.6,313"/>
+        <ListBox x:Name="lbxOutput" HorizontalAlignment="Left" Height="273" Margin="325,135,0,0" VerticalAlignment="Top" Width="458" SelectionChanged="LbxOutput_SelectionChanged"/>
+        <Button x:Name="btnShowCustomers" Content="Show Customers" Grid.Column="1" HorizontalAlignment="Left" Margin="10.2,79,0,0" Grid.Row="6" VerticalAlignment="Top" Width="153" Height="34" Click="BtnShowCustomers_Click"/>
+        <Button x:Name="btnShowEmployees" Content="Show Employees" Grid.Column="1" HorizontalAlignment="Left" Margin="10.2,135,0,0" Grid.Row="6" VerticalAlignment="Top" Width="153" Height="30" Click="BtnShowEmployees_Click"/>
+        <Button x:Name="btnCreate" Content="Add" HorizontalAlignment="Left" Margin="699,92,0,0" VerticalAlignment="Top" Width="84" Height="33"/>
     </Grid>
 </Window>
