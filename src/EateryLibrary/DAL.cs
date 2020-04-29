@@ -573,5 +573,135 @@ namespace EateryLibrary
         }
 
         #endregion
+
+        #region SprocsEightToTen
+        public static int CitiesCreate(string cityName, int zip, string stateName)
+        {
+            SqlConnection conn = null;
+            int output = 0;
+
+            try
+            {
+                conn = new SqlConnection(GlobalConfig.ConnectionString(db));
+                SqlCommand comm = new SqlCommand("sproc_CitiesCreate", conn);
+                comm.CommandType = System.Data.CommandType.StoredProcedure;
+                comm.Parameters.AddWithValue("@CityName", cityName);
+                comm.Parameters.AddWithValue("@ZipCode", zip);
+                comm.Parameters.AddWithValue("@StateName", stateName);
+                comm.Parameters.Add("@CityID", System.Data.SqlDbType.Int);
+                comm.Parameters["@CityID"].Direction = System.Data.ParameterDirection.Output;
+
+                conn.Open();
+                comm.ExecuteNonQuery();
+                output = (int)comm.Parameters["@CityID"].Value;
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+            }
+            finally
+            {
+                if (conn != null) conn.Close();
+            }
+
+            return output;
+        }
+
+
+        public static List<Tuple<string, int, string, DateTime>> CustomersEatInOrdersGetByDate(string dateString)
+        {
+            DateTime date;
+            bool parsed = DateTime.TryParse(dateString, out date);
+
+            List<Tuple<string, int, string, DateTime>> results = new List<Tuple<string, int, string, DateTime>>();
+
+            if (parsed)
+            {
+                SqlConnection conn = null;
+
+                try
+                {
+                    conn = new SqlConnection(GlobalConfig.ConnectionString(db));
+                    SqlCommand comm = new SqlCommand("sprocCustomersEatInOrdersGetByDate", conn);
+                    comm.CommandType = System.Data.CommandType.StoredProcedure;
+                    comm.Parameters.AddWithValue("@Date", date);
+
+
+                    conn.Open();
+                    SqlDataReader dr = comm.ExecuteReader();
+
+                    while (dr.Read())
+                    {
+                        Tuple<string, int, string, DateTime> row = new Tuple<string, int, string, DateTime>(
+                                (string)dr["Customer"],
+                                (int)dr["Table Number"],
+                                (string)dr["Menu Item"],
+                                (DateTime)dr["Date Ordered"]
+                            );
+                        results.Add(row);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine(ex.Message);
+                }
+                finally
+                {
+                    if (conn != null) conn.Close();
+                }
+
+                return results;
+            }
+
+            return null;
+        }
+
+
+        public static List<MenuItem> EntreesGetBetweenDates(string beginDate, string endDate)
+        {
+            SqlConnection conn = null;
+            List<MenuItem> results = new List<MenuItem>();
+
+            try
+            {
+                conn = new SqlConnection(GlobalConfig.ConnectionString(db));
+                SqlCommand comm = new SqlCommand("sprocEntreesGetBetweenDates", conn);
+                comm.CommandType = System.Data.CommandType.StoredProcedure;
+                comm.Parameters.AddWithValue("@BeginDate", beginDate);
+                comm.Parameters.AddWithValue("@EndDate", endDate);
+
+
+                conn.Open();
+                SqlDataReader dr = comm.ExecuteReader();
+
+                while (dr.Read())
+                {
+                    MenuItem menuItem = new MenuItem();
+                    menuItem.ID = (int)dr["MenuItemID"];
+                    menuItem.Name = (string)dr["Name"];
+                    menuItem.Description = (string)dr["Description"];
+                    menuItem.PicturePath = (string)dr["PicturePath"];
+                    menuItem.IsSideItem = (bool)dr["IsSideItem"];
+                    menuItem.PrepTime = (int)dr["PrepTime"];
+                    menuItem.PrepMethodID = (int)dr["PrepMethodID"];
+                    menuItem.CategoryID = (int)dr["CategoryID"];
+                    menuItem.CuisineTypeID = (int)dr["CuisineTypeID"];
+                    results.Add(menuItem);
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+            }
+            finally
+            {
+                if (conn != null) conn.Close();
+            }
+
+            return results;
+        }
+
+
+        #endregion
     }
 }
