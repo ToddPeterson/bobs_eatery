@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace EateryLibrary.Models
 {
-    class Order
+    public class Order
     {
         #region Private Fields
         private int _OrderID;

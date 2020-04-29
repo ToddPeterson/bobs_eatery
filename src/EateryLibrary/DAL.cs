@@ -160,10 +160,6 @@ namespace EateryLibrary
                 comm.Parameters.AddWithValue("@CategoryID", model.CategoryID);
                 comm.Parameters.AddWithValue("@CuisineTypeID", model.CuisineTypeID);
 
-                SqlParameter outID = new SqlParameter("@MenuItemID", System.Data.SqlDbType.Int);
-                outID.Direction = System.Data.ParameterDirection.Output;
-                comm.Parameters.Add(outID);
-
                 conn.Open();
                 numberOfRowsAffected = comm.ExecuteNonQuery();
             }
@@ -195,7 +191,6 @@ namespace EateryLibrary
             return mi;
         }
         #endregion
-
 
         #region Employees
 
@@ -356,10 +351,6 @@ namespace EateryLibrary
                 comm.Parameters.AddWithValue("@EmployeePositionID", emp.EmployeePositionID);
                 comm.Parameters.AddWithValue("@EmployeeNumber", emp.EmployeeNumber);
 
-                SqlParameter outID = new SqlParameter("@EmployeeID", System.Data.SqlDbType.Int);
-                outID.Direction = System.Data.ParameterDirection.Output;
-                comm.Parameters.Add(outID);
-
                 conn.Open();
                 numberOfRowsAffected = comm.ExecuteNonQuery();
             }
@@ -397,7 +388,6 @@ namespace EateryLibrary
         }
 
         #endregion
-
 
         #region Customers
 
@@ -570,6 +560,160 @@ namespace EateryLibrary
             customer.StreetAddress = (string)dr["StreetAddress"];
             customer.CityID = (int)dr["CityID"];
             return customer;
+        }
+
+        #endregion
+
+        #region Orders
+        public static List<Order> OrdersGetAll()
+        {
+            SqlConnection conn = null;
+            List<Order> output = new List<Order>();
+
+            try
+            {
+                conn = new SqlConnection(GlobalConfig.ConnectionString(db));
+
+                SqlCommand comm = new SqlCommand("sprocOrdersGetAll", conn);
+                comm.CommandType = System.Data.CommandType.StoredProcedure;
+
+                conn.Open();
+                SqlDataReader dr = comm.ExecuteReader();
+
+                while (dr.Read())
+                {
+                    output.Add(FillOrder(dr));
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+            }
+            finally
+            {
+                if (conn != null) conn.Close();
+            }
+
+            return output;
+        }
+
+        public static Order OrderGetByID(int id)
+        {
+            SqlConnection conn = null;
+            Order output = null;
+
+            try
+            {
+                conn = new SqlConnection(GlobalConfig.ConnectionString(db));
+
+                SqlCommand comm = new SqlCommand("sprocOrdersGetByID", conn);
+                comm.CommandType = System.Data.CommandType.StoredProcedure;
+                comm.Parameters.AddWithValue("@OrderID", id);
+
+                conn.Open();
+                SqlDataReader dr = comm.ExecuteReader();
+
+                while (dr.Read())
+                {
+                    output = FillOrder(dr);
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+            }
+            finally
+            {
+                if (conn != null) conn.Close();
+            }
+
+            return output;
+        }
+
+        public static Order OrderCreate(Order model)
+        {
+            SqlConnection conn = null;
+
+            try
+            {
+                conn = new SqlConnection(GlobalConfig.ConnectionString(db));
+
+                SqlCommand comm = new SqlCommand("sproc_OrdersAdd", conn);
+                comm.CommandType = System.Data.CommandType.StoredProcedure;
+
+                comm.Parameters.AddWithValue("@CustomerID", model.CustomerID);
+                comm.Parameters.AddWithValue("@SeatingID", model.SeatingID);
+                comm.Parameters.AddWithValue("@OrderTypeID", model.OrderTypeID);
+                comm.Parameters.AddWithValue("@DateOrdered", model.DateOrdered);
+                comm.Parameters.AddWithValue("@PaymentMethodID", model.PaymentMethodID);
+
+                SqlParameter outID = new SqlParameter("@OrderID", System.Data.SqlDbType.Int);
+                outID.Direction = System.Data.ParameterDirection.Output;
+                comm.Parameters.Add(outID);
+
+                conn.Open();
+                comm.ExecuteNonQuery();
+
+                if (outID.Value != DBNull.Value)
+                    model.OrderID = (int)outID.Value;
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+            }
+            finally
+            {
+                if (conn != null) conn.Close();
+            }
+
+            return model;
+        }
+
+        public static int OrderUpdate(Order model)
+        {
+            SqlConnection conn = null;
+            int numberOfRowsAffected = 0;
+
+            try
+            {
+                conn = new SqlConnection(GlobalConfig.ConnectionString(db));
+
+                SqlCommand comm = new SqlCommand("sproc_OrdersUpdateByID", conn);
+                comm.CommandType = System.Data.CommandType.StoredProcedure;
+
+                comm.Parameters.AddWithValue("@OrderID", model.OrderID);
+                comm.Parameters.AddWithValue("@CustomerID", model.CustomerID);
+                comm.Parameters.AddWithValue("@SeatingID", model.SeatingID);
+                comm.Parameters.AddWithValue("@OrderTypeID", model.OrderTypeID);
+                comm.Parameters.AddWithValue("@DateOrdered", model.DateOrdered);
+                comm.Parameters.AddWithValue("@PaymentMethodID", model.PaymentMethodID);
+
+                conn.Open();
+                numberOfRowsAffected = comm.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+            }
+            finally
+            {
+                if (conn != null) conn.Close();
+            }
+
+            return numberOfRowsAffected;
+        }
+
+        private static Order FillOrder(SqlDataReader dr)
+        {
+            Order o = new Order();
+            o.OrderID = (int)dr["OrderID"];
+            o.CustomerID = (int)dr["CustomerID"];
+            o.SeatingID = (int)dr["SeatingID"];
+            o.OrderTypeID = (int)dr["OrderTypeID"];
+            o.DateOrdered = (DateTime)dr["DateOrdered"];
+            o.PaymentMethodID = (int)dr["PaymentMethodID"];
+
+            return o;
         }
 
         #endregion
