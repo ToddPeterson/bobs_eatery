@@ -718,6 +718,49 @@ namespace EateryLibrary
 
         #endregion
 
+        /// <summary>
+        /// Query 5
+        /// Returns a bool indicating whether or not an employee with the given name exists in the database
+        /// </summary>
+        /// <param name="firstName">string: The employee's first name</param>
+        /// <param name="lastName">string: The employee's last name</param>
+        /// <returns></returns>
+        public static bool EmployeeExists(string firstName, string lastName)
+        {
+            SqlConnection conn = null;
+            bool output = false;
+
+            try
+            {
+                conn = new SqlConnection(GlobalConfig.ConnectionString(db));
+
+                SqlCommand comm = new SqlCommand("sproc_EmployeesExists", conn);
+                comm.CommandType = System.Data.CommandType.StoredProcedure;
+
+                comm.Parameters.AddWithValue("@FirstName", firstName);
+                comm.Parameters.AddWithValue("@LastName", lastName);
+
+                // Add a parameter to get the return value from the sproc
+                comm.Parameters.Add("@return", System.Data.SqlDbType.Int).Direction = System.Data.ParameterDirection.ReturnValue;
+
+                conn.Open();
+                comm.ExecuteNonQuery();
+
+                // return value is 1 or -1
+                output = ((int)comm.Parameters["@return"].Value == 1);
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+            }
+            finally
+            {
+                if (conn != null) conn.Close();
+            }
+
+            return output;
+        }
+
         #region SprocsEightToTen
         public static int CitiesCreate(string cityName, int zip, string stateName)
         {
