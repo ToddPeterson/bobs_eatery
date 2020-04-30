@@ -761,6 +761,47 @@ namespace EateryLibrary
             return output;
         }
 
+        /// <summary>
+        /// Query 6
+        /// Given a customer's first and last name, returns all orders made by that customer
+        /// </summary>
+        /// <param name="firstName"></param>
+        /// <param name="lastName"></param>
+        /// <returns></returns>
+        public static List<Order> OrdersGetByCustomer(string firstName, string lastName)
+        {
+            SqlConnection conn = null;
+            List<Order> output = new List<Order>();
+
+            try
+            {
+                conn = new SqlConnection(GlobalConfig.ConnectionString(db));
+
+                SqlCommand comm = new SqlCommand("sprocOrdersGetByCustomer", conn);
+                comm.CommandType = System.Data.CommandType.StoredProcedure;
+                comm.Parameters.AddWithValue("@FirstName", firstName);
+                comm.Parameters.AddWithValue("@LastName", lastName);
+
+                conn.Open();
+                SqlDataReader dr = comm.ExecuteReader();
+
+                while (dr.Read())
+                {
+                    output.Add(FillOrder(dr));
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+            }
+            finally
+            {
+                if (conn != null) conn.Close();
+            }
+
+            return output;
+        }
+
         #region SprocsEightToTen
         public static int CitiesCreate(string cityName, int zip, string stateName)
         {
