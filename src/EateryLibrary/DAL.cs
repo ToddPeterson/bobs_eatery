@@ -970,5 +970,176 @@ namespace EateryLibrary
 
 
         #endregion
+
+
+        #region Sprocs11to14
+
+        /// <summary>
+        /// Query 11
+        /// Lists menu items that belong to a given cuisine
+        /// </summary>
+        /// <param name="cuisineID">ID that belongs to the cuisine in question</param>
+        /// <returns>all mennu items that meet the requirements</returns>
+        public static List<MenuItem> MenuItemsGetByCuisineID(int cuisineID)
+        {
+            SqlConnection conn = null;
+            List<MenuItem> output = new List<MenuItem>();
+
+            try
+            {
+                conn = new SqlConnection(GlobalConfig.ConnectionString(db));
+
+                SqlCommand comm = new SqlCommand("sprocMenuItemsGetByCuisineID", conn);
+                comm.CommandType = System.Data.CommandType.StoredProcedure;
+                comm.Parameters.AddWithValue("@CusineID", cuisineID);
+
+                conn.Open();
+                SqlDataReader dr = comm.ExecuteReader();
+
+                while (dr.Read())
+                {
+                    output.Add(FillMenuItem(dr));
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+            }
+            finally
+            {
+                if (conn != null) conn.Close();
+            }
+
+
+            return output;
+
+        }
+
+        /// <summary>
+        /// Query 12
+        /// Lists customers served by a specific employee
+        /// </summary>
+        /// <param name="employeeID">ID that belongs to the employee in question</param>
+        /// <returns>All customers that meet the requirements</returns>
+        public static List<Customer> CustomersGetByEmployeeID(int employeeID)
+        {
+            SqlConnection conn = null;
+            List<Customer> output = new List<Customer>();
+
+            try
+            {
+                conn = new SqlConnection(GlobalConfig.ConnectionString(db));
+                //which sproc do we want to use?
+                SqlCommand comm = new SqlCommand("sprocCustomersGetByEmployeeID", conn);
+                comm.CommandType = System.Data.CommandType.StoredProcedure;
+                comm.Parameters.AddWithValue("@EmployeeID", employeeID);
+
+                conn.Open();
+                SqlDataReader dr = comm.ExecuteReader();
+
+                while (dr.Read())
+                {
+                    output.Add(FillCustomer(dr));
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+            }
+            finally
+            {
+                if (conn != null) conn.Close();
+            }
+
+
+            return output;
+        }
+
+        /// <summary>
+        /// Query 13
+        /// Lists all menu items ordered in a given year
+        /// </summary>
+        /// <param name="year"></param>
+        /// <returns>All menu items that meet the requirements</returns>
+        public static List<MenuItem> MenuItemGetByYearOrdered(int year)
+        {
+            SqlConnection conn = null;
+            List<MenuItem> output = new List<MenuItem>();
+
+            try
+            {
+                conn = new SqlConnection(GlobalConfig.ConnectionString(db));
+
+                SqlCommand comm = new SqlCommand("sprocMenuItemGetByYearOrdered", conn);
+                comm.CommandType = System.Data.CommandType.StoredProcedure;
+                comm.Parameters.AddWithValue("@Year", year);
+
+                conn.Open();
+                SqlDataReader dr = comm.ExecuteReader();
+
+                while (dr.Read())
+                {
+                    output.Add(FillMenuItem(dr));
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+            }
+            finally
+            {
+                if (conn != null) conn.Close();
+            }
+
+
+            return output;
+        }
+
+        /// <summary>
+        /// Query 14
+        /// lists all menu items that have been ordered under specified amount of times 
+        /// in between two dates
+        /// </summary>
+        /// <param name="numOrders">max number of orders</param>
+        /// <param name="beginDate"></param>
+        /// <param name="endDate"></param>
+        /// <returns>list of menu items that meet requirements</returns>
+        public static List<MenuItem> MenuItemGetLowSalesByDate(int numOrders, DateTime beginDate, DateTime endDate)
+        {
+            //only a datetime option??
+            SqlConnection conn = null;
+            List<MenuItem> output = new List<MenuItem>();
+
+            try
+            {
+                conn = new SqlConnection(GlobalConfig.ConnectionString(db));
+
+                SqlCommand comm = new SqlCommand("sprocMenuItemGetLowSalesByDate", conn);
+                comm.CommandType = System.Data.CommandType.StoredProcedure;
+                comm.Parameters.AddWithValue("@BeginDate", beginDate);
+                comm.Parameters.AddWithValue("@EndDate", endDate);
+                comm.Parameters.AddWithValue("@NumberOfOrders", numOrders);
+
+                conn.Open();
+                SqlDataReader dr = comm.ExecuteReader();
+
+                while (dr.Read())
+                {
+                    output.Add(FillMenuItem(dr));
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+            }
+            finally
+            {
+                if (conn != null) conn.Close();
+            }
+
+
+            return output;
+        }
+        #endregion
     }
 }
