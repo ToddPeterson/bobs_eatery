@@ -1,0 +1,16 @@
+﻿<Window x:Class="EateryUI.Details"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:EateryUI"
+        mc:Ignorable="d"
+        Title="Details" Height="450" Width="800">
+    <Grid>
+        <ListBox x:Name="lbxDetails" HorizontalAlignment="Left" Height="274" VerticalAlignment="Top" Width="438" Margin="174,136,0,0"/>
+        <TextBlock Text="Bob's Awesome Eatery" FontSize="24" Margin="261,10,254.6,373"/>
+        <TextBlock x:Name="tbDetail" FontSize="20" Margin="174,60,181.6,323" TextAlignment="Center"/>
+        <Button x:Name="btnEdit" Content="Edit" HorizontalAlignment="Left" Margin="525,102,0,0" VerticalAlignment="Top" Width="75" Height="29" Click="BtnEdit_Click"/>
+
+    </Grid>
+</Window>

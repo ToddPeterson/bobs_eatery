@@ -1,0 +1,29 @@
+﻿<Window x:Class="EateryUI.MenuItem"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:EateryUI"
+        mc:Ignorable="d"
+        Title="Menu Item" Height="345" Width="529" x:Name="frmMenuItem">
+    <Grid>
+        <Label x:Name="lblName" Content="Name:" HorizontalAlignment="Left" Margin="10,28,0,0" VerticalAlignment="Top" Width="103"/>
+        <Label x:Name="lblDescription" Content="Description: " HorizontalAlignment="Left" Margin="10,59,0,0" VerticalAlignment="Top" Width="103"/>
+        <Label x:Name="lblPicturePath" Content="PicturePath:" HorizontalAlignment="Left" Margin="10,90,0,0" VerticalAlignment="Top" Width="103"/>
+        <Label x:Name="lblIsSideItem" Content="IsSideItem:" HorizontalAlignment="Left" Margin="10,121,0,0" VerticalAlignment="Top" Width="103"/>
+        <Label x:Name="lblPrepTime" Content="PrepTime:" HorizontalAlignment="Left" Margin="10,152,0,0" VerticalAlignment="Top" Width="103"/>
+        <Label x:Name="lblPrepMethodID" Content="PrepMethodID:" HorizontalAlignment="Left" Margin="10,183,0,0" VerticalAlignment="Top" Width="103"/>
+        <Label x:Name="lblCategoryID" Content="CategoryID:" HorizontalAlignment="Left" Margin="10,214,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="lblCuisineTypeID" Content="CuisineTypeID:" HorizontalAlignment="Left" Margin="10,245,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="txtName" HorizontalAlignment="Left" Height="23" Margin="118,32,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="365"/>
+        <TextBox x:Name="txtDescription" HorizontalAlignment="Left" Height="23" Margin="118,59,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="365" TextChanged="TextBox_TextChanged"/>
+        <TextBox x:Name="txtPicturePath" HorizontalAlignment="Left" Height="23" Margin="118,87,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="365"/>
+        <TextBox x:Name="txtPrepTime" HorizontalAlignment="Left" Height="23" Margin="118,156,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="365" TextChanged="TextBox_TextChanged"/>
+        <RadioButton x:Name="rbIsSideItemYes" Content="Yes" HorizontalAlignment="Left" Margin="118,125,0,0" VerticalAlignment="Top" Checked="RadioButton_Checked"/>
+        <RadioButton x:Name="rbIsSideItemNo" Content="No" HorizontalAlignment="Left" Margin="246,125,0,0" VerticalAlignment="Top"/>
+        <ComboBox x:Name="cmbPrepMethodID" HorizontalAlignment="Left" Margin="118,187,0,0" VerticalAlignment="Top" Width="365" SelectionChanged="ComboBox_SelectionChanged"/>
+        <ComboBox x:Name="cmbCategoryID" HorizontalAlignment="Left" Margin="118,218,0,0" VerticalAlignment="Top" Width="365" SelectionChanged="ComboBox_SelectionChanged"/>
+        <ComboBox x:Name="cmbCuisineTypeID" HorizontalAlignment="Left" Margin="118,249,0,0" VerticalAlignment="Top" Width="365" SelectionChanged="ComboBox_SelectionChanged"/>
+
+    </Grid>
+</Window>

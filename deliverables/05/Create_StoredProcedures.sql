@@ -390,7 +390,7 @@ CREATE PROCEDURE sprocCustomersEatInOrdersGetByDate
 AS
 BEGIN
 	SET NOCOUNT ON
-	SELECT cus.FirstName + ' ' + cus.LastName AS [Customer], t.Number [Table Number], mi.Name [Menu Item], o.DateOrdered FROM Customers cus
+	SELECT cus.FirstName + ' ' + cus.LastName AS [Customer], t.Number [Table Number], mi.Name [Menu Item], o.DateOrdered [Date Ordered] FROM Customers cus
 		JOIN Orders o ON o.CustomerID = cus.CustomerID
 		JOIN Seatings s ON s.SeatingID = o.SeatingID
 		JOIN [Tables] t ON t.TableID = s.TableID

@@ -1,0 +1,29 @@
+﻿<Window x:Class="EateryUI.Order"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:EateryUI"
+        mc:Ignorable="d"
+        Title="Order" Height="441" Width="793" x:Name="frmOrder">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="125*"/>
+            <ColumnDefinition Width="667*"/>
+        </Grid.ColumnDefinitions>
+        <Label x:Name="lblCustomerID" Content="CustomerID:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="84"/>
+        <Label x:Name="lblSeatingID" Content="SeatingID:" HorizontalAlignment="Left" Margin="10,50,0,0" VerticalAlignment="Top" Width="73"/>
+        <Label x:Name="OrderTypeID" Content="OrderTypeID:" HorizontalAlignment="Left" Margin="10,92,0,0" VerticalAlignment="Top" Width="84"/>
+        <Label x:Name="lblPaymentMethodID" Content="PaymentMethodID:" HorizontalAlignment="Left" Margin="10,133,0,0" VerticalAlignment="Top" Width="115"/>
+        <Label x:Name="lblDateOrdered" Content="DateOrdered:" HorizontalAlignment="Left" Margin="10,176,0,0" VerticalAlignment="Top" Width="138" Grid.ColumnSpan="2"/>
+        <ComboBox x:Name="cmbPaymentMethodID" HorizontalAlignment="Left" Margin="0,133,0,0" VerticalAlignment="Top" Width="242" Grid.Column="1"/>
+        <ComboBox x:Name="cmbOrderTypeID" HorizontalAlignment="Left" Margin="0,96,0,0" VerticalAlignment="Top" Width="242" Grid.Column="1">
+        </ComboBox>
+        <ComboBox x:Name="cmbSeatingID" HorizontalAlignment="Left" Margin="0,54,0,0" VerticalAlignment="Top" Width="242" Grid.Column="1">
+        </ComboBox>
+        <ComboBox x:Name="cmbCustomerID" HorizontalAlignment="Left" Margin="0,14,0,0" VerticalAlignment="Top" Width="242" Grid.Column="1">
+        </ComboBox>
+        <DatePicker x:Name="dpDateOrdered" Grid.Column="1" HorizontalAlignment="Left" Margin="0,176,0,0" VerticalAlignment="Top" Width="242"/>
+
+    </Grid>
+</Window>

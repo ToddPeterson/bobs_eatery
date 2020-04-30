@@ -14,6 +14,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using EateryLibrary;
+using EateryLibrary.Models;
+
 
 namespace EateryUI
 {
@@ -27,30 +30,31 @@ namespace EateryUI
             InitializeComponent();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void BtnShowCustomers_Click(object sender, RoutedEventArgs e)
         {
-            MenuItem mi = new MenuItem();
-            mi.Name = "test food";
-            mi.Description = "description";
-            mi.PicturePath = "C:\\folder\\image.jpg";
-            mi.IsSideItem = true;
-            mi.PrepTime = 15;
-            mi.PrepMethodID = 1;
-            mi.CategoryID = 2;
-            mi.CuisineTypeID = 3;
+            lbxOutput.Items.Clear();
+            List<Customer> customers = DAL.CustomerGetAll();
+            foreach(Customer customer in customers)
+            {
+                lbxOutput.Items.Add(customer);
+            }
+        }
 
-            mi = DAL.MenuItemCreate(mi);
+        private void BtnShowEmployees_Click(object sender, RoutedEventArgs e)
+        {
+            lbxOutput.Items.Clear();
+            List<Employee> employees = DAL.EmployeesGetAll();
+            foreach (Employee employee in employees)
+            {
+                lbxOutput.Items.Add(employee);
+            }
+        }
 
-            mi.Name = "new name";
-            mi.Description = "new desc";
-            mi.PicturePath = "new path";
-            mi.IsSideItem = !mi.IsSideItem;
-            mi.PrepTime = 123;
-            mi.PrepMethodID = 2;
-            mi.CategoryID = 3;
-            mi.CuisineTypeID = 4;
-
-            int num = DAL.MenuItemUpdate(mi);
+        private void LbxOutput_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Employee ba = lbxOutput.SelectedItem as Employee;
+            Details details = new Details(ba);
+            details.Show();
         }
     }
 }
