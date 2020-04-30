@@ -802,6 +802,45 @@ namespace EateryLibrary
             return output;
         }
 
+        /// <summary>
+        /// Query 7
+        /// Given a string pattern, returns all employees whose first or last name contain that string.
+        /// </summary>
+        /// <param name="pattern"></param>
+        /// <returns></returns>
+        public static List<Employee> EmployeesGetByNameLikeString(string pattern)
+        {
+            SqlConnection conn = null;
+            List<Employee> output = new List<Employee>();
+
+            try
+            {
+                conn = new SqlConnection(GlobalConfig.ConnectionString(db));
+
+                SqlCommand comm = new SqlCommand("sprocEmployeesGetByNameLikeString", conn);
+                comm.CommandType = System.Data.CommandType.StoredProcedure;
+                comm.Parameters.AddWithValue("@String", pattern);
+
+                conn.Open();
+                SqlDataReader dr = comm.ExecuteReader();
+
+                while (dr.Read())
+                {
+                    output.Add(FillEmployee(dr));
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+            }
+            finally
+            {
+                if (conn != null) conn.Close();
+            }
+
+            return output;
+        }
+
         #region SprocsEightToTen
         public static int CitiesCreate(string cityName, int zip, string stateName)
         {
