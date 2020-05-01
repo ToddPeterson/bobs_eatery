@@ -210,20 +210,17 @@ namespace EateryLibrary
                 comm.CommandType = System.Data.CommandType.StoredProcedure;
 
                 conn.Open();
-                Console.WriteLine("Exec reader");
                 SqlDataReader dr = comm.ExecuteReader();
-                Console.WriteLine("Done exec");
 
                 while (dr.Read())
                 {
-                    Console.WriteLine("Filling employee");
                     output.Add(FillEmployee(dr));
                 }
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
-                System.Diagnostics.Debug.WriteLine(ex.Message);
+                //System.Diagnostics.Debug.WriteLine(ex.Message);
             }
             finally
             {
@@ -261,6 +258,7 @@ namespace EateryLibrary
             }
             catch (Exception ex)
             {
+                Console.WriteLine(ex.Message);
                 System.Diagnostics.Debug.WriteLine(ex.Message);
             }
             finally
@@ -284,7 +282,7 @@ namespace EateryLibrary
             {
                 conn = new SqlConnection(GlobalConfig.ConnectionString(db));
 
-                SqlCommand comm = new SqlCommand("sproc_MenuItemsAdd", conn);
+                SqlCommand comm = new SqlCommand("sproc_EmployeesAdd", conn);
                 comm.CommandType = System.Data.CommandType.StoredProcedure;
 
                 comm.Parameters.AddWithValue("@FirstName", emp.FirstName);
@@ -313,6 +311,7 @@ namespace EateryLibrary
             }
             catch (Exception ex)
             {
+                Console.WriteLine(ex.Message);
                 System.Diagnostics.Debug.WriteLine(ex.Message);
             }
             finally
@@ -387,8 +386,6 @@ namespace EateryLibrary
             emp.CityID = (int)dr["CityID"];
             emp.EmployeePositionID = (int)dr["EmployeePositionID"];
             emp.EmployeeNumber = (int)dr["EmployeeNumber"];
-
-            Console.WriteLine("filled employee");
 
             return emp;
         }

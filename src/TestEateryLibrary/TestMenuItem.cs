@@ -89,7 +89,7 @@ namespace TestEateryLibrary
 
             int num = DAL.MenuItemUpdate(mi);
 
-            //Assert.AreEqual(num, 1);
+            Assert.AreEqual(num, 1);
 
             MenuItem check = DAL.MenuItemGetByID(mi.ID);
             Assert.AreEqual(mi.Name, check.Name);
