@@ -743,7 +743,7 @@ namespace EateryLibrary
             {
                 conn = new SqlConnection(GlobalConfig.ConnectionString(db));
 
-                SqlCommand comm = new SqlCommand("sproc_EmployeesExists", conn);
+                SqlCommand comm = new SqlCommand("sprocEmployeesExists", conn);
                 comm.CommandType = System.Data.CommandType.StoredProcedure;
 
                 comm.Parameters.AddWithValue("@FirstName", firstName);

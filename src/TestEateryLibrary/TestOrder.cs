@@ -86,5 +86,12 @@ namespace TestEateryLibrary
             Assert.AreEqual(o.PaymentMethodID, check.PaymentMethodID);
             Assert.AreEqual(o.DateOrdered, check.DateOrdered);
         }
+
+        [Test]
+        public void GetByCustomer()
+        {
+            List<Order> orders = DAL.OrdersGetByCustomer("Asher", "Santiago");
+            Assert.Greater(orders.Count, 0);
+        }
     }
 }

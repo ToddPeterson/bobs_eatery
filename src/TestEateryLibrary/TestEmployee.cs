@@ -133,6 +133,36 @@ namespace TestEateryLibrary
             Assert.AreEqual(em.EmployeeNumber, check.EmployeeNumber);
         }
 
+        [Test]
+        public void EmployeeExists()
+        {
+            // Exists
+            Assert.IsTrue(DAL.EmployeeExists("Pearl", "Evans"));
+
+            // Does not exist
+            Assert.IsFalse(DAL.EmployeeExists("xxx", "xxx"));
+
+            // First name exists
+            Assert.IsFalse(DAL.EmployeeExists("Rudyard", "xxx"));
+
+            // Last name exists
+            Assert.IsFalse(DAL.EmployeeExists("xxx", "Smith"));
+        }
+
+        [Test]
+        public void GetByNameContaining()
+        {
+            string pattern = "ck";
+            List<Employee> matches = DAL.EmployeesGetByNameLikeString(pattern);
+
+            Assert.Greater(matches.Count, 0);
+
+            foreach (Employee employee in matches)
+            {
+                StringAssert.Contains(pattern, $"{employee.FirstName} {employee.LastName}");
+            }
+        }
+
         private int UniqueEmployeeNumber()
         {
             List<Employee> employees = DAL.EmployeesGetAll();
