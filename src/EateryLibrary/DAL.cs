@@ -472,18 +472,19 @@ namespace EateryLibrary
         /// </summary>
         /// <param name="emp">Customer data model</param>
         /// <returns>The id of customer added</returns>
-        public static int CustomerAdd(Customer customer)
+        public static Customer CustomerAdd(Customer customer)
         {
-            if (customer == null) return -1;
-            int effectedId = -1;
+            if (customer == null)
+                return customer;
             SqlConnection conn = null;
 
             try
             {
                 conn = new SqlConnection(GlobalConfig.ConnectionString(db));
+
                 SqlCommand comm = new SqlCommand("sproc_CustomersAdd", conn);
                 comm.CommandType = System.Data.CommandType.StoredProcedure;
-                conn.Open();
+
                 comm.Parameters.AddWithValue("@FirstName", customer.FirstName);
                 comm.Parameters.AddWithValue("@MiddleName", customer.MiddleName);
                 comm.Parameters.AddWithValue("@LastName", customer.LastName);
@@ -492,21 +493,25 @@ namespace EateryLibrary
                 comm.Parameters.AddWithValue("@Email", customer.Email);
                 comm.Parameters.AddWithValue("@StreetAddress", customer.StreetAddress);
                 comm.Parameters.AddWithValue("@CityID", customer.CityID);
-                SqlParameter retParameter = comm.Parameters.Add("@ID", System.Data.SqlDbType.Int);
+
+                SqlParameter retParameter = comm.Parameters.Add("@CustomerID", System.Data.SqlDbType.Int);
                 retParameter.Direction = System.Data.ParameterDirection.Output;
-                effectedId = comm.ExecuteNonQuery();
-                return effectedId;
+
+                conn.Open();
+                comm.ExecuteNonQuery();
+
+                if (retParameter.Value != DBNull.Value)
+                    customer.ID = (int)retParameter.Value;
             }
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine(ex.Message);
-                effectedId = -1;
             }
             finally
             {
                 if (conn != null) conn.Close();
             }
-            return effectedId;
+            return customer;
         }
 
         /// <summary>
@@ -523,10 +528,10 @@ namespace EateryLibrary
             try
             {
                 conn = new SqlConnection(GlobalConfig.ConnectionString(db));
-                SqlCommand comm = new SqlCommand("sproc_EmployeesUpdateByID", conn);
+                SqlCommand comm = new SqlCommand("sproc_CustomersUpdateByID", conn);
                 comm.CommandType = System.Data.CommandType.StoredProcedure;
                 conn.Open();
-                comm.Parameters.AddWithValue("@CustomerID", customer.FirstName);
+                comm.Parameters.AddWithValue("@CustomerID", customer.ID);
                 comm.Parameters.AddWithValue("@FirstName", customer.FirstName);
                 comm.Parameters.AddWithValue("@MiddleName", customer.MiddleName);
                 comm.Parameters.AddWithValue("@LastName", customer.LastName);
@@ -535,6 +540,7 @@ namespace EateryLibrary
                 comm.Parameters.AddWithValue("@Email", customer.Email);
                 comm.Parameters.AddWithValue("@StreetAddress", customer.StreetAddress);
                 comm.Parameters.AddWithValue("@CityID", customer.CityID);
+
                 effectedId = comm.ExecuteNonQuery();
             }
             catch (Exception ex)

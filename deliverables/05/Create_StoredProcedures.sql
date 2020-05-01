@@ -212,7 +212,7 @@ BEGIN
 			FirstName = @FirstName
 			,MiddleName = @MiddleName
 			,LastName = @LastName
-			,CustomerNumber = @CustomerID
+			,CustomerNumber = @CustomerNumber
 			,PhoneNumber = @PhoneNumber
 			,Email = @Email
 			,StreetAddress = @StreetAddress
