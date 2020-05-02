@@ -127,5 +127,21 @@ namespace EateryUI
         {
             lbxOutput.Items.Clear();
         }
+
+        private void btnSearchBySubstring_Click(object sender, RoutedEventArgs e)
+        {
+            lbxOutput.Items.Clear();
+
+            string substring = tbxEmployeeSubstring.Text;
+
+            if (substring == "")
+                return;
+
+            List<Employee> employees = DAL.EmployeesGetByNameLikeString(substring);
+            foreach (Employee employee in employees)
+            {
+                lbxOutput.Items.Add(employee);
+            }
+        }
     }
 }
