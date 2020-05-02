@@ -329,7 +329,7 @@ BEGIN
 END
 GO
 
---7. Return all employees whose first or last name contains a given string. E.g. if ï¿½arï¿½ was
+--7. Return all employees whose first or last name contains a given string. E.g. if “ar” was
 --given as a parameter, you would return: Mark Smith, Marc Lewis, Paris Marconi, Howey
 --Marsdin, etc.
 
@@ -382,7 +382,7 @@ BEGIN
 END
 GO
 
---9. List the customer name, table number, entrï¿½e ordered, and date and time ordered for
+--9. List the customer name, table number, entrée ordered, and date and time ordered for
 --all items purchased on a given date.
 
 CREATE PROCEDURE sprocCustomersEatInOrdersGetByDate
@@ -401,7 +401,7 @@ BEGIN
 END
 GO
 
---10. List all entrï¿½es ordered between two given dates.
+--10. List all entrées ordered between two given dates.
 
 CREATE PROCEDURE sprocEntreesGetBetweenDates
 @BeginDate Date
