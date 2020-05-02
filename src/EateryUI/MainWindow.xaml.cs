@@ -32,7 +32,7 @@ namespace EateryUI
         {
             lbxOutput.Items.Clear();
             List<Customer> customers = DAL.CustomerGetAll();
-            foreach(Customer customer in customers)
+            foreach (Customer customer in customers)
             {
                 lbxOutput.Items.Add(customer);
             }
@@ -59,7 +59,7 @@ namespace EateryUI
 
         private void LbxOutput_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if(lbxOutput.SelectedIndex >= 0)
+            if (lbxOutput.SelectedIndex >= 0)
             {
                 // Took help from the Db Learn Project assignment
                 object selectedItem = lbxOutput.SelectedItem;
@@ -69,13 +69,13 @@ namespace EateryUI
                     Details details = new Details(employee);
                     details.Show();
                 }
-                else if(selectedItem.GetType() == typeof(Customer))
+                else if (selectedItem.GetType() == typeof(Customer))
                 {
                     Customer customer = new Customer();
 
                 }
             }
-            
+
         }
 
         /// <summary>
@@ -93,11 +93,11 @@ namespace EateryUI
                     form.Show();
                     break;
                 case "Customers":
-                    // TODO - Show create customer form
+                // TODO - Show create customer form
                 case "Orders":
-                    // TODO - Show create order form
+                // TODO - Show create order form
                 case "Menu Items":
-                    // TODO - Show create Menu Item form
+                // TODO - Show create Menu Item form
                 default:
                     break;
             }
@@ -163,7 +163,7 @@ namespace EateryUI
 
             List<Order> orders = DAL.OrdersGetByCustomer(firstName, lastName);
 
-            foreach(Order order in orders)
+            foreach (Order order in orders)
             {
                 lbxOutput.Items.Add(order);
             }
@@ -181,7 +181,7 @@ namespace EateryUI
             MessageBox.Show(message);
         }
 
-    
+
         private void btnSproc8_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -192,11 +192,30 @@ namespace EateryUI
 
                 DAL.CitiesCreate(city, zip, state);
             }
-            catch(Exception excp)
+            catch (Exception excp)
             {
                 MessageBox.Show(excp.Message);
             }
-           
+
+        }
+
+        private void btnSearchSproc9_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                string date = dpSproc9.Text;
+
+                List<Tuple<string, int, string, DateTime>> results = DAL.CustomersEatInOrdersGetByDate(date);
+
+                foreach (Tuple<string, int, string, DateTime> tuple in results)
+                {
+                    lbxOutput.Items.Add(tuple);
+                }
+            }
+            catch (Exception excp)
+            {
+                MessageBox.Show(excp.Message);
+            }
         }
     }
 }

@@ -91,6 +91,25 @@
                         <ColumnDefinition/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
+                    <GroupBox Header="Search by Date" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="5" Padding="10">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                            </Grid.RowDefinitions>
+
+                            <TextBlock Text="Purchase Date:" Grid.Row="0" Grid.Column="0" Margin="0 0 10 0"/>
+                            <DatePicker x:Name="dpSproc9" Grid.Row="0" Grid.Column="1" Margin="0 0 0 10"/>
+
+                            
+                            <Button x:Name="btnSearchSproc9" Content="Search" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Padding="30 5" Margin="0 10 0 0" HorizontalAlignment="Left" Click="btnOrderSearchByCustomer_Click"/>
+                        </Grid>
+                    </GroupBox>
                     <Button x:Name="btnShowCustomers" Grid.Column="0" Content="Show Customers" HorizontalAlignment="Center" VerticalAlignment="Center" Width="200" Height="50" Click="BtnShowCustomers_Click"/>
                 </Grid>
             </TabItem>
