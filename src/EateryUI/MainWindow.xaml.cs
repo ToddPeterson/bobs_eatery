@@ -105,14 +105,16 @@ namespace EateryUI
             switch (header)
             {
                 case "Employees":
-                    
+                    Employee employee = lbxOutput.SelectedItem as Employee;
+                    EmployeeForm form = new EmployeeForm(employee);
+                    form.Show();
                     break;
                 case "Customers":
-                // TODO - Show create customer form
+                // TODO - Show edit customer form
                 case "Orders":
-                // TODO - Show create order form
+                // TODO - Show edit order form
                 case "Menu Items":
-                // TODO - Show create Menu Item form
+                // TODO - Show edit Menu Item form
                 default:
                     break;
             }
