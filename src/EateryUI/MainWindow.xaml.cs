@@ -168,5 +168,17 @@ namespace EateryUI
                 lbxOutput.Items.Add(order);
             }
         }
+
+        private void btnEmployeeExists_Click(object sender, RoutedEventArgs e)
+        {
+            string firstName = tbxEmployeeExistsFirstName.Text;
+            string lastName = tbxEmployeeExistsLastName.Text;
+
+            bool exists = DAL.EmployeeExists(firstName, lastName);
+
+            string message = exists ? "Yes" : "No";
+
+            MessageBox.Show(message);
+        }
     }
 }
