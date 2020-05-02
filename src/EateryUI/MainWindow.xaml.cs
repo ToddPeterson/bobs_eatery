@@ -47,6 +47,15 @@ namespace EateryUI
                 lbxOutput.Items.Add(employee);
             }
         }
+        private void btnShowOrders_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnShowMenuItems_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
 
         private void LbxOutput_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -141,6 +150,22 @@ namespace EateryUI
             foreach (Employee employee in employees)
             {
                 lbxOutput.Items.Add(employee);
+            }
+        }
+
+
+        private void btnOrderSearchByCustomer_Click(object sender, RoutedEventArgs e)
+        {
+            lbxOutput.Items.Clear();
+
+            string firstName = tbxOrderCustomerFirstName.Text;
+            string lastName = tbxOrderCustomerLastName.Text;
+
+            List<Order> orders = DAL.OrdersGetByCustomer(firstName, lastName);
+
+            foreach(Order order in orders)
+            {
+                lbxOutput.Items.Add(order);
             }
         }
     }

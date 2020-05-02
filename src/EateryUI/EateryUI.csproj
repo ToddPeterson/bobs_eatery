@@ -85,7 +85,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Order.xaml">
+    <Page Include="OrderForm.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -94,8 +94,8 @@
     <Compile Include="MenuItemForm.xaml.cs">
       <DependentUpon>MenuItemForm.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Order.xaml.cs">
-      <DependentUpon>Order.xaml</DependentUpon>
+    <Compile Include="OrderForm.xaml.cs">
+      <DependentUpon>OrderForm.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>

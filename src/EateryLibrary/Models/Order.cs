@@ -96,5 +96,11 @@ namespace EateryLibrary.Models
             }
         }
         #endregion
+
+        public override string ToString()
+        {
+            Customer cus = DAL.CustomerGetByID(_CustomerID);
+            return $"{DateOrdered} - {cus}";
+        }
     }
 }

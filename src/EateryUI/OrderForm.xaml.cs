@@ -15,11 +15,11 @@ using System.Windows.Shapes;
 namespace EateryUI
 {
     /// <summary>
-    /// Interaction logic for Order.xaml
+    /// Interaction logic for OrderForm.xaml
     /// </summary>
-    public partial class Order : Window
+    public partial class OrderForm : Window
     {
-        public Order()
+        public OrderForm()
         {
             InitializeComponent();
         }
