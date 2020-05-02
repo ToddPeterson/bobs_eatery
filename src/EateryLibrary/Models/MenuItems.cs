@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace EateryLibrary.Models
 {
-    public class MenuItem
+    public class MenuItems
     {
 		#region Private Variables
 		private int _ID;

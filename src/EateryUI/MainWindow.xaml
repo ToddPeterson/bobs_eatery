@@ -7,12 +7,31 @@
         mc:Ignorable="d"
         FontSize="18"
         FontFamily="Montserrat"
-        Title="Bob's Awesome Eatery" Height="450" Width="800" WindowState="Maximized" WindowStyle="ToolWindow">
+        Title="Bob's Awesome Eatery" Height="566.4" Width="910.4" WindowState="Maximized" WindowStyle="ToolWindow">
     <Grid>
-        <TextBlock Text="Bob's Awesome Eatery" FontSize="24" Margin="262,70,253.6,313"/>
-        <ListBox x:Name="lbxOutput" HorizontalAlignment="Left" Height="273" Margin="325,135,0,0" VerticalAlignment="Top" Width="458" SelectionChanged="LbxOutput_SelectionChanged"/>
-        <Button x:Name="btnShowCustomers" Content="Show Customers" Grid.Column="1" HorizontalAlignment="Left" Margin="10.2,79,0,0" Grid.Row="6" VerticalAlignment="Top" Width="153" Height="34" Click="BtnShowCustomers_Click"/>
-        <Button x:Name="btnShowEmployees" Content="Show Employees" Grid.Column="1" HorizontalAlignment="Left" Margin="10.2,135,0,0" Grid.Row="6" VerticalAlignment="Top" Width="153" Height="30" Click="BtnShowEmployees_Click"/>
-        <Button x:Name="btnCreate" Content="Add" HorizontalAlignment="Left" Margin="699,92,0,0" VerticalAlignment="Top" Width="84" Height="33"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <ListBox x:Name="lbxOutput" Grid.Row="1" HorizontalAlignment="Left" Height="266"  VerticalAlignment="Top" Width="904" SelectionChanged="LbxOutput_SelectionChanged"/>
+        <TabControl HorizontalAlignment="Left" Grid.Row="0" Height="266" VerticalAlignment="Top" Width="904">
+            <TabItem Header="Employee">
+                <Grid>
+                    <Button x:Name="btnShowEmployees" Content="Show Employees" HorizontalAlignment="Left" Margin="10,98,0,0" VerticalAlignment="Top" Width="167" Height="48" Click="BtnShowEmployees_Click" RenderTransformOrigin="0.375,0.983"/>
+                    <Button x:Name="btnCreateEmployee" Content="Add Employee" HorizontalAlignment="Left" Margin="682,96,0,0" VerticalAlignment="Top" Width="206" Height="50" RenderTransformOrigin="6.474,-3.967"/>
+                    <TextBlock Text="Bob's Awesome Eatery" FontSize="24" Margin="316,25,330.4,85"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Customer">
+                <Grid>
+                    <Button x:Name="btnShowCustomers" Content="Show Customers" HorizontalAlignment="Left" Margin="10,109,0,0" VerticalAlignment="Top" Width="163" Height="37" Click="BtnShowCustomers_Click"/>
+                    <TextBlock Text="Bob's Awesome Eatery" FontSize="24" Margin="321,25,331.4,84"/>
+                    <Button x:Name="btnCreateCustomer" Content="Add Customer" HorizontalAlignment="Left" Margin="682,96,0,0" VerticalAlignment="Top" Width="206" Height="50" RenderTransformOrigin="6.474,-3.967"/>
+                </Grid>
+            </TabItem>
+        </TabControl>
     </Grid>
 </Window>

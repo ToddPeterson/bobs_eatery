@@ -16,10 +16,10 @@ namespace EateryLibrary
         /// <summary>
         /// Get a list of all MenuItems in the database
         /// </summary>
-        public static List<MenuItem> MenuItemsGetAll()
+        public static List<MenuItems> MenuItemsGetAll()
         {
             SqlConnection conn = null;
-            List<MenuItem> output = new List<MenuItem>();
+            List<MenuItems> output = new List<MenuItems>();
 
             try
             {
@@ -53,10 +53,10 @@ namespace EateryLibrary
         /// </summary>
         /// <param name="id">Primary key associated with a MenuItem</param>
         /// <returns></returns>
-        public static MenuItem MenuItemGetByID(int id)
+        public static MenuItems MenuItemGetByID(int id)
         {
             SqlConnection conn = null;
-            MenuItem output = null;
+            MenuItems output = null;
 
             try
             {
@@ -91,7 +91,7 @@ namespace EateryLibrary
         /// </summary>
         /// <param name="model">A MenuItem data model</param>
         /// <returns>The input MenuItem model with the ID attribute set</returns>
-        public static MenuItem MenuItemCreate(MenuItem model)
+        public static MenuItems MenuItemCreate(MenuItems model)
         {
             SqlConnection conn = null;
 
@@ -138,7 +138,7 @@ namespace EateryLibrary
         /// </summary>
         /// <param name="model">A MenuItem model</param>
         /// <returns>The number of rows affected</returns>
-        public static int MenuItemUpdate(MenuItem model)
+        public static int MenuItemUpdate(MenuItems model)
         {
             SqlConnection conn = null;
             int numberOfRowsAffected = 0;
@@ -175,9 +175,9 @@ namespace EateryLibrary
             return numberOfRowsAffected;
         }
 
-        private static MenuItem FillMenuItem(SqlDataReader dr)
+        private static MenuItems FillMenuItem(SqlDataReader dr)
         {
-            MenuItem mi = new MenuItem();
+            MenuItems mi = new MenuItems();
             mi.ID = (int)dr["MenuItemID"];
             mi.Name = (string)dr["Name"];
             mi.Description = (string)dr["Description"];
@@ -924,10 +924,10 @@ namespace EateryLibrary
         }
 
 
-        public static List<MenuItem> EntreesGetBetweenDates(string beginDate, string endDate)
+        public static List<MenuItems> EntreesGetBetweenDates(string beginDate, string endDate)
         {
             SqlConnection conn = null;
-            List<MenuItem> results = new List<MenuItem>();
+            List<MenuItems> results = new List<MenuItems>();
 
             try
             {
@@ -943,7 +943,7 @@ namespace EateryLibrary
 
                 while (dr.Read())
                 {
-                    MenuItem menuItem = new MenuItem();
+                    MenuItems menuItem = new MenuItems();
                     menuItem.ID = (int)dr["MenuItemID"];
                     menuItem.Name = (string)dr["Name"];
                     menuItem.Description = (string)dr["Description"];
@@ -980,10 +980,10 @@ namespace EateryLibrary
         /// </summary>
         /// <param name="cuisineID">ID that belongs to the cuisine in question</param>
         /// <returns>all mennu items that meet the requirements</returns>
-        public static List<MenuItem> MenuItemsGetByCuisineID(int cuisineID)
+        public static List<MenuItems> MenuItemsGetByCuisineID(int cuisineID)
         {
             SqlConnection conn = null;
-            List<MenuItem> output = new List<MenuItem>();
+            List<MenuItems> output = new List<MenuItems>();
 
             try
             {
@@ -1061,10 +1061,10 @@ namespace EateryLibrary
         /// </summary>
         /// <param name="year"></param>
         /// <returns>All menu items that meet the requirements</returns>
-        public static List<MenuItem> MenuItemGetByYearOrdered(int year)
+        public static List<MenuItems> MenuItemGetByYearOrdered(int year)
         {
             SqlConnection conn = null;
-            List<MenuItem> output = new List<MenuItem>();
+            List<MenuItems> output = new List<MenuItems>();
 
             try
             {
@@ -1104,11 +1104,11 @@ namespace EateryLibrary
         /// <param name="beginDate"></param>
         /// <param name="endDate"></param>
         /// <returns>list of menu items that meet requirements</returns>
-        public static List<MenuItem> MenuItemGetLowSalesByDate(int numOrders, DateTime beginDate, DateTime endDate)
+        public static List<MenuItems> MenuItemGetLowSalesByDate(int numOrders, DateTime beginDate, DateTime endDate)
         {
             //only a datetime option??
             SqlConnection conn = null;
-            List<MenuItem> output = new List<MenuItem>();
+            List<MenuItems> output = new List<MenuItems>();
 
             try
             {

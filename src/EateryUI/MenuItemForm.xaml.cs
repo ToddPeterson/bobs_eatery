@@ -17,9 +17,9 @@ namespace EateryUI
     /// <summary>
     /// Interaction logic for MenuItem.xaml
     /// </summary>
-    public partial class MenuItem : Window
+    public partial class MenuItemForm : Window
     {
-        public MenuItem()
+        public MenuItemForm()
         {
             InitializeComponent();
         }

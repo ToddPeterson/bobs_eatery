@@ -54,5 +54,6 @@ namespace EateryUI
             Details details = new Details(ba);
             details.Show();
         }
+       
     }
 }

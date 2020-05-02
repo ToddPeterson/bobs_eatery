@@ -46,7 +46,7 @@
     <Compile Include="GlobalConfig.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\Employee.cs" />
-    <Compile Include="Models\MenuItem.cs" />
+    <Compile Include="Models\MenuItems.cs" />
     <Compile Include="Models\Order.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
