@@ -180,5 +180,23 @@ namespace EateryUI
 
             MessageBox.Show(message);
         }
+
+    
+        private void btnSproc8_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                string city = txtCitySproc8.Text;
+                int zip = int.Parse(txtZipSproc8.Text);
+                string state = txtStateSproc8.Text;
+
+                DAL.CitiesCreate(city, zip, state);
+            }
+            catch(Exception excp)
+            {
+                MessageBox.Show(excp.Message);
+            }
+           
+        }
     }
 }

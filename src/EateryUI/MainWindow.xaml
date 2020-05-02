@@ -94,7 +94,7 @@
                     <Button x:Name="btnShowCustomers" Grid.Column="0" Content="Show Customers" HorizontalAlignment="Center" VerticalAlignment="Center" Width="200" Height="50" Click="BtnShowCustomers_Click"/>
                 </Grid>
             </TabItem>
-            
+
             <TabItem Header="Orders" BorderBrush="Black">
                 <Grid>
                     <Grid.RowDefinitions>
@@ -124,7 +124,7 @@
                                 <RowDefinition Height="auto"/>
                                 <RowDefinition Height="auto"/>
                             </Grid.RowDefinitions>
-                            
+
                             <TextBlock Text="First Name:" Grid.Row="0" Grid.Column="0" Margin="0 0 10 0"/>
                             <TextBox x:Name="tbxOrderCustomerFirstName" Grid.Row="0" Grid.Column="1" Margin="0 0 0 10"/>
 
@@ -132,12 +132,12 @@
                             <TextBox x:Name="tbxOrderCustomerLastName" Grid.Row="1" Grid.Column="1"/>
 
                             <Button x:Name="btnOrderSearchByCustomer" Content="Search" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Padding="30 5" Margin="0 10 0 0" HorizontalAlignment="Left" Click="btnOrderSearchByCustomer_Click"/>
-                        </Grid>    
+                        </Grid>
                     </GroupBox>
                     <Button x:Name="btnShowOrders" Grid.Row="5" Grid.Column="0" Content="Show All" Padding="30 5" Margin="0 10 0 0" Click="btnShowOrders_Click"/>
                 </Grid>
             </TabItem>
-            
+
             <TabItem Header="Menu Items" BorderBrush="Black">
                 <Grid>
                     <Grid.RowDefinitions>
@@ -159,8 +159,52 @@
                     <Button x:Name="btnShowMenuItems" Grid.Row="5" Grid.Column="0" Content="Show All" Padding="30 5" Margin="0 10 0 0" Click="btnShowMenuItems_Click"/>
                 </Grid>
             </TabItem>
+            <TabItem Header="City" BorderBrush="Black" Margin="-2,-2,6,0">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <GroupBox Header="City, Zip, State" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="5" Padding="10" Margin="0,0,0,164" Grid.RowSpan="3">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                            </Grid.RowDefinitions>
+
+                            <TextBlock Text="City:" Grid.Row="0" Grid.Column="0" Margin="0 0 10 0"/>
+                            <TextBox x:Name="txtCitySproc8" Grid.Row="0" Grid.Column="1" Margin="0 0 0 10" TextChanged="OrderCustomerFirstName_TextChanged"/>
+
+                            <TextBlock Text="Zip:" Grid.Row="1" Grid.Column="0" Margin="0 0 10 0"/>
+                            <TextBox x:Name="txtZipSproc8" Grid.Row="1" Grid.Column="1"/>
+
+                            <TextBlock Text="State:" Grid.Row="2" Grid.Column="0" Margin="0,10,10,-10"/>
+                            <TextBox x:Name="txtStateSproc8" Grid.Row="2" Grid.Column="1" Margin="0,10"/>
+
+                            <Button x:Name="btnSproc8" Content="Associate/Add" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Padding="30 5" Margin="0,57,0,-47" HorizontalAlignment="Left" Click="btnSproc8_Click"/>
+                        </Grid>
+                    </GroupBox>
+                </Grid>
+            </TabItem>
         </TabControl>
-        
+
         <ListBox x:Name="lbxOutput" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" SelectionChanged="LbxOutput_SelectionChanged" BorderBrush="Black"/>
         <Button x:Name="btnCreate" Grid.Column="2" Grid.Row="2" Content="Create" Margin="0 10 10 0" Click="btnCreate_Click"/>
         <Button x:Name="btnEdit" Grid.Column="3" Grid.Row="2" Content="Edit" Margin="10 10 0 0" Click="btnEdit_Click"/>
