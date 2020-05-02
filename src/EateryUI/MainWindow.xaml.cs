@@ -50,10 +50,36 @@ namespace EateryUI
 
         private void LbxOutput_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Employee ba = lbxOutput.SelectedItem as Employee;
-            Details details = new Details(ba);
-            details.Show();
+            if(lbxOutput.SelectedIndex >= 0)
+            {
+                // Took help from the Db Learn Project assignment
+                object selectedItem = lbxOutput.SelectedItem;
+                if (selectedItem.GetType() == typeof(Employee))
+                {
+                    Employee employee = lbxOutput.SelectedItem as Employee;
+                    Details details = new Details(employee);
+                    details.Show();
+                }
+                else if(selectedItem.GetType() == typeof(Customer))
+                {
+                    Customer customer = new Customer();
+
+                }
+            }
+            
         }
-       
+
+        private void BtnCreateEmployee_Click(object sender, RoutedEventArgs e)
+        {
+            EmployeeForm employeeForm = new EmployeeForm();
+            employeeForm.Show();
+        }
+
+        private void BtnCreateCustomer_Click(object sender, RoutedEventArgs e)
+        {
+            EmployeeForm employeeForm = new EmployeeForm();
+            employeeForm.Show();
+            // create customer form goes here.
+        }
     }
 }

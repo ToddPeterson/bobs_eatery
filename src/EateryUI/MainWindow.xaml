@@ -10,28 +10,49 @@
         Title="Bob's Awesome Eatery" Height="566.4" Width="910.4" WindowState="Maximized" WindowStyle="ToolWindow">
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="0.25*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <ListBox x:Name="lbxOutput" Grid.Row="1" HorizontalAlignment="Left" Height="266"  VerticalAlignment="Top" Width="904" SelectionChanged="LbxOutput_SelectionChanged"/>
-        <TabControl HorizontalAlignment="Left" Grid.Row="0" Height="266" VerticalAlignment="Top" Width="904">
+        <TextBlock Grid.Row="0" Grid.Column="1" Text="Bob's Awesome Eatery" FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        <TabControl Margin="0,0,0,0.2" Grid.ColumnSpan="3" Grid.Row="1">
             <TabItem Header="Employee">
                 <Grid>
-                    <Button x:Name="btnShowEmployees" Content="Show Employees" HorizontalAlignment="Left" Margin="10,98,0,0" VerticalAlignment="Top" Width="167" Height="48" Click="BtnShowEmployees_Click" RenderTransformOrigin="0.375,0.983"/>
-                    <Button x:Name="btnCreateEmployee" Content="Add Employee" HorizontalAlignment="Left" Margin="682,96,0,0" VerticalAlignment="Top" Width="206" Height="50" RenderTransformOrigin="6.474,-3.967"/>
-                    <TextBlock Text="Bob's Awesome Eatery" FontSize="24" Margin="316,25,330.4,85"/>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Button x:Name="btnShowEmployees" Grid.Row="0" Grid.Column="0" Content="Show Employees" HorizontalAlignment="Center"  VerticalAlignment="Center" Width="200" Height="50" Click="BtnShowEmployees_Click" RenderTransformOrigin="0.375,0.983"/>
+                    <Button x:Name="btnCreateEmployeer" Grid.Row="0" Grid.Column="2" Content="Add Employee" HorizontalAlignment="Center"  VerticalAlignment="Center" Width="200" Height="50" RenderTransformOrigin="6.474,-3.967" Click="BtnCreateEmployee_Click"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Customer">
                 <Grid>
-                    <Button x:Name="btnShowCustomers" Content="Show Customers" HorizontalAlignment="Left" Margin="10,109,0,0" VerticalAlignment="Top" Width="163" Height="37" Click="BtnShowCustomers_Click"/>
-                    <TextBlock Text="Bob's Awesome Eatery" FontSize="24" Margin="321,25,331.4,84"/>
-                    <Button x:Name="btnCreateCustomer" Content="Add Customer" HorizontalAlignment="Left" Margin="682,96,0,0" VerticalAlignment="Top" Width="206" Height="50" RenderTransformOrigin="6.474,-3.967"/>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Button x:Name="btnShowCustomers" Grid.Column="0" Content="Show Customers" HorizontalAlignment="Center" VerticalAlignment="Center" Width="200" Height="50" Click="BtnShowCustomers_Click"/>
+                    <Button x:Name="btnCreateCustomer" Grid.Column="2" Content="Add Customer" HorizontalAlignment="Center" VerticalAlignment="Center" Width="200" Height="50" RenderTransformOrigin="6.474,-3.967" Click="BtnCreateCustomer_Click"/>
                 </Grid>
             </TabItem>
+            <TabItem Header="Others">
+                
+            </TabItem>
         </TabControl>
+        <ListBox x:Name="lbxOutput" Grid.Row="2" Grid.ColumnSpan="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" SelectionChanged="LbxOutput_SelectionChanged"/>
     </Grid>
 </Window>
