@@ -69,17 +69,44 @@ namespace EateryUI
             
         }
 
-        private void BtnCreateEmployee_Click(object sender, RoutedEventArgs e)
-        {
-            EmployeeForm employeeForm = new EmployeeForm();
-            employeeForm.Show();
-        }
+        //private void BtnCreateEmployee_Click(object sender, RoutedEventArgs e)
+        //{
+        //    EmployeeForm employeeForm = new EmployeeForm();
+        //    employeeForm.Show();
+        //}
 
-        private void BtnCreateCustomer_Click(object sender, RoutedEventArgs e)
+        //private void BtnCreateCustomer_Click(object sender, RoutedEventArgs e)
+        //{
+        //    EmployeeForm employeeForm = new EmployeeForm();
+        //    employeeForm.Show();
+        //    // create customer form goes here.
+        //}
+
+        /// <summary>
+        /// Display a create form based on the selected tab
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnCreate_Click(object sender, RoutedEventArgs e)
         {
-            EmployeeForm employeeForm = new EmployeeForm();
-            employeeForm.Show();
-            // create customer form goes here.
+            TabItem tab = tabFormSelection.SelectedItem as TabItem;
+            string header = tab.Header as string;
+
+            switch (header)
+            {
+                case "Employees":
+                    EmployeeForm form = new EmployeeForm();
+                    form.Show();
+                    break;
+                case "Customers":
+                    // TODO - Show create customer form
+                case "Orders":
+                    // TODO - Show create order form
+                case "Menu Items":
+                    // TODO - Show create Menu Item form
+                default:
+                    break;
+            }
         }
     }
 }
