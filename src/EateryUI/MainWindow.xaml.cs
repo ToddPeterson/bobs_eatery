@@ -217,5 +217,27 @@ namespace EateryUI
                 MessageBox.Show(excp.Message);
             }
         }
+
+        private void btnEntreeSearchSproc10_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                string startDate = dpSproc10StartDate.Text;
+                string endDate = dpSproc10EndDate.Text;
+
+                List<MenuItems> results = DAL.EntreesGetBetweenDates(startDate, endDate);
+
+                foreach (MenuItems tuple in results)
+                {
+                    lbxOutput.Items.Add(tuple);
+                }
+
+            }
+            catch (Exception excp)
+            {
+                MessageBox.Show(excp.Message);
+            }
+
+        }
     }
 }
