@@ -47,14 +47,25 @@ namespace EateryUI
                 lbxOutput.Items.Add(employee);
             }
         }
+        
         private void btnShowOrders_Click(object sender, RoutedEventArgs e)
         {
-
+            lbxOutput.Items.Clear();
+            List<Order> orders = DAL.OrdersGetAll();
+            foreach (Order order in orders)
+            {
+                lbxOutput.Items.Add(order);
+            }
         }
 
         private void btnShowMenuItems_Click(object sender, RoutedEventArgs e)
         {
-
+            lbxOutput.Items.Clear();
+            List<MenuItems> menuItems = DAL.MenuItemsGetAll();
+            foreach (MenuItems menuItemsVar in menuItems)
+            {
+                lbxOutput.Items.Add(menuItemsVar);
+            }
         }
 
         private void LbxOutput_SelectionChanged(object sender, SelectionChangedEventArgs e)
