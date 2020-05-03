@@ -43,6 +43,14 @@ namespace EateryUI
             lbxDetails.Items.Add(customer.Details());
         }
 
+        public Details(Order order)
+        {
+            InitializeComponent();
+            model = order;
+            tbDetail.Text = $"Details for: {order}";
+            lbxDetails.Items.Add(order.Details());
+        }
+
         private void BtnEdit_Click(object sender, RoutedEventArgs e)
         {
             if (model.GetType() == typeof(Employee))

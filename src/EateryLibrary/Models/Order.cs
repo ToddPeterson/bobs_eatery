@@ -102,5 +102,27 @@ namespace EateryLibrary.Models
             Customer cus = DAL.CustomerGetByID(_CustomerID);
             return $"{DateOrdered} - {cus}";
         }
+
+        public string Details()
+        {
+            Tuple<List<string>, List<string>> orderItems = DAL.GetOrderItems(this);
+            
+            string details =
+                $"Date: {_DateOrdered}\r\n"
+                + "Food Ordered:\r\n";
+
+            foreach(string item in orderItems.Item1)
+            {
+                details += $"\t{item}\r\n";
+            }
+
+            details += "Drinks Ordered:\r\n";
+            foreach(string item in orderItems.Item2)
+            {
+                details += $"\t{item}\r\n";
+            }
+
+            return details;
+        }
     }
 }

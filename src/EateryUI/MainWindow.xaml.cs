@@ -77,6 +77,16 @@ namespace EateryUI
                     Details details = new Details(customer);
                     details.Show();
                 }
+                else if (selectedItem.GetType() == typeof(Order))
+                {
+                    Order order = lbxOutput.SelectedItem as Order;
+                    Details details = new Details(order);
+                    details.Show();
+                }
+                else if (selectedItem.GetType() == typeof(MenuItem))
+                {
+                    // TODO - wire up detail view for menuitem
+                }
             }
 
         }
@@ -155,7 +165,6 @@ namespace EateryUI
                 lbxOutput.Items.Add(employee);
             }
         }
-
 
         private void btnOrderSearchByCustomer_Click(object sender, RoutedEventArgs e)
         {

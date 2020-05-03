@@ -1151,7 +1151,11 @@ namespace EateryLibrary
         #endregion
 
         #region Extras
-
+        /// <summary>
+        /// Get the city name, zip code, and state name associated with a given cityID
+        /// </summary>
+        /// <param name="id">A valid CityID</param>
+        /// <returns>A tuple containing (CityName, ZipCode, StateName)</returns>
         public static Tuple<string, string, string> GetCityData(int id)
         {
             SqlConnection conn = null;
@@ -1188,6 +1192,67 @@ namespace EateryLibrary
             {
                 if (conn != null) conn.Close();
             }
+
+            return output;
+        }
+
+        public static Tuple<List<string>, List<string>> GetOrderItems(Order order)
+        {
+            SqlConnection conn = null;
+            List<string> menuItems = new List<string>();
+            List<string> drinks = new List<string>();
+
+            try
+            {
+                conn = new SqlConnection(GlobalConfig.ConnectionString(db));
+
+                string menuItemSql = "SELECT mi.Name FROM Orders o "
+                    + "JOIN OrderItems oi ON o.OrderID = oi.OrderID "
+                    + "JOIN MenuItemVariations miv ON oi.MenuItemVariationID = miv.MenuItemVariationID "
+                    + "JOIN MenuItems mi ON mi.MenuItemID = miv.MenuItemID "
+                    + "WHERE o.OrderID = @id";
+                SqlCommand menuItemComm = new SqlCommand(menuItemSql, conn);
+                menuItemComm.CommandType = System.Data.CommandType.Text;
+                menuItemComm.Parameters.AddWithValue("@id", order.OrderID);
+
+                string drinkSql = "SELECT d.Name FROM Orders o "
+                    + "JOIN OrderItems oi ON o.OrderID = oi.OrderID "
+                    + "JOIN Drinks d ON oi.DrinkID = d.DrinkID "
+                    + "WHERE o.OrderID = @id";
+
+                SqlCommand drinkComm = new SqlCommand(drinkSql, conn);
+                drinkComm.CommandType = System.Data.CommandType.Text;
+                drinkComm.Parameters.AddWithValue("@id", order.OrderID);
+
+                conn.Open();
+                SqlDataReader dr1 = menuItemComm.ExecuteReader();
+
+                while (dr1.Read())
+                {
+                    menuItems.Add((string)dr1["Name"]);
+                }
+                dr1.Close();
+
+                SqlDataReader dr2 = drinkComm.ExecuteReader();
+
+                while (dr2.Read())
+                {
+                    drinks.Add((string)dr2["Name"]);
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+            }
+            finally
+            {
+                if (conn != null) conn.Close();
+            }
+
+            Tuple<List<string>, List<string>> output = new Tuple<List<string>, List<string>>(
+                menuItems,
+                drinks
+                );
 
             return output;
         }
