@@ -309,5 +309,69 @@ namespace EateryUI
                 MessageBox.Show(ex.Message);
             }
         }
+
+        private void btnEmployeeSearchByID_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                int empID;
+                int.TryParse(txtEmployeeID.Text, out empID);
+                Employee output = DAL.EmployeeGetByID(empID);
+                lbxOutput.Items.Clear();
+                lbxOutput.Items.Add(output);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void btnCustomerGetByID_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                int custID;
+                int.TryParse(txtEmployeeID.Text, out custID);
+                Customer output = DAL.CustomerGetByID(custID);
+                lbxOutput.Items.Clear();
+                lbxOutput.Items.Add(output);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void btnMenuItemsGetByID_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                int menuItemID;
+                int.TryParse(txtMenuItemID.Text, out menuItemID);
+                MenuItems output = DAL.MenuItemGetByID(menuItemID);
+                lbxOutput.Items.Clear();
+                lbxOutput.Items.Add(output);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void btnOrdersGetByID_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                int ordID;
+                int.TryParse(txtOrderID.Text, out ordID);
+                Order output = DAL.OrderGetByID(ordID);
+                lbxOutput.Items.Clear();
+                lbxOutput.Items.Add(output);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
     }
 }
