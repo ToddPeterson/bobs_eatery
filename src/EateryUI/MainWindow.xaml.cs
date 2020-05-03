@@ -27,16 +27,7 @@ namespace EateryUI
         {
             InitializeComponent();
         }
-
-        private void BtnShowCustomers_Click(object sender, RoutedEventArgs e)
-        {
-            lbxOutput.Items.Clear();
-            List<Customer> customers = DAL.CustomerGetAll();
-            foreach (Customer customer in customers)
-            {
-                lbxOutput.Items.Add(customer);
-            }
-        }
+        
 
         private void BtnShowEmployees_Click(object sender, RoutedEventArgs e)
         {
@@ -331,7 +322,7 @@ namespace EateryUI
             try
             {
                 int custID;
-                int.TryParse(txtEmployeeID.Text, out custID);
+                int.TryParse(txtCustomerID.Text, out custID);
                 Customer output = DAL.CustomerGetByID(custID);
                 lbxOutput.Items.Clear();
                 lbxOutput.Items.Add(output);
@@ -371,6 +362,16 @@ namespace EateryUI
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void btnShowAllCustomers_Click(object sender, RoutedEventArgs e)
+        {
+            lbxOutput.Items.Clear();
+            List<Customer> customers = DAL.CustomerGetAll();
+            foreach (Customer customer in customers)
+            {
+                lbxOutput.Items.Add(customer);
             }
         }
     }

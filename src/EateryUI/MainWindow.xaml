@@ -121,7 +121,6 @@
                             <Button x:Name="btnSearchSproc9" Content="Search" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Padding="30 5" Margin="0 10 0 0" HorizontalAlignment="Left" Click="btnSearchSproc9_Click"/>
                         </Grid>
                     </GroupBox>
-                    <Button x:Name="btnShowCustomers" Grid.Row="6" Grid.Column="0" Content="Show All" Padding="30 5" Margin="0,11.6,260.2,18.6" Click="BtnShowCustomers_Click" Grid.ColumnSpan="5"/>
                     <GroupBox Grid.Column="4" Header="Search by Server" HorizontalAlignment="Left" Height="135" Margin="0,10.2,0,0" Grid.Row="5" VerticalAlignment="Top" Width="391">
                         <Grid HorizontalAlignment="Left" Height="100" Margin="0,0,-2.6,0" VerticalAlignment="Top" Width="381">
                             <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Employee ID:" VerticalAlignment="Top"/>
@@ -132,6 +131,7 @@
                     <Button x:Name="btnCustomerGetByID" Content="Search by ID" Grid.Column="4" HorizontalAlignment="Left" Margin="264,11.6,0,0" Grid.Row="6" VerticalAlignment="Top" Width="117" RenderTransformOrigin="0.137,1.397" Height="33" Click="btnCustomerGetByID_Click"/>
                     <TextBox x:Name="txtCustomerID" Grid.Column="4" HorizontalAlignment="Left" Height="30" Margin="213,14.6,0,0" Grid.Row="6" TextWrapping="Wrap" VerticalAlignment="Top" Width="46"/>
                     <TextBlock Grid.Column="4" HorizontalAlignment="Left" Margin="187,15.6,0,0" Grid.Row="6" TextWrapping="Wrap" Text="ID:" VerticalAlignment="Top"/>
+                    <Button x:Name="btnShowAllCustomers" Content="Show All" Grid.Column="4" HorizontalAlignment="Left" Margin="10,10.6,0,0" Grid.Row="6" VerticalAlignment="Top" Width="92" Height="34" Click="btnShowAllCustomers_Click"/>
                 </Grid>
             </TabItem>
 
@@ -312,6 +312,7 @@
             </TabItem>
             <Button Content="Button" Height="100" Width="75"/>
             <TextBox Height="23" TextWrapping="Wrap" Text="TextBox" Width="120"/>
+            <Button Content="Button" Height="100" Width="75"/>
         </TabControl>
 
         <ListBox x:Name="lbxOutput" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" SelectionChanged="LbxOutput_SelectionChanged" BorderBrush="Black">
