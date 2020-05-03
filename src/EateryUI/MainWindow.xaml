@@ -230,7 +230,7 @@
                             </Grid.RowDefinitions>
 
                             <TextBlock Text="City:" Grid.Row="0" Grid.Column="0" Margin="0 0 10 0"/>
-                            <TextBox x:Name="txtCitySproc8" Grid.Row="0" Grid.Column="1" Margin="0 0 0 10" TextChanged="OrderCustomerFirstName_TextChanged"/>
+                            <TextBox x:Name="txtCitySproc8" Grid.Row="0" Grid.Column="1" Margin="0 0 0 10"/>
 
                             <TextBlock Text="Zip:" Grid.Row="1" Grid.Column="0" Margin="0 0 10 0"/>
                             <TextBox x:Name="txtZipSproc8" Grid.Row="1" Grid.Column="1"/>
