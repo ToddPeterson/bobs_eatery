@@ -76,6 +76,11 @@ namespace EateryLibrary.Models
 			get { return _CuisineTypeID; }
 			set { _CuisineTypeID = value; }
 		}
-		#endregion
-	}
+        #endregion
+
+        public override string ToString()
+        {
+            return $"{Name}";
+        }
+    }
 }
