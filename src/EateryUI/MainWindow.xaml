@@ -88,9 +88,9 @@
                         <RowDefinition Height="auto"/>
                         <RowDefinition Height="auto"/>
                         <RowDefinition Height="auto"/>
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="auto" MinHeight="148.8"/>
+                        <RowDefinition Height="auto" MinHeight="146"/>
+                        <RowDefinition/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="auto"/>
@@ -99,7 +99,7 @@
                         <ColumnDefinition Width="auto"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <GroupBox Header="Search by Date" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="5" Padding="10">
+                    <GroupBox Header="Search by Date" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="5" Padding="10" Margin="0,0,0.2,7.8">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="auto"/>
@@ -118,7 +118,14 @@
                             <Button x:Name="btnSearchSproc9" Content="Search" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Padding="30 5" Margin="0 10 0 0" HorizontalAlignment="Left" Click="btnSearchSproc9_Click"/>
                         </Grid>
                     </GroupBox>
-                    <Button x:Name="btnShowCustomers" Grid.Row="5" Grid.Column="0" Content="Show All" Padding="30 5" Margin="0 10 0 0" Click="BtnShowCustomers_Click"/>
+                    <Button x:Name="btnShowCustomers" Grid.Row="6" Grid.Column="0" Content="Show All" Padding="30 5" Margin="0,11.6,260.2,18.6" Click="BtnShowCustomers_Click" Grid.ColumnSpan="5"/>
+                    <GroupBox Grid.Column="4" Header="Search by Server" HorizontalAlignment="Left" Height="135" Margin="0,10.2,0,0" Grid.Row="5" VerticalAlignment="Top" Width="391">
+                        <Grid HorizontalAlignment="Left" Height="100" Margin="0,0,-2.6,0" VerticalAlignment="Top" Width="381">
+                            <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Employee ID:" VerticalAlignment="Top"/>
+                            <TextBox x:Name="txtCustomersGetByEmployeeID" HorizontalAlignment="Left" Height="23" Margin="141,13,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+                            <Button x:Name="btnCustomersGetByEmployeeID" Content="Search" HorizontalAlignment="Left" Margin="10,53,0,0" VerticalAlignment="Top" Width="117" Height="37" Click="btnCustomersGetByEmployeeID_Click"/>
+                        </Grid>
+                    </GroupBox>
                 </Grid>
             </TabItem>
 
@@ -154,12 +161,12 @@
                             </Grid.RowDefinitions>
                             <Label Content="Start:" Grid.Row="0" Grid.Column="0" Margin="0 0 10 0"/>
                             <DatePicker x:Name="dpSproc14Start" Grid.Row="0" Grid.Column="1" Margin="0 0 0 10"/>
-                            
+
                             <Label Content="End:" Grid.Row="1" Grid.Column="0" Margin="0 0 10 0"/>
                             <DatePicker x:Name="dpSproc14End" Grid.Row="1" Grid.Column="1" Margin="0 0 0 10"/>
-                            
+
                             <TextBox x:Name="txtSproc14" Text="Quantity" Grid.Row="0" Grid.Column="2" Margin="10 0 0 10"/>
-                            
+
                             <Button x:Name="btnSproc14" Content="Search" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Padding="30 5" HorizontalAlignment="Left"/>
                         </Grid>
                     </GroupBox>
@@ -291,9 +298,12 @@
                     </GroupBox>
                 </Grid>
             </TabItem>
+            <Button Content="Button" Height="100" Width="75"/>
         </TabControl>
 
-        <ListBox x:Name="lbxOutput" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" SelectionChanged="LbxOutput_SelectionChanged" BorderBrush="Black"/>
+        <ListBox x:Name="lbxOutput" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" SelectionChanged="LbxOutput_SelectionChanged" BorderBrush="Black">
+            <Button Content="Button" Width="75"/>
+        </ListBox>
         <Button x:Name="btnCreate" Grid.Column="2" Grid.Row="2" Content="Create" Margin="0 10 10 0" Click="btnCreate_Click"/>
         <Button x:Name="btnEdit" Grid.Column="3" Grid.Row="2" Content="Edit" Margin="10 10 0 0" Click="btnEdit_Click"/>
     </Grid>

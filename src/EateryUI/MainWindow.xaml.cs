@@ -290,5 +290,24 @@ namespace EateryUI
                 MessageBox.Show(ex.Message);
             }
         }
+
+        private void btnCustomersGetByEmployeeID_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                int empID;
+                int.TryParse(txtCustomersGetByEmployeeID.Text, out empID);
+                List<Customer> output = DAL.CustomersGetByEmployeeID(empID);
+                lbxOutput.Items.Clear();
+                foreach (Customer c in output)
+                {
+                    lbxOutput.Items.Add(c);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
     }
 }
