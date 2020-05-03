@@ -253,12 +253,42 @@ namespace EateryUI
 
         private void btnYearSearch_Click(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                int year = int.Parse(txtYearSearch.Text);
 
+                List<MenuItems> results = DAL.MenuItemGetByYearOrdered(year);
+
+                foreach (MenuItems tuple in results)
+                {
+                    lbxOutput.Items.Add(tuple);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void btnSproc14_Click(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                int quantity = int.Parse(txtSproc14.Text);
+                DateTime start = dpSproc14Start.SelectedDate.GetValueOrDefault();
+                DateTime end = dpSproc14End.SelectedDate.GetValueOrDefault();
 
+                List<MenuItems> results = DAL.MenuItemGetLowSalesByDate(quantity,start,end);
+
+                foreach (MenuItems tuple in results)
+                {
+                    lbxOutput.Items.Add(tuple);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
     }
 }
