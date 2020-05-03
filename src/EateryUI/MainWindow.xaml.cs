@@ -73,8 +73,9 @@ namespace EateryUI
                 }
                 else if (selectedItem.GetType() == typeof(Customer))
                 {
-                    Customer customer = new Customer();
-
+                    Customer customer = lbxOutput.SelectedItem as Customer;
+                    Details details = new Details(customer);
+                    details.Show();
                 }
             }
 

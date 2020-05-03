@@ -80,7 +80,7 @@ namespace EateryLibrary.Models
 
         public override string ToString()
         {
-            return $"{Name}";
+            return $"{_Name}";
         }
     }
 }

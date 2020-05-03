@@ -20,7 +20,8 @@ namespace EateryUI
     /// </summary>
     public partial class Details : Window
     {
-        Employee emp = new Employee();
+        object model = null;
+
         public Details()
         {
             InitializeComponent();
@@ -29,15 +30,44 @@ namespace EateryUI
         public Details(Employee employee)
         {
             InitializeComponent();
-            emp = employee;
+            model = employee;
             tbDetail.Text = "Details on: " + employee.ToString();
             lbxDetails.Items.Add(employee.Details());
         }
 
+        public Details(Customer customer)
+        {
+            InitializeComponent();
+            model = customer;
+            tbDetail.Text = $"Details for: {customer}";
+            lbxDetails.Items.Add(customer.Details());
+        }
+
         private void BtnEdit_Click(object sender, RoutedEventArgs e)
         {
-            EmployeeForm employeeForm = new EmployeeForm(emp);
-            employeeForm.Show();
+            if (model.GetType() == typeof(Employee))
+            {
+                EmployeeForm employeeForm = new EmployeeForm(model as Employee);
+                employeeForm.Show();
+            }
+            else if (model.GetType() == typeof(Customer))
+            {
+                // TODO - show customer form
+                //CustomerForm form = new CustomerForm(model as Customer);
+                //form.Show();
+            }
+            else if (model.GetType() == typeof(MenuItems))
+            {
+                // TODO - add contstructor to MenuItemForm
+                //MenuItemForm form = new MenuItemForm(model as MenuItems);
+                //form.Show();
+            }
+            else if (model.GetType() == typeof(Order))
+            {
+                // TODO - add constructor to OrderForm
+                //OrderForm form = new OrderForm(model as Order);
+                //form.Show();
+            }
             this.Close();
         }
     }

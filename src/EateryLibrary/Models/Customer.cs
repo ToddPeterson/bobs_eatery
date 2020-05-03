@@ -83,5 +83,21 @@ namespace EateryLibrary.Models
         {
             return FirstName + " " + MiddleName + " " + LastName;
         }
+
+        public string Details()
+        {
+            Tuple<string, string, string> cityData = DAL.GetCityData(_CityID);
+
+            string details =
+                $"Name: {this}\r\n"
+                + $"Customer Number: {_CustomerNumber}\r\n"
+                + $"Phone Number: {_PhoneNumber}\r\n"
+                + $"Email: {_Email}\r\n"
+                + $"Street Address: {_StreetAddress}\r\n"
+                + $"City: {cityData.Item1}\r\n"
+                + $"State: {cityData.Item3}\r\n"
+                + $"Zip Code: {cityData.Item2}\r\n";
+            return details;
+        }
     }
 }

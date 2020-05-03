@@ -1146,9 +1146,52 @@ namespace EateryLibrary
                 if (conn != null) conn.Close();
             }
 
+            return output;
+        }
+        #endregion
+
+        #region Extras
+
+        public static Tuple<string, string, string> GetCityData(int id)
+        {
+            SqlConnection conn = null;
+            Tuple<string, string, string> output = new Tuple<string, string, string>("", "", "");
+
+            try
+            {
+                conn = new SqlConnection(GlobalConfig.ConnectionString(db));
+
+                string sql = "SELECT c.Name [city], c.ZipCode [zip], s.Name [state] FROM Cities c "
+                    + "JOIN States s ON c.StateID = s.StateID "
+                    + "WHERE c.CityID = @id";
+                SqlCommand comm = new SqlCommand(sql, conn);
+                comm.CommandType = System.Data.CommandType.Text;
+                comm.Parameters.AddWithValue("@id", id);
+
+                conn.Open();
+                SqlDataReader dr = comm.ExecuteReader();
+
+                while (dr.Read())
+                {
+                    output = new Tuple<string, string, string>(
+                            (string)dr["city"],
+                            (string)dr["zip"],
+                            (string)dr["state"]
+                        );
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+            }
+            finally
+            {
+                if (conn != null) conn.Close();
+            }
 
             return output;
         }
+
         #endregion
     }
 }
