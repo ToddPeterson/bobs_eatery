@@ -84,12 +84,20 @@
             <TabItem Header="Customers" BorderBrush="Black">
                 <Grid>
                     <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <GroupBox Header="Search by Date" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="5" Padding="10">
                         <Grid>
@@ -110,7 +118,7 @@
                             <Button x:Name="btnSearchSproc9" Content="Search" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Padding="30 5" Margin="0 10 0 0" HorizontalAlignment="Left" Click="btnSearchSproc9_Click"/>
                         </Grid>
                     </GroupBox>
-                    <Button x:Name="btnShowCustomers" Grid.Column="0" Content="Show Customers" HorizontalAlignment="Center" VerticalAlignment="Center" Width="200" Height="50" Click="BtnShowCustomers_Click"/>
+                    <Button x:Name="btnShowCustomers" Grid.Row="5" Grid.Column="0" Content="Show All" Padding="30 5" Margin="0 10 0 0" Click="BtnShowCustomers_Click"/>
                 </Grid>
             </TabItem>
 
@@ -132,6 +140,29 @@
                         <ColumnDefinition Width="auto"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
+                    <GroupBox Header="Orders Under a Given Quantity" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="5" Padding="10">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                            </Grid.RowDefinitions>
+                            <Label Content="Start:" Grid.Row="0" Grid.Column="0" Margin="0 0 10 0"/>
+                            <DatePicker x:Name="dpSproc14Start" Grid.Row="0" Grid.Column="1" Margin="0 0 0 10"/>
+                            
+                            <Label Content="End:" Grid.Row="1" Grid.Column="0" Margin="0 0 10 0"/>
+                            <DatePicker x:Name="dpSproc14End" Grid.Row="1" Grid.Column="1" Margin="0 0 0 10"/>
+                            
+                            <TextBox x:Name="txtSproc14" Text="Quantity" Grid.Row="0" Grid.Column="2" Margin="10 0 0 10"/>
+                            
+                            <Button x:Name="btnSproc14" Content="Search" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Padding="30 5" HorizontalAlignment="Left"/>
+                        </Grid>
+                    </GroupBox>
                     <GroupBox Header="Search by Customer" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="5" Padding="10">
                         <Grid>
                             <Grid.ColumnDefinitions>
@@ -175,7 +206,7 @@
                         <ColumnDefinition Width="auto"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <GroupBox Header="Search by Customer" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="5" Padding="10">
+                    <GroupBox Header="Search by Customer" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="5" Padding="10">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="auto"/>
@@ -196,29 +227,26 @@
                             <Button x:Name="btnEntreeSearchSproc10" Content="Search" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Padding="30 5" Margin="0 10 0 0" HorizontalAlignment="Left" Click="btnEntreeSearchSproc10_Click"/>
                         </Grid>
                     </GroupBox>
-                    <Button x:Name="btnShowMenuItems" Grid.Row="6" Grid.Column="0" Content="Show All" Padding="30 5" Margin="0,179,0,2" Click="btnShowMenuItems_Click"/>
-                    <GroupBox Header="Search by Year" HorizontalAlignment="Left" Height="77" Grid.Row="6" VerticalAlignment="Top" Width="391" Grid.ColumnSpan="5">
+                    <GroupBox Header="Search by Year" Grid.Row="4" Grid.ColumnSpan="5" Padding="10">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="auto"/>
-                                <ColumnDefinition Width="76*"/>
-                                <ColumnDefinition Width="303*"/>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="auto"/>
                                 <RowDefinition Height="auto"/>
-                                <RowDefinition Height="auto"/>
                             </Grid.RowDefinitions>
-                            <Label x:Name="lblYearSearch" Content="Year:" Grid.Column="1" HorizontalAlignment="Left" Margin="26,6,0,0" Grid.Row="2" VerticalAlignment="Top"/>
-                            <TextBox x:Name="txtYearSearch" Grid.Column="2" HorizontalAlignment="Left" Height="28" Margin="3,12,0,0" TextWrapping="Wrap" Text="Enter Year" VerticalAlignment="Top" Width="120" Grid.Row="2"/>
-                            <Button x:Name="btnYearSearch" Content="Search" Grid.Column="2" HorizontalAlignment="Left" Margin="144,11,0,0" Grid.Row="2" VerticalAlignment="Top" Width="75" Click="btnYearSearch_Click"/>
-
-
+                            <Label x:Name="lblYearSearch" Content="Year:" Grid.Row="0" Grid.Column="0" Margin="0 0 10 0"/>
+                            <TextBox x:Name="txtYearSearch" Grid.Row="0" Grid.Column="1" Width="120"/>
+                            <Button x:Name="btnYearSearch" Content="Search" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="0 10 0 0" Padding="30 5" Click="btnYearSearch_Click"/>
                         </Grid>
                     </GroupBox>
+                    <Button x:Name="btnShowMenuItems" Grid.Row="5" Grid.Column="0" Content="Show All" Padding="30 5" Margin="0 10 0 0" Click="btnShowMenuItems_Click"/>
                 </Grid>
             </TabItem>
-            <TabItem Header="City" BorderBrush="Black" Margin="-2,-2,6,0">
+            <TabItem Header="City" BorderBrush="Black">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="auto"/>
@@ -236,13 +264,14 @@
                         <ColumnDefinition Width="auto"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <GroupBox Header="City, Zip, State" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="5" Padding="10" Margin="0,0,0,164" Grid.RowSpan="3">
+                    <GroupBox Header="City, Zip, State" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="5" Padding="10">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="auto"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
                                 <RowDefinition Height="auto"/>
                                 <RowDefinition Height="auto"/>
                                 <RowDefinition Height="auto"/>
@@ -257,7 +286,7 @@
                             <TextBlock Text="State:" Grid.Row="2" Grid.Column="0" Margin="0,10,10,-10"/>
                             <TextBox x:Name="txtStateSproc8" Grid.Row="2" Grid.Column="1" Margin="0,10"/>
 
-                            <Button x:Name="btnSproc8" Content="Associate/Add" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Padding="30 5" Margin="0,57,0,-47" HorizontalAlignment="Left" Click="btnSproc8_Click"/>
+                            <Button x:Name="btnSproc8" Content="Associate/Add" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Padding="30 5" HorizontalAlignment="Left" Click="btnSproc8_Click"/>
                         </Grid>
                     </GroupBox>
                 </Grid>
@@ -267,15 +296,5 @@
         <ListBox x:Name="lbxOutput" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" SelectionChanged="LbxOutput_SelectionChanged" BorderBrush="Black"/>
         <Button x:Name="btnCreate" Grid.Column="2" Grid.Row="2" Content="Create" Margin="0 10 10 0" Click="btnCreate_Click"/>
         <Button x:Name="btnEdit" Grid.Column="3" Grid.Row="2" Content="Edit" Margin="10 10 0 0" Click="btnEdit_Click"/>
-        <GroupBox Header="Orders Under a Given Quantity" HorizontalAlignment="Left" Height="100" Margin="10,287,0,0" Grid.Row="1" VerticalAlignment="Top" Width="392" Grid.Column="1">
-            <Grid HorizontalAlignment="Left" Height="74" Margin="10,0,-2,-5" VerticalAlignment="Top" Width="372" RenderTransformOrigin="0.742,-0.092">
-                <DatePicker x:Name="dpSproc14Start" HorizontalAlignment="Left" Margin="227,8,0,0" VerticalAlignment="Top"/>
-                <DatePicker x:Name="dpSproc14End" HorizontalAlignment="Left" Margin="227,40,0,0" VerticalAlignment="Top"/>
-                <Label Content="Start:" HorizontalAlignment="Left" Margin="175,7,0,0" VerticalAlignment="Top"/>
-                <Label Content="End:" Margin="175,40,145,2"/>
-                <TextBox x:Name="txtSproc14" HorizontalAlignment="Left" Height="26" Margin="38,11,0,0" TextWrapping="Wrap" Text="Quantity" VerticalAlignment="Top" Width="75"/>
-                <Button x:Name="btnSproc14" Content="Search" HorizontalAlignment="Left" Margin="38,37,0,0" VerticalAlignment="Top" Width="75" Click="btnSproc14_Click"/>
-            </Grid>
-        </GroupBox>
     </Grid>
 </Window>

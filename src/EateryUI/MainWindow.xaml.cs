@@ -250,5 +250,15 @@ namespace EateryUI
             }
 
         }
+
+        private void btnYearSearch_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnSproc14_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
