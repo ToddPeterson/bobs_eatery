@@ -1000,7 +1000,7 @@ namespace EateryLibrary
 
                 SqlCommand comm = new SqlCommand("sprocMenuItemsGetByCuisineID", conn);
                 comm.CommandType = System.Data.CommandType.StoredProcedure;
-                comm.Parameters.AddWithValue("@CusineID", cuisineID);
+                comm.Parameters.AddWithValue("@CuisineID", cuisineID);
 
                 conn.Open();
                 SqlDataReader dr = comm.ExecuteReader();

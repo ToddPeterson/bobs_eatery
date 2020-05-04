@@ -257,6 +257,7 @@ namespace EateryUI
 
         private void btnEntreeSearchSproc10_Click(object sender, RoutedEventArgs e)
         {
+            lbxOutput.Items.Clear();
             try
             {
                 string startDate = dpSproc10StartDate.Text;
@@ -279,6 +280,7 @@ namespace EateryUI
 
         private void btnYearSearch_Click(object sender, RoutedEventArgs e)
         {
+            lbxOutput.Items.Clear();
             try
             {
                 int year = int.Parse(txtYearSearch.Text);
@@ -370,12 +372,12 @@ namespace EateryUI
 
         private void btnMenuItemsGetByID_Click(object sender, RoutedEventArgs e)
         {
+            lbxOutput.Items.Clear();
             try
             {
                 int menuItemID;
                 int.TryParse(txtMenuItemID.Text, out menuItemID);
                 MenuItems output = DAL.MenuItemGetByID(menuItemID);
-                lbxOutput.Items.Clear();
                 lbxOutput.Items.Add(output);
             }
             catch (Exception ex)
@@ -415,7 +417,7 @@ namespace EateryUI
             lbxOutput.Items.Clear();
             try
             {
-                List<MenuItems> menuItems = DAL.MenuItemsGetByCuisineID(int.Parse(tbxCusisineSearchID.Text));
+                List<MenuItems> menuItems = DAL.MenuItemsGetByCuisineID(int.Parse(tbxCuisineSearchID.Text));
                 foreach(MenuItems menuItem in menuItems)
                 {
                     lbxOutput.Items.Add(menuItem);
