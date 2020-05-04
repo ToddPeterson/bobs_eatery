@@ -16,16 +16,13 @@
         <Label x:Name="OrderTypeID" Content="OrderTypeID:" HorizontalAlignment="Left" Margin="10,92,0,0" VerticalAlignment="Top" Width="84"/>
         <Label x:Name="lblPaymentMethodID" Content="PaymentMethodID:" HorizontalAlignment="Left" Margin="10,133,0,0" VerticalAlignment="Top" Width="115"/>
         <Label x:Name="lblDateOrdered" Content="DateOrdered:" HorizontalAlignment="Left" Margin="10,176,0,0" VerticalAlignment="Top" Width="138" Grid.ColumnSpan="2"/>
-        <ComboBox x:Name="cmbPaymentMethodID" HorizontalAlignment="Left" Margin="0,133,0,0" VerticalAlignment="Top" Width="242" Grid.Column="1"/>
-        <ComboBox x:Name="cmbOrderTypeID" HorizontalAlignment="Left" Margin="0,96,0,0" VerticalAlignment="Top" Width="242" Grid.Column="1">
-        </ComboBox>
-        <ComboBox x:Name="cmbSeatingID" HorizontalAlignment="Left" Margin="0,54,0,0" VerticalAlignment="Top" Width="242" Grid.Column="1">
-        </ComboBox>
-        <ComboBox x:Name="cmbCustomerID" HorizontalAlignment="Left" Margin="0,14,0,0" VerticalAlignment="Top" Width="242" Grid.Column="1">
-        </ComboBox>
         <DatePicker x:Name="dpDateOrdered" Grid.Column="1" HorizontalAlignment="Left" Margin="0,176,0,0" VerticalAlignment="Top" Width="242"/>
 
         <Button x:Name="btnCreateOrder" Content="Create" Grid.Column="1" HorizontalAlignment="Left" Margin="167,229,0,0" VerticalAlignment="Top" Width="75"/>
+        <TextBox x:Name="txtCustomerID" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="24,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="txtSeatingID" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="24,52,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.475,0.461"/>
+        <TextBox x:Name="txtOrderTypeID" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="24,96,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="txtPaymentMethodID" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="24,137,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
 
 
     </Grid>

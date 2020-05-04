@@ -31,10 +31,10 @@ namespace EateryUI
         public OrderForm(Order order)
         {
             InitializeComponent();
-            cmbCustomerID.SelectedItem = order.CustomerID;
-            cmbOrderTypeID.SelectedItem = order.OrderTypeID;
-            cmbPaymentMethodID.SelectedItem = order.PaymentMethodID;
-            cmbSeatingID.SelectedItem = order.SeatingID;
+            txtCustomerID.Text = order.CustomerID.ToString();
+            txtOrderTypeID.Text = order.OrderTypeID.ToString();
+            txtPaymentMethodID.Text = order.PaymentMethodID.ToString();
+            txtSeatingID.Text = order.SeatingID.ToString();
             dpDateOrdered.SelectedDate = order.DateOrdered;
             updateID = order.OrderID;
             btnCreateOrder.Content = "Edit";
@@ -45,10 +45,10 @@ namespace EateryUI
             try
             {
                 Order newOrder = new Order();
-                newOrder.CustomerID = int.Parse(cmbCustomerID.SelectedItem.ToString());
-                newOrder.OrderTypeID = int.Parse(cmbOrderTypeID.SelectedItem.ToString());
-                newOrder.PaymentMethodID = int.Parse(cmbPaymentMethodID.SelectedItem.ToString());
-                newOrder.SeatingID = int.Parse(cmbSeatingID.SelectedItem.ToString());
+                newOrder.CustomerID = int.Parse(txtCustomerID.Text);
+                newOrder.OrderTypeID = int.Parse(txtOrderTypeID.Text);
+                newOrder.PaymentMethodID = int.Parse(txtPaymentMethodID.Text);
+                newOrder.SeatingID = int.Parse(txtSeatingID.Text);
                 newOrder.DateOrdered = dpDateOrdered.DisplayDate;
 
                 if (btnCreateOrder.Content.ToString() == "Create")
