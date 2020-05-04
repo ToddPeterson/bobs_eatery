@@ -83,9 +83,12 @@ namespace EateryUI
                     Details details = new Details(order);
                     details.Show();
                 }
-                else if (selectedItem.GetType() == typeof(MenuItem))
+                else if (selectedItem.GetType() == typeof(MenuItems))
                 {
                     // TODO - wire up detail view for menuitem
+                    MenuItems menuItem = lbxOutput.SelectedItem as MenuItems;
+                    Details details = new Details(menuItem);
+                    details.Show();
                 }
             }
 

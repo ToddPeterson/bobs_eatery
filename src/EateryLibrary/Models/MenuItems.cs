@@ -82,5 +82,21 @@ namespace EateryLibrary.Models
         {
             return $"{_Name}";
         }
+
+        public string Details()
+        {
+            return String.Format(
+                                 "Name: {0} \r\n" +
+                                 "Description: {1} \r\n" +
+                                 "Picture Path: {2} \r\n" +
+                                 "Is Side Item: {3} \r\n" +
+                                 "Prep Time: {4} \r\n" +
+                                 "Prep Method ID: {5} \r\n" +
+                                 "Category ID: {6}\r\n" +
+                                 "Cuisine Type ID: {7}"
+                                 ,
+                                 ToString(), Description, PicturePath, IsSideItem.ToString(), PrepTime.ToString()
+                                 , PrepMethodID.ToString(), CategoryID.ToString(), CuisineTypeID.ToString());
+        }
     }
 }

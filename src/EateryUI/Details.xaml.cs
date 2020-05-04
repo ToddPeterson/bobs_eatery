@@ -43,6 +43,14 @@ namespace EateryUI
             lbxDetails.Items.Add(customer.Details());
         }
 
+        public Details(MenuItems menuItem)
+        {
+            InitializeComponent();
+            model = menuItem;
+            tbDetail.Text = $"Details for: {menuItem}";
+            lbxDetails.Items.Add(menuItem.Details());
+        }
+
         public Details(Order order)
         {
             InitializeComponent();
