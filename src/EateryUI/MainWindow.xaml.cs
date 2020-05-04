@@ -409,5 +409,22 @@ namespace EateryUI
                 lbxOutput.Items.Add(customer);
             }
         }
+
+        private void BtnCuisineSearch_Click(object sender, RoutedEventArgs e)
+        {
+            lbxOutput.Items.Clear();
+            try
+            {
+                List<MenuItems> menuItems = DAL.MenuItemsGetByCuisineID(int.Parse(tbxCusisineSearchID.Text));
+                foreach(MenuItems menuItem in menuItems)
+                {
+                    lbxOutput.Items.Add(menuItem);
+                }
+            }
+            catch
+            {
+                MessageBox.Show("Please enter valid integer.");
+            }
+        }
     }
 }

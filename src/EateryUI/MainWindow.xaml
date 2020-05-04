@@ -252,7 +252,7 @@
                             <Button x:Name="btnEntreeSearchSproc10" Content="Search" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Padding="30 5" Margin="0 10 0 0" HorizontalAlignment="Left" Click="btnEntreeSearchSproc10_Click"/>
                         </Grid>
                     </GroupBox>
-                    <GroupBox Header="Search by Year" Grid.Row="4" Grid.ColumnSpan="5" Padding="10">
+                    <GroupBox Header="Search by Year" Grid.Row="4"  Padding="10" Margin="0,0.4,251.2,0">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="auto"/>
@@ -272,6 +272,22 @@
                     <TextBlock Text="ID:" Grid.Row="5" Grid.Column="1" Margin="30 15 10 0"/>
                     <TextBox x:Name="txtMenuItemID" Grid.Row="5" Grid.Column="2" Width="100" Margin="0 10 0 0"/>
                     <Button x:Name="btnMenuItemsGetByID" Content="Search by ID" Grid.Row="5" Grid.Column="3" Padding="30 5" Margin="10 10 0 0" Click="btnMenuItemsGetByID_Click"/>
+                    <GroupBox Header="Search by Cuisine ID" Grid.Row="4"  Padding="10" Margin="200,0.4,43.2,0.2">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                            </Grid.RowDefinitions>
+                            <Label x:Name="lblCuisineSearchID" Content="ID:" Grid.Row="0" Grid.Column="0" Margin="0 0 10 0"/>
+                            <TextBox x:Name="tbxCusisineSearchID" Grid.Row="0" Grid.Column="1" Width="120" Margin="0,0,0,44.4" Grid.RowSpan="2"/>
+                            <Button x:Name="btnCuisineSearch" Content="Search" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="0 10 0 0" Padding="30 5" Click="BtnCuisineSearch_Click"/>
+                        </Grid>
+                    </GroupBox>
                 </Grid>
             </TabItem>
             <TabItem Header="City" BorderBrush="Black">
