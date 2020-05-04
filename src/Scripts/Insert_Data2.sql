@@ -12,9 +12,9 @@ INSERT INTO MenuItems VALUES
 DECLARE @CookieID int = @@IDENTITY
 
 INSERT INTO Ingredients VALUES
-	('Baking Soda', 'Pantry', @CookieID, 2),
-	('Baking Powder', 'Pantry', @CookieID, 2),
-	('Baker''s Chocolate', 'Pantry', @CookieID, 4)
+	('Baking Soda', 'Pantry', @CookieID),
+	('Baking Powder', 'Pantry', @CookieID),
+	('Baker''s Chocolate', 'Pantry', @CookieID)
 GO
 
 -- For query 11

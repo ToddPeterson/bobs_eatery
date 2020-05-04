@@ -431,22 +431,22 @@ END
 GO
 
 --12. Given an employee ID, list all the customers served by that employee.
-CREATE PROCEDURE sprocCustomersGetByEmployeeID
-@EmployeeID int
-AS
-BEGIN
-	SET NOCOUNT ON
-	SELECT c.* FROM Customers c
-		JOIN Orders o ON c.CustomerID = o.CustomerID
-		JOIN Seatings s ON o.SeatingID = s.SeatingID
-		JOIN Employees e ON s.EmployeeID = e.EmployeeID
-		WHERE e.EmployeeID = @EmployeeID
-END
-GO
+--CREATE PROCEDURE sprocCustomersGetByEmployeeID
+--@EmployeeID int
+--AS
+--BEGIN
+--	SET NOCOUNT ON
+--	SELECT c.* FROM Customers c
+--		JOIN Orders o ON c.CustomerID = o.CustomerID
+--		JOIN Seatings s ON o.SeatingID = s.SeatingID
+--		JOIN Employees e ON s.EmployeeID = e.EmployeeID
+--		WHERE e.EmployeeID = @EmployeeID
+--END
+--GO
 
 --12. Given an employee ID, list all the customers served by that employee.
 
-CREATE PROCEDURE sprocCustomersGetByServer
+CREATE PROCEDURE sprocCustomersGetByEmployeeID
 	@EmployeeID int
 AS
 BEGIN

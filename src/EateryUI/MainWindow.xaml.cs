@@ -238,16 +238,30 @@ namespace EateryUI
 
         private void btnSearchSproc9_Click(object sender, RoutedEventArgs e)
         {
+            lbxOutput.Items.Clear();
+
             try
             {
                 string date = dpSproc9.Text;
 
                 List<Tuple<string, int, string, DateTime>> results = DAL.CustomersEatInOrdersGetByDate(date);
 
+                if (results.Count == 0)
+                {
+                    MessageBox.Show("No results");
+                    return;
+                }
+
+                string details = "Date | Name | Table # | MenuItem\r\n"
+                    + "=====================\r\n";
+
                 foreach (Tuple<string, int, string, DateTime> tuple in results)
                 {
-                    lbxOutput.Items.Add(tuple);
+                    // Date | Name | Table # | Menu Item
+                    details += $"{tuple.Item4} | {tuple.Item1} | Table {tuple.Item2} | {tuple.Item3}\r\n";
                 }
+
+                MessageBox.Show(details);
             }
             catch (Exception excp)
             {
