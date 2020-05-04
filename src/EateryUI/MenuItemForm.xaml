@@ -19,11 +19,12 @@
         <TextBox x:Name="txtDescription" HorizontalAlignment="Left" Height="23" Margin="118,59,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="365"/>
         <TextBox x:Name="txtPicturePath" HorizontalAlignment="Left" Height="23" Margin="118,87,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="365"/>
         <TextBox x:Name="txtPrepTime" HorizontalAlignment="Left" Height="23" Margin="118,156,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="365"/>
-        <RadioButton x:Name="rbIsSideItemYes" Content="Yes" HorizontalAlignment="Left" Margin="118,125,0,0" VerticalAlignment="Top" Checked="RadioButton_Checked"/>
+        <RadioButton x:Name="rbIsSideItemYes" Content="Yes" HorizontalAlignment="Left" Margin="118,125,0,0" VerticalAlignment="Top"/>
         <RadioButton x:Name="rbIsSideItemNo" Content="No" HorizontalAlignment="Left" Margin="246,125,0,0" VerticalAlignment="Top"/>
-        <ComboBox x:Name="cmbPrepMethodID" HorizontalAlignment="Left" Margin="118,187,0,0" VerticalAlignment="Top" Width="365"/>
-        <ComboBox x:Name="cmbCategoryID" HorizontalAlignment="Left" Margin="118,218,0,0" VerticalAlignment="Top" Width="365"/>
-        <ComboBox x:Name="cmbCuisineTypeID" HorizontalAlignment="Left" Margin="118,249,0,0" VerticalAlignment="Top" Width="365"/>
+        <TextBox x:Name="txtPrepMethodID" HorizontalAlignment="Left" Margin="118,187,0,0" VerticalAlignment="Top" Width="365"/>
+        <TextBox x:Name="txtCategoryID" HorizontalAlignment="Left" Margin="118,218,0,0" VerticalAlignment="Top" Width="365"/>
+        <TextBox x:Name="txtCuisineTypeID" HorizontalAlignment="Left" Margin="118,249,0,0" VerticalAlignment="Top" Width="365"/>
+        <Button x:Name="btnSubmit" Content="Create" HorizontalAlignment="Left" Margin="408,277,0,0" VerticalAlignment="Top" Width="75" Click="btnSubmit_Click"/>
 
     </Grid>
 </Window>
