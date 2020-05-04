@@ -61,20 +61,20 @@ namespace EateryUI
             else if (model.GetType() == typeof(Customer))
             {
                 // TODO - show customer form
-                //CustomerForm form = new CustomerForm(model as Customer);
-                //form.Show();
+                CustomerForm customerForm = new CustomerForm(model as Customer);
+                customerForm.Show();
             }
             else if (model.GetType() == typeof(MenuItems))
             {
                 // TODO - add contstructor to MenuItemForm
-                //MenuItemForm form = new MenuItemForm(model as MenuItems);
-                //form.Show();
+                MenuItemForm form = new MenuItemForm(model as MenuItems);
+                form.Show();
             }
             else if (model.GetType() == typeof(Order))
             {
                 // TODO - add constructor to OrderForm
-                //OrderForm form = new OrderForm(model as Order);
-                //form.Show();
+                OrderForm form = new OrderForm(model as Order);
+                form.Show();
             }
             this.Close();
         }

@@ -27,14 +27,15 @@ namespace EateryUI
 
         public CustomerForm(Customer customer)
         {
-            customer.FirstName = tbxFirstName.Text;
-            customer.MiddleName = tbxMiddleName.Text;
-            customer.LastName = tbxLastName.Text;
-            customer.PhoneNumber = tbxPhoneNumber.Text;
-            customer.CustomerNumber = int.Parse(tbxCustomerNumber.Text);
-            customer.StreetAddress = tbxStreetAddress.Text;
-            customer.CityID = int.Parse(tbxCityID.Text);
-            customer.Email = tbxEmail.Text;
+            InitializeComponent();
+            tbxFirstName.Text = customer.FirstName;
+            tbxMiddleName.Text = customer.MiddleName;
+            tbxLastName.Text = customer.LastName;
+            tbxPhoneNumber.Text = customer.PhoneNumber;
+            tbxCustomerNumber.Text = customer.CustomerNumber.ToString();
+            tbxStreetAddress.Text = customer.StreetAddress;
+            tbxCityID.Text = customer.CityID.ToString();
+            tbxEmail.Text = customer.Email;
 
             btnSubmit.Content = "Edit";
         }

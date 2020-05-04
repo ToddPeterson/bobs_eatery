@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EateryLibrary.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,6 +21,11 @@ namespace EateryUI
     public partial class OrderForm : Window
     {
         public OrderForm()
+        {
+            InitializeComponent();
+        }
+
+        public OrderForm(Order order)
         {
             InitializeComponent();
         }

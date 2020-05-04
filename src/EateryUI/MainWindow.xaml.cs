@@ -102,15 +102,24 @@ namespace EateryUI
             switch (header)
             {
                 case "Employees":
-                    EmployeeForm form = new EmployeeForm();
-                    form.Show();
+                    EmployeeForm employeeForm = new EmployeeForm();
+                    employeeForm.Show();
                     break;
                 case "Customers":
-                // TODO - Show create customer form
+                    // TODO - Show create customer form
+                    CustomerForm customerForm = new CustomerForm();
+                    customerForm.Show();
+                    break;
                 case "Orders":
-                // TODO - Show create order form
+                    // TODO - Show create order form
+                    OrderForm orderForm = new OrderForm();
+                    orderForm.Show();
+                    break;
                 case "Menu Items":
-                // TODO - Show create Menu Item form
+                    // TODO - Show create Menu Item form
+                    MenuItemForm menuItemForm = new MenuItemForm();
+                    menuItemForm.Show();
+                    break;
                 default:
                     break;
             }
@@ -132,11 +141,23 @@ namespace EateryUI
                     form.Show();
                     break;
                 case "Customers":
-                // TODO - Show edit customer form
+                    // TODO - Show edit customer form
+                    Customer customer = lbxOutput.SelectedItem as Customer;
+                    CustomerForm customerForm = new CustomerForm(customer);
+                    customerForm.Show();
+                    break;
                 case "Orders":
-                // TODO - Show edit order form
+                    // TODO - Show edit order form
+                    Order order = lbxOutput.SelectedItem as Order;
+                    OrderForm orderForm = new OrderForm(order);
+                    orderForm.Show();
+                    break;
                 case "Menu Items":
-                // TODO - Show edit Menu Item form
+                    // TODO - Show edit Menu Item form
+                    MenuItems menuItem = lbxOutput.SelectedItem as MenuItems;
+                    MenuItemForm menuItemForm = new MenuItemForm(menuItem);
+                    menuItemForm.Show();
+                    break;
                 default:
                     break;
             }
