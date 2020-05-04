@@ -5,11 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:EateryUI"
         mc:Ignorable="d"
-        Title="EmployeeForm" Height="506.883" Width="1086.212">
+        Title="EmployeeForm" Height="562.883" Width="1121.412">
     <Grid>
         <TextBlock Text="Bob's Awesome Eatery" FontSize="24" Margin="388,10,426,412.6"/>
 
-        <GroupBox x:Name="gnxPersonalInfo" Header="Personal Information" HorizontalAlignment="Left" Height="335" VerticalAlignment="Top" Width="501" Margin="0,65,0,0">
+        <GroupBox x:Name="gnxPersonalInfo" Header="Personal Information" HorizontalAlignment="Left" Height="389" VerticalAlignment="Top" Width="501" Margin="10,44,0,0">
             <Grid>
                 <Label x:Name="lblFirstName" Content="First Name:" HorizontalAlignment="Left" Margin="14,16,0,0" VerticalAlignment="Top" Height="30" Width="85"/>
                 <TextBox x:Name="tbxFirstName" HorizontalAlignment="Left" Height="26" Margin="124,20,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="355"/>
@@ -23,17 +23,21 @@
                 <TextBox x:Name="tbxWage" HorizontalAlignment="Left" Height="26" Margin="124,144,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="355"/>
                 <Label x:Name="lblStreetAddress" Content="Street Address:" HorizontalAlignment="Left" Margin="14,175,0,0" VerticalAlignment="Top" Height="30" Width="105"/>
                 <TextBox x:Name="tbxStreetAddress" HorizontalAlignment="Left" Height="26" Margin="124,175,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="355"/>
-                <Label x:Name="lblCityID" Content="City ID:" HorizontalAlignment="Left" Margin="14,206,0,0" VerticalAlignment="Top" Height="30" Width="105"/>
-                <TextBox x:Name="tbxCityID" HorizontalAlignment="Left" Height="26" Margin="124,206,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="355"/>
-                <Label x:Name="lblEmployeePositionID" Content="Employee Position ID:" HorizontalAlignment="Left" Margin="0,236,0,0" VerticalAlignment="Top" Height="26" Width="124"/>
-                <TextBox x:Name="tbxEmployeePositionID" HorizontalAlignment="Left" Height="26" Margin="124,237,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="355"/>
-                <Label x:Name="lblEmployeeNumber" Content="Employee Number:" HorizontalAlignment="Left" Margin="14,267,0,0" VerticalAlignment="Top" Height="26" Width="110"/>
-                <TextBox x:Name="tbxEmployeeNumber" HorizontalAlignment="Left" Height="26" Margin="124,268,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="355"/>
+                <Label x:Name="lblCity" Content="City:" HorizontalAlignment="Left" Margin="14,206,0,0" VerticalAlignment="Top" Height="30" Width="105"/>
+                <TextBox x:Name="tbxCity" HorizontalAlignment="Left" Height="26" Margin="124,206,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="355"/>
+                <Label x:Name="lblEmployeePosition" Content="Employee Position:" HorizontalAlignment="Left" Margin="0,299,0,0" VerticalAlignment="Top" Height="26" Width="124"/>
+                <TextBox x:Name="tbxEmployeePosition" HorizontalAlignment="Left" Height="26" Margin="124,300,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="355"/>
+                <Label x:Name="lblEmployeeNumber" Content="Employee Number:" HorizontalAlignment="Left" Margin="14,330,0,0" VerticalAlignment="Top" Height="26" Width="110"/>
+                <TextBox x:Name="tbxEmployeeNumber" HorizontalAlignment="Left" Height="26" Margin="124,331,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="355"/>
+                <Label x:Name="lblZipCode" Content="Zip Code:" HorizontalAlignment="Left" Margin="14,237,0,0" VerticalAlignment="Top" Height="30" Width="105"/>
+                <TextBox x:Name="tbxZipCode" HorizontalAlignment="Left" Height="26" Margin="124,237,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="355"/>
+                <Label x:Name="lblState" Content="State:" HorizontalAlignment="Left" Margin="14,268,0,0" VerticalAlignment="Top" Height="30" Width="105"/>
+                <TextBox x:Name="tbxState" HorizontalAlignment="Left" Height="26" Margin="124,268,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="355"/>
             </Grid>
         </GroupBox>
 
 
-        <GroupBox x:Name="gnxContactInfo" Header="Contact Information" HorizontalAlignment="Left" Height="203" Margin="521,65,0,0" VerticalAlignment="Top" Width="549">
+        <GroupBox x:Name="gnxContactInfo" Header="Contact Information" HorizontalAlignment="Left" Height="203" Margin="556,91,0,0" VerticalAlignment="Top" Width="549">
             <Grid>
                 <Label x:Name="lblContactFirstName" Content="Contact First Name:" HorizontalAlignment="Left" Margin="11,20,0,0" VerticalAlignment="Top"/>
                 <TextBox x:Name="tbxContactFirstName" HorizontalAlignment="Left" Height="26" Margin="154,21,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="355"/>
@@ -45,6 +49,6 @@
                 <TextBox x:Name="tbxContactPhoneNumber" HorizontalAlignment="Left" Height="26" Margin="155,114,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="355"/>
             </Grid>
         </GroupBox>
-        <Button x:Name="btnSubmit" Content="Create Employee" HorizontalAlignment="Left" Margin="351,405,0,0" VerticalAlignment="Top" Width="355" Click="btnSubmit_Click" Height="46"/>
+        <Button x:Name="btnSubmit" Content="Create" HorizontalAlignment="Left" Margin="388,451,0,0" VerticalAlignment="Top" Width="355" Click="btnSubmit_Click" Height="46"/>
     </Grid>
 </Window>

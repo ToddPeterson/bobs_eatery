@@ -10,19 +10,19 @@ using System.Threading.Tasks;
 namespace TestEateryLibrary
 {
     [TestFixture]
-    class TestMenuItem
+    class TestMenuItemss
     {
         [Test]
         public void GetAll()
         {
-            List<MenuItem> items = DAL.MenuItemsGetAll();
+            List<MenuItems> items = DAL.MenuItemsGetAll();
             Assert.Greater(items.Count, 0);
         }
 
         [Test]
         public void GetByID()
         {
-            MenuItem mi = DAL.MenuItemGetByID(4);
+            MenuItems mi = DAL.MenuItemGetByID(4);
             Assert.AreEqual(mi.ID, 4);
             Assert.AreEqual(mi.Name, "seafood platter");
             Assert.AreEqual(mi.Description, "a, malesuada id, erat. Etiam vestibulum massa rutrum magna. Cras convallis convallis dolor. Quisque tincidunt pede ac urna. Ut tincidunt vehicula risus. Nulla eget metus eu erat semper rutrum. Fusce dolor quam, elementum at, egestas a, scelerisque sed, sapien. Nunc pulvinar arcu et pede. Nunc sed orci");
@@ -37,7 +37,7 @@ namespace TestEateryLibrary
         [Test]
         public void Create()
         {
-            MenuItem mi = new MenuItem();
+            MenuItems mi = new MenuItems();
             mi.Name = "test food";
             mi.Description = "description";
             mi.PicturePath = "C:\\folder\\image.jpg";
@@ -47,11 +47,11 @@ namespace TestEateryLibrary
             mi.CategoryID = 2;
             mi.CuisineTypeID = 3;
 
-            MenuItem created = DAL.MenuItemCreate(mi);
+            MenuItems created = DAL.MenuItemCreate(mi);
 
             Assert.AreNotEqual(created.ID, 0);
 
-            MenuItem check = DAL.MenuItemGetByID(created.ID);
+            MenuItems check = DAL.MenuItemGetByID(created.ID);
 
             Assert.AreEqual(mi.Name, check.Name);
             Assert.AreEqual(mi.Description, check.Description);
@@ -66,7 +66,7 @@ namespace TestEateryLibrary
         [Test]
         public void Update()
         {
-            MenuItem mi = new MenuItem();
+            MenuItems mi = new MenuItems();
             mi.Name = "test food";
             mi.Description = "description";
             mi.PicturePath = "C:\\folder\\image.jpg";
@@ -91,7 +91,7 @@ namespace TestEateryLibrary
 
             Assert.AreEqual(num, 1);
 
-            MenuItem check = DAL.MenuItemGetByID(mi.ID);
+            MenuItems check = DAL.MenuItemGetByID(mi.ID);
             Assert.AreEqual(mi.Name, check.Name);
             Assert.AreEqual(mi.Description, check.Description);
             Assert.AreEqual(mi.PicturePath, check.PicturePath);

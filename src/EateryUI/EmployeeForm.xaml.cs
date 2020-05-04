@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using EateryLibrary.Models;
+using EateryLibrary;
 namespace EateryUI
 {
     /// <summary>
@@ -22,7 +23,10 @@ namespace EateryUI
         public EmployeeForm()
         {
             InitializeComponent();
+            
         }
+
+        int updateID;
 
         public EmployeeForm(Employee employee)
         {
@@ -37,16 +41,55 @@ namespace EateryUI
             tbxContactPhoneNumber.Text = employee.ContactPhoneNumber;
             tbxWage.Text = employee.Wage.ToString();
             tbxStreetAddress.Text = employee.StreetAddress;
-            tbxCityID.Text = employee.CityID.ToString();
-            tbxEmployeePositionID.Text = employee.EmployeePositionID.ToString();
             tbxEmployeeNumber.Text = employee.EmployeeNumber.ToString();
-
+            updateID = employee.ID;
             btnSubmit.Content = "Edit";
+            Tuple<string, string, string> data = DAL.GetCityData(employee.CityID);
+            tbxCity.Text = data.Item1;
+            tbxZipCode.Text = data.Item2;
+            tbxState.Text = data.Item3;
+            tbxEmployeePosition.Text = DAL.GetEmployePositionByID(employee.EmployeePositionID);
         }
 
         private void btnSubmit_Click(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                Employee newEmployee = new Employee();
+                newEmployee.FirstName = tbxFirstName.Text;
+                newEmployee.MiddleName = tbxMiddleName.Text;
+                newEmployee.LastName = tbxLastName.Text;
+                newEmployee.PhoneNumber = tbxPhoneNumber.Text;
+                newEmployee.ContactFirstName = tbxContactFirstName.Text;
+                newEmployee.ContactMiddleName = tbxContactMiddleName.Text;
+                newEmployee.ContactLastName = tbxContactLastName.Text;
+                newEmployee.ContactPhoneNumber = tbxContactPhoneNumber.Text;
+                newEmployee.Wage = decimal.Parse(tbxWage.Text);
+                newEmployee.StreetAddress = tbxStreetAddress.Text;
+                newEmployee.EmployeePositionID = DAL.EmployePositionCreate(tbxEmployeePosition.Text);
+                newEmployee.EmployeeNumber = int.Parse(tbxEmployeeNumber.Text);
+                newEmployee.CityID = DAL.CitiesCreate(tbxCity.Text, int.Parse(tbxZipCode.Text), tbxState.Text);
 
+                if (btnSubmit.Content.ToString() == "Create")
+                {
+                    Employee employee = DAL.EmployeeCreate(newEmployee);
+                    Details details = new Details(employee);
+                    details.Show();
+                    this.Close();
+                }
+                else if (btnSubmit.Content.ToString() == "Edit")
+                {
+                    newEmployee.ID = updateID;
+                    DAL.EmployeeUpdate(newEmployee);
+                    Details details = new Details(newEmployee);
+                    details.Show();
+                    this.Close();
+                }
+            }
+            catch
+            {
+                MessageBox.Show("There were some input errors. Please check the input.");
+            }
         }
     }
 }

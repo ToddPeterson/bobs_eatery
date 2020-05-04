@@ -338,8 +338,8 @@ namespace EateryLibrary
 
                 SqlCommand comm = new SqlCommand("sproc_EmployeesUpdateByID", conn);
                 comm.CommandType = System.Data.CommandType.StoredProcedure;
-
-                comm.Parameters.AddWithValue("@EmployeeID", emp.ID);
+                int id = (int)emp.ID;
+                comm.Parameters.AddWithValue("@EmployeeID", id);
                 comm.Parameters.AddWithValue("@FirstName", emp.FirstName);
                 comm.Parameters.AddWithValue("@MiddleName", emp.MiddleName);
                 comm.Parameters.AddWithValue("@LastName", emp.LastName);
@@ -1195,6 +1195,114 @@ namespace EateryLibrary
 
             return output;
         }
+
+        //public static Tuple<string, string, string> GetCitiesALL()
+        //{
+        //    SqlConnection conn = null;
+        //    Tuple<string, string, string> output = new Tuple<string, string, string>("", "", "");
+
+        //    try
+        //    {
+        //        conn = new SqlConnection(GlobalConfig.ConnectionString(db));
+
+        //        SqlCommand comm = new SqlCommand("sprocCitiesGetALL", conn);
+        //        comm.CommandType = System.Data.CommandType.StoredProcedure;
+        //        conn.Open();
+        //        SqlDataReader dr = comm.ExecuteReader();
+
+        //        while (dr.Read())
+        //        {
+        //            output = new Tuple<string, string, string>(
+        //                    (string)dr["city"],
+        //                    (string)dr["zip"],
+        //                    (string)dr["state"]
+        //                );
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        System.Diagnostics.Debug.WriteLine(ex.Message);
+        //    }
+        //    finally
+        //    {
+        //        if (conn != null) conn.Close();
+        //    }
+
+        //    return output;
+        //}
+
+        /// <summary>
+        /// returns name of employee's position by id
+        /// </summary>
+        /// <param name="id">id of position of employee</param>
+        /// <returns></returns>
+        public static string GetEmployePositionByID(int id)
+        {
+            SqlConnection conn = null;
+            string output = "";
+
+            try
+            {
+                conn = new SqlConnection(GlobalConfig.ConnectionString(db));
+
+                SqlCommand comm = new SqlCommand("sprocEmployeePositionGetALL", conn);
+                comm.CommandType = System.Data.CommandType.StoredProcedure;
+
+                comm.Parameters.AddWithValue("@EmployeePositionID", id);
+                conn.Open();
+                SqlDataReader dr = comm.ExecuteReader();
+
+                while (dr.Read())
+                {
+                    output = (string)dr["Name"];
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+            }
+            finally
+            {
+                if (conn != null) conn.Close();
+            }
+
+            return output;
+        }
+
+        /// <summary>
+        /// adds a employee position if it's not alreade added in database and returns the id of employee position with the name
+        /// </summary>
+        /// <returns>employee position id</returns>
+        public static int EmployePositionCreate(string name)
+        {
+            SqlConnection conn = null;
+            int output = 0;
+            try
+            {
+                conn = new SqlConnection(GlobalConfig.ConnectionString(db));
+                SqlCommand comm = new SqlCommand("sproc_EmployeePositionAdd", conn);
+                comm.CommandType = System.Data.CommandType.StoredProcedure;
+                comm.Parameters.AddWithValue("@Name", name);
+                comm.Parameters.Add("@EmployeePositionID", System.Data.SqlDbType.Int);
+                comm.Parameters["@EmployeePositionID"].Direction = System.Data.ParameterDirection.Output;
+
+                conn.Open();
+                comm.ExecuteNonQuery();
+                output = (int)comm.Parameters["@EmployeePositionID"].Value;
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+            }
+            finally
+            {
+                if (conn != null) conn.Close();
+            }
+
+            return output;
+        }
+
+        
 
         public static Tuple<List<string>, List<string>> GetOrderItems(Order order)
         {

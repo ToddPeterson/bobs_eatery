@@ -32,6 +32,7 @@ namespace EateryUI
         private void BtnShowEmployees_Click(object sender, RoutedEventArgs e)
         {
             lbxOutput.Items.Clear();
+            
             List<Employee> employees = DAL.EmployeesGetAll();
             foreach (Employee employee in employees)
             {
