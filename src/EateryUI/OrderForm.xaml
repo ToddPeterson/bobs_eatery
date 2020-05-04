@@ -24,6 +24,7 @@
         <ComboBox x:Name="cmbCustomerID" HorizontalAlignment="Left" Margin="0,14,0,0" VerticalAlignment="Top" Width="242" Grid.Column="1">
         </ComboBox>
         <DatePicker x:Name="dpDateOrdered" Grid.Column="1" HorizontalAlignment="Left" Margin="0,176,0,0" VerticalAlignment="Top" Width="242"/>
+        <Button Content="Create" Grid.Column="1" HorizontalAlignment="Left" Margin="167,229,0,0" VerticalAlignment="Top" Width="75"/>
 
     </Grid>
 </Window>

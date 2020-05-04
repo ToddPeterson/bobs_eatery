@@ -1,4 +1,5 @@
-﻿using EateryLibrary.Models;
+﻿using EateryLibrary;
+using EateryLibrary.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,6 +21,8 @@ namespace EateryUI
     /// </summary>
     public partial class MenuItemForm : Window
     {
+        private int ID;
+
         public MenuItemForm()
         {
             InitializeComponent();
@@ -32,6 +35,11 @@ namespace EateryUI
             txtDescription.Text = menuItem.Description;
             txtPicturePath.Text = menuItem.PicturePath;
             txtPrepTime.Text = menuItem.PrepTime.ToString();
+            txtCategoryID.Text = menuItem.CategoryID.ToString();
+            txtCuisineTypeID.Text = menuItem.CuisineTypeID.ToString();
+            txtPrepMethodID.Text = menuItem.PrepMethodID.ToString();
+
+            ID = menuItem.ID;
 
             if (menuItem.IsSideItem)
             {
@@ -41,11 +49,64 @@ namespace EateryUI
             {
                 rbIsSideItemNo.IsChecked = true;
             }
+
+            btnSubmit.Content = "Edit";
         }
 
-        private void RadioButton_Checked(object sender, RoutedEventArgs e)
+        private void btnSubmit_Click(object sender, RoutedEventArgs e)
         {
+            MenuItems item = new MenuItems();
 
+            if (!int.TryParse(txtPrepTime.Text, out int prepTime))
+            {
+                MessageBox.Show("Invalid Prep time");
+                return;
+            }
+            if (!int.TryParse(txtCategoryID.Text, out int categoryID))
+            {
+                MessageBox.Show("Invalid Category ID");
+                return;
+            }
+            if (!int.TryParse(txtCuisineTypeID.Text, out int cuisineID))
+            {
+                MessageBox.Show("Invalid Cuisine ID");
+                return;
+            }
+            if (!int.TryParse(txtPrepMethodID.Text, out int prepID))
+            {
+                MessageBox.Show("Invalid Prep Method ID");
+                return;
+            }
+
+            item.Name = txtName.Text;
+            item.Description = txtDescription.Text;
+            item.PicturePath = txtPicturePath.Text;
+            item.PrepTime = prepTime;
+            item.CategoryID = categoryID;
+            item.CuisineTypeID = cuisineID;
+            item.PrepMethodID = prepID;
+            if (rbIsSideItemYes.IsChecked == true)
+            {
+                item.IsSideItem = true;
+            } 
+            else
+            {
+                item.IsSideItem = false;
+            }
+
+            if (btnSubmit.Content.ToString() == "Create")
+            {
+                DAL.MenuItemCreate(item);
+            }
+            else if (btnSubmit.Content.ToString() == "Edit")
+            {
+                item.ID = ID;
+                DAL.MenuItemUpdate(item);
+            }
+
+            Details details = new Details(item);
+            details.Show();
+            this.Close();
         }
     }
 }
