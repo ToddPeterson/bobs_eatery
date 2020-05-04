@@ -29,7 +29,7 @@
                 <TextBox x:Name="tbxEmail" HorizontalAlignment="Left" Height="26" Margin="124,237,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="355"/>
             </Grid>
         </GroupBox>
-        <Button x:Name="btnSubmit" Content="Add Customer" HorizontalAlignment="Left" Margin="78,378,0,0" VerticalAlignment="Top" Width="354" Click="btnSubmit_Click" Height="46"/>
+        <Button x:Name="btnSubmit" Content="Create" HorizontalAlignment="Left" Margin="78,378,0,0" VerticalAlignment="Top" Width="354" Click="btnSubmit_Click" Height="46"/>
 
     </Grid>
 </Window>
